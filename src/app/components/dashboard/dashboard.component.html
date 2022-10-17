@@ -1,0 +1,257 @@
+<app-sidenav *ngIf="!isauthRouth()"></app-sidenav>
+
+
+<div class="body" [ngClass]="getBodyClass()">
+    <app-header></app-header>
+    <div class="main-header">
+        <div class="welcome">
+            <h5 class="colour">👋 Hi Lucy</h5>
+            <h3>Let's Get Productive Today !</h3>
+        </div>
+        <div>
+            <button class="btn btn-primary" (click)="open(addService)">+ Add Service</button>
+        </div>
+    </div>
+
+    <div class="main">
+
+        <div class="row1">
+            <div class="part1">
+                <div class="service">
+                    <div class="top">
+                        <div class="image">
+                            <img src="/assets/images/Dsd.png" alt="">
+                        </div>
+                        <div class="info">
+                            <p>Service Reequests Pending</p>
+                            <h3>165</h3>
+                        </div>
+                    </div>
+                    <div class="image">
+                        <img src="/assets/images/Vector 3 (1).png" alt="">
+                    </div>
+                </div>
+                <div class="service">
+                    <div class="top">
+                        <div class="image">
+                            <img src="/assets/images/Group 399.png" alt="">
+                        </div>
+                        <div class="info">
+                            <p>Requests Attended</p>
+                            <h3>165</h3>
+                        </div>
+                    </div>
+                    <div class="image">
+                        <img src="/assets/images/Vector 5.png" alt="">
+                    </div>
+                </div>
+
+            </div>
+            <div class="part2">
+                <div class="accred">
+                    <div class="image">
+                        <img src="/assets/images/freepik--Stopwatch--inject-112.png" alt="">
+                    </div>
+                    <div class="info">
+                        <div>
+                            <h4>Accreditation</h4>
+                            <p>Lorem ipsum dolor, sit amet consectetur
+                                adipisicing elit. Voluptate blanditiis</p>
+                        </div>
+                        <button class="btn btn-outline-light d-flex justify-content-end">Proceed</button>
+
+                    </div>
+                </div>
+                <div class="all">
+                    <div class="image">
+                        <img src="/assets/images/vbf.png" alt="">
+                    </div>
+                    <div class="info">
+                        <h1 class="colour">165</h1>
+                        <h4 class="colour">All Service</h4>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row2">
+            <div class="part1">
+                <h2 class="colour">List of services</h2>
+                <p>3 services added</p>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col">Service Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Rating</th>
+                                <th scope="col">Date Added</th>
+                                <th scope="col">
+                                    <mat-icon>delete</mat-icon>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let country of countries; index as i">
+                                <!-- <th scope="row">{{ i + 1 }}</th> -->
+                                <th><input type="checkbox" class="form-check-input" id="exampleCheck1"></th>
+                                <td>
+                                    <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
+                                        class="me-2" style="width: 20px">
+                                </td>
+                                <td>{{ country.name }}</td>
+                                <td>{{ country.area | number }}</td>
+                                <td>
+                                    <ngb-rating [rate]="3"></ngb-rating>
+                                </td>
+                                <td>{{country.date}}</td>
+                                <td>
+                                    <mat-icon>&#8230;</mat-icon>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="part2">
+                <div class="rate">
+                    <div class="ratecount">
+                        <b>Rating</b>
+                        <p><span>3.6</span></p>
+                        <ngb-rating [rate]="3"></ngb-rating>
+                        <small>45678 Rating</small>
+                    </div>
+                    <div class="ratings">
+                        <div><span>5 &#11088; </span>
+                            <ngb-progressbar type="success" [value]="50"></ngb-progressbar> <span>800</span>
+                        </div>
+                        <div><span>4 &#11088; </span>
+                            <ngb-progressbar type="info" [value]="75"></ngb-progressbar> <span>1.1k</span>
+                        </div>
+                        <div><span>3 &#11088; </span>
+                            <ngb-progressbar type="warning" [value]="30"></ngb-progressbar> <span>592</span>
+                        </div>
+                        <div><span>2 &#11088; </span>
+                            <ngb-progressbar type="primary" [value]="60"></ngb-progressbar> <span>934</span>
+                        </div>
+                        <div><span>1 &#11088; </span>
+                            <ngb-progressbar type="danger" [value]="20"></ngb-progressbar> <span>253</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="incoming">
+                    <div class="icomreq">
+                        <p>Incoming Requests</p>
+                        <mat-icon>notifications</mat-icon>
+                    </div>
+                    <div class="requests">
+                        <div><span>!</span></div>
+                        <div class="request">
+                            <p>Burna Live in Concert by <b>Christie Ann</b> is requesting for a Disck Jockey</p>
+                            <div class="reqtbtns">
+                                <button class="btn btn-success">Accept</button>
+                                <button class="btn btn-outline-danger">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="requests">
+                        <div><span>!</span></div>
+                        <div class="request">
+                            <p>Burna Live in Concert by <b>Christie Ann</b> is requesting for a Disck Jockey</p>
+                            <div class="reqtbtns">
+                                <button class="btn btn-success">Accept</button>
+                                <button class="btn btn-outline-danger">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- //////////// Add Service Modal //////// -->
+        <ng-template #addService let-c="close" let-d="dismiss">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Add a New Service</h4>
+                <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="Select" class="form-label">Service Type</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Service Caption</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <div class="negotiate">
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput" class="form-label">Rate</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput"
+                                placeholder=" &#x20A6; 350 ">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Negotiatable</label>
+                        </div>
+
+                    </div>
+                    <div class="mb-3">
+                        <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+                            <ngx-dropzone-label>
+                                <div>
+                                    <mat-icon>cloud_upload</mat-icon>
+                                    <h3>Drop images here or click to select</h3>
+                                </div>
+                            </ngx-dropzone-label>
+                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                                [file]="f" [removable]="true" (removed)="onRemove(f)">
+                                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                            </ngx-dropzone-image-preview>
+                            
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-light cancel" (click)="c('Save click')">Cancel</button>
+                <button type="button" class="btn addService" (click)="serviceSuccess(success)">+ Add Service</button>
+
+            </div>
+        </ng-template>
+
+        <!-- /////////// Service Addedd Successfully modal /////////// -->
+
+        <ng-template #success let-modal>
+            
+            <div class="modal-body">
+              <div class="successmodal">
+                <h4>Congratulations! Your service has been addedd successfully</h4>
+                <div class="img">
+                    <img src="/assets/images/undraw_Mail_sent_re_0ofv 1.png" alt="">
+                </div>
+                <button class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+              </div>
+            </div>
+            
+          </ng-template>
+    </div>
+
+</div>

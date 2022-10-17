@@ -1,0 +1,106 @@
+<app-sidenav *ngIf="!isauthRouth()"></app-sidenav>
+
+<div class="body" [ngClass]="getBodyClass()">
+    <app-header></app-header>
+    <div class="main-header">
+        <div class="welcome">
+            <h5 class="colour">👋 Hi Lucy</h5>
+            <h3>Invoice List</h3>
+        </div>
+        <div>
+            <input type="search">
+            <button class="btn btn-primary" (click)="openLg(content)">+ Add New</button>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Invoice ID</th>
+                        <th scope="col">Event Creator</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">
+                            <mat-icon>delete</mat-icon>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let country of countries; index as i">
+                        <!-- <th scope="row">{{ i + 1 }}</th> -->
+                        <th scope="row"><input type="checkbox" name="" id=""></th>
+                        <td>{{country.event}}</td>
+                        <td>
+                            <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="me-2"
+                                style="width: 20px">
+                            {{ country.name }}
+                        </td>
+                        <td>{{ country.area | number }}</td>
+                        <td>{{ country.population | number }}</td>
+                        <td>
+                            <div [ngClass]="{'done': country.status =='Done','pending': country.status =='Pending'}">{{
+                                country.status }}</div>
+                        </td>
+                        <td>&hellip; </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <!-- ///////  Add Invoice Modal /////// -->
+        <ng-template #content let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title">Create New Invoice</h4>
+                <button type="button" class="btn-close" aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3">
+                    <div class="col-md-6">
+                        <label for="inputEmail4" class="form-label">Invoice ID</label>
+                        <input type="text" class="form-control" id="inputEmail4">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputPassword4" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="inputPassword4">
+                    </div>
+                    <div class="col-12">
+                        <label for="inputAddress" class="form-label">Recipient Name</label>
+                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label for="inputCity" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="inputCity">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputCity" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="inputCity" placeholder="Apartment, studio, or floor">
+                    </div>
+                    <hr>
+                    <h4>Service Description</h4>
+                    <div class="col-md-6">
+                        <label for="type" class="form-label">Service Type</label>
+                        <select id="type" class="form-select">
+                            <option selected>Choose...</option>
+                            <option>...</option>
+                          </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="rate" class="form-label">Rate</label>
+                        <input type="text" class="form-control" id="rate">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-light cancel" (click)="modal.close('Close click')">Close</button>
+                <button type="button" class="btn addService">Create Invoice</button>
+            </div>
+        </ng-template>
+    </div>
+</div>

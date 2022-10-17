@@ -1,0 +1,105 @@
+a{
+    text-decoration: none;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+}
+
+.nav{
+    background: #fff;;
+    position: relative;
+    padding: 0.2rem;
+    width: 100%;
+    /* padding-left:2% ; */
+    // padding-right: 8%;
+    min-height: 10vh;
+    /* overflow: hidden; */
+    top: 0;
+    z-index: 3;
+}
+.navborder{
+    border-bottom: 2px solid #1C2B66; 
+}
+.navbar-brand img{
+    width: 100%;
+    /* height: 8vh; */
+}
+ hr{
+    margin: 0;
+    height: 0px;
+    border: none;
+    border-top: 5px solid #1C2B66;
+}
+.profile{
+    display: flex;
+}
+.profile img{
+    border-radius: 35px;
+    /* margin-right: 0.5rem; */
+}
+.profile section{
+    display: flex;
+    flex-direction: column;
+}
+article{
+    font-size: 15px;
+    font-family: poppins;
+    font-weight: 400;
+    color: #2D3748;
+}
+.profile span{
+    font-family: poppins;
+    font-weight: 400;
+    font-size: 10px;
+    color: rgba(45, 55, 72, 0.75);
+}
+mat-icon{
+    color: #2D3748;
+}
+.landing{
+    margin: 0 0.5rem;
+    font-size: 1.1rem;
+    position:relative;
+    font-weight: 600;
+    font-family:poppins;
+}
+
+.landing:hover {
+    /* background-color: #007AFF; */
+    color: #1C2B66;
+    border-bottom: 3px solid #1C2B66;
+    /* border-radius: 2px; */
+}
+#signup{
+    border: 1px solid #1C2B66;
+    border-radius: 5px;
+    padding: 5px;
+    color:  #1C2B66;
+    margin: 0.5rem;
+    font-weight: 400;
+font-size: 18px;
+line-height: 27px;
+
+}
+#signup:hover{
+    background-color: #1C2B66;
+    color: #fff;
+}
+#signin{
+    background: #1C2B66;
+border-radius: 10px;
+    padding: 5px 10px;
+    color: white;
+    font-weight: 600;
+font-size: 18px;
+line-height: 27px;
+margin: 0.5rem;
+
+    
+}
+#signin:hover{
+    background-color: #1470d3;
+    color: #fff;
+}
+.landingli{
+    margin:0.5rem;
+}

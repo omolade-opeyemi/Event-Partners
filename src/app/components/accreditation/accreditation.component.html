@@ -1,0 +1,92 @@
+<app-sidenav *ngIf="!isauthRouth()"></app-sidenav>
+
+
+<div class="body" [ngClass]="getBodyClass()">
+    <app-header></app-header>
+    <div class="main-header">
+        <div class="welcome">
+            <h5 class="colour">👋 Hi Lucy</h5>
+            <h3>Let's Get Productive Today !</h3>
+        </div>
+        <!-- <div>
+            <button class="btn btn-primary" >+ Add Service</button>
+        </div> -->
+    </div>
+
+    <div class="main">
+        <ng-template [ngIf]="page == 'intromsg'">
+            <div class="introMsg">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem placeat non ipsum laborum harum facilis dolorem? Explicabo id distinctio saepe, sed error perferendis repudiandae et, ipsum libero quidem dolore ad, nam earum culpa laborum deserunt delectus optio amet ratione sit.
+                </p>
+                <br>
+                <b>Commision Act and Rule</b>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis dolore et molestias fuga id vero debitis amet rerum maxime impedit commodi, ea quo! At earum, necessitatibus quisquam distinctio facere nostrum id eum tenetur animi natus doloribus qui mollitia repellendus ratione.</p>
+                <br>
+                <b>What is A Service</b>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, nesciunt, saepe quo repellendus totam magnam obcaecati libero dolorem perferendis, velit quas dolore ratione! Fugiat eius suscipit ut asperiores ipsum enim labore exercitationem voluptas voluptatem deserunt, harum tempora velit possimus. Vel!</p>
+                <br>
+                <b>Applying For Accreditation</b>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita commodi ut accusamus eaque accusantium vel iusto officia sit cum possimus rerum harum eum non quas asperiores et assumenda modi dolor, perspiciatis minima? Nostrum quam nam alias adipisci culpa quos officiis.</p>
+                <br>
+                <b>The Decision Process</b>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos blanditiis, ipsum maiores ab voluptates architecto beatae impedit fugit dolores quaerat earum ipsa eum quidem delectus aliquid quod sapiente modi. Adipisci natus maiores laboriosam quam explicabo, pariatur perspiciatis rem incidunt totam.</p>
+                <br>
+                <b>Monitoring Your Accreditation</b>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos est, eius voluptates ipsam amet voluptatem quam pariatur. Vel voluptatibus fuga, aspernatur omnis iure excepturi! Optio, ducimus, saepe natus tempora similique exercitationem sequi dolore iusto in aut enim? Quisquam, officiis alias.</p>
+                <br>
+                <b>Application For Re-activation</b>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente numquam nemo possimus nobis, hic quod totam asperiores qui unde et saepe non, dolore animi laboriosam fugiat cum porro, sequi reprehenderit voluptatem? Eos, unde a. At accusamus amet nesciunt. Maxime, illo.</p>
+                <br>
+                <div class="button d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary">Next</button>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template [ngIf]="page == 'stepper'">
+
+            <mat-stepper #stepper>
+                <mat-step [stepControl]="firstFormGroup" errorMessage="Name is required.">
+                  <form >
+                    <ng-template matStepLabel>Fill out your name</ng-template>
+                    <mat-form-field appearance="fill">
+                      <mat-label>Name</mat-label>
+                      <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+                    </mat-form-field>
+                    <div>
+                      <p>Go to a different step to see the error state</p>
+                      <button mat-button matStepperNext>Next</button>
+                    </div>
+                  </form>
+                </mat-step>
+                <mat-step [stepControl]="secondFormGroup" errorMessage="Address is required.">
+                  <form >
+                    <ng-template matStepLabel>Fill out your address</ng-template>
+                    <mat-form-field appearance="fill">
+                      <mat-label>Address</mat-label>
+                      <input matInput placeholder="Ex. 1 Main St, New York, NY" formControlName="secondCtrl"
+                             required>
+                    </mat-form-field>
+                    <div>
+                      <p>Go to a different step to see the error state</p>
+                      <button mat-button matStepperPrevious>Back</button>
+                      <button mat-button matStepperNext>Next</button>
+                    </div>
+                  </form>
+                </mat-step>
+                <mat-step>
+                  <ng-template matStepLabel>Done</ng-template>
+                  <p>You are now done.</p>
+                  <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                  </div>
+                </mat-step>
+              </mat-stepper>
+
+        </ng-template>
+        
+    </div>
+
+</div>
