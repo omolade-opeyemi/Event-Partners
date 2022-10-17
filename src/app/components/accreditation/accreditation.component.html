@@ -2,91 +2,251 @@
 
 
 <div class="body" [ngClass]="getBodyClass()">
-    <app-header></app-header>
-    <div class="main-header">
-        <div class="welcome">
-            <h5 class="colour">👋 Hi Lucy</h5>
-            <h3>Let's Get Productive Today !</h3>
-        </div>
-        <!-- <div>
-            <button class="btn btn-primary" >+ Add Service</button>
+  <app-header></app-header>
+  <div class="main-header">
+    <div class="welcome">
+      <h5 class="colour">👋 Hi Lucy</h5>
+      <h3>Let's Get Productive Today !</h3>
+    </div>
+    <!-- <div>
+            <button class="btn btn-dark" >+ Add Service</button>
         </div> -->
-    </div>
+  </div>
 
-    <div class="main">
-        <ng-template [ngIf]="page == 'intromsg'">
-            <div class="introMsg">
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem placeat non ipsum laborum harum facilis dolorem? Explicabo id distinctio saepe, sed error perferendis repudiandae et, ipsum libero quidem dolore ad, nam earum culpa laborum deserunt delectus optio amet ratione sit.
-                </p>
-                <br>
-                <b>Commision Act and Rule</b>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis dolore et molestias fuga id vero debitis amet rerum maxime impedit commodi, ea quo! At earum, necessitatibus quisquam distinctio facere nostrum id eum tenetur animi natus doloribus qui mollitia repellendus ratione.</p>
-                <br>
-                <b>What is A Service</b>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, nesciunt, saepe quo repellendus totam magnam obcaecati libero dolorem perferendis, velit quas dolore ratione! Fugiat eius suscipit ut asperiores ipsum enim labore exercitationem voluptas voluptatem deserunt, harum tempora velit possimus. Vel!</p>
-                <br>
-                <b>Applying For Accreditation</b>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita commodi ut accusamus eaque accusantium vel iusto officia sit cum possimus rerum harum eum non quas asperiores et assumenda modi dolor, perspiciatis minima? Nostrum quam nam alias adipisci culpa quos officiis.</p>
-                <br>
-                <b>The Decision Process</b>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos blanditiis, ipsum maiores ab voluptates architecto beatae impedit fugit dolores quaerat earum ipsa eum quidem delectus aliquid quod sapiente modi. Adipisci natus maiores laboriosam quam explicabo, pariatur perspiciatis rem incidunt totam.</p>
-                <br>
-                <b>Monitoring Your Accreditation</b>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos est, eius voluptates ipsam amet voluptatem quam pariatur. Vel voluptatibus fuga, aspernatur omnis iure excepturi! Optio, ducimus, saepe natus tempora similique exercitationem sequi dolore iusto in aut enim? Quisquam, officiis alias.</p>
-                <br>
-                <b>Application For Re-activation</b>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente numquam nemo possimus nobis, hic quod totam asperiores qui unde et saepe non, dolore animi laboriosam fugiat cum porro, sequi reprehenderit voluptatem? Eos, unde a. At accusamus amet nesciunt. Maxime, illo.</p>
-                <br>
-                <div class="button d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary">Next</button>
-                </div>
-            </div>
-        </ng-template>
+  <div class="main">
+    <ng-template [ngIf]="page == 'introMsg'">
+      <div class="introMsg">
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem placeat non ipsum laborum harum facilis
+          dolorem? Explicabo id distinctio saepe, sed error perferendis repudiandae et, ipsum libero quidem dolore ad,
+          nam earum culpa laborum deserunt delectus optio amet ratione sit.
+        </p>
+        <br>
+        <b>Commision Act and Rule</b>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis dolore et molestias fuga id vero debitis amet
+          rerum maxime impedit commodi, ea quo! At earum, necessitatibus quisquam distinctio facere nostrum id eum
+          tenetur animi natus doloribus qui mollitia repellendus ratione.</p>
+        <br>
+        <b>What is A Service</b>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, nesciunt, saepe quo repellendus totam
+          magnam obcaecati libero dolorem perferendis, velit quas dolore ratione! Fugiat eius suscipit ut asperiores
+          ipsum enim labore exercitationem voluptas voluptatem deserunt, harum tempora velit possimus. Vel!</p>
+        <br>
+        <b>Applying For Accreditation</b>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita commodi ut accusamus eaque accusantium vel
+          iusto officia sit cum possimus rerum harum eum non quas asperiores et assumenda modi dolor, perspiciatis
+          minima? Nostrum quam nam alias adipisci culpa quos officiis.</p>
+        <br>
+        <b>The Decision Process</b>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos blanditiis, ipsum maiores ab voluptates
+          architecto beatae impedit fugit dolores quaerat earum ipsa eum quidem delectus aliquid quod sapiente modi.
+          Adipisci natus maiores laboriosam quam explicabo, pariatur perspiciatis rem incidunt totam.</p>
+        <br>
+        <b>Monitoring Your Accreditation</b>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos est, eius voluptates ipsam amet voluptatem quam
+          pariatur. Vel voluptatibus fuga, aspernatur omnis iure excepturi! Optio, ducimus, saepe natus tempora
+          similique exercitationem sequi dolore iusto in aut enim? Quisquam, officiis alias.</p>
+        <br>
+        <b>Application For Re-activation</b>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente numquam nemo possimus nobis, hic quod totam
+          asperiores qui unde et saepe non, dolore animi laboriosam fugiat cum porro, sequi reprehenderit voluptatem?
+          Eos, unde a. At accusamus amet nesciunt. Maxime, illo.</p>
+        <br>
+        <div class="button d-flex justify-content-end">
+          <button type="button" class="btn btn-dark" (click)="acrreditation()">Next</button>
+        </div>
+      </div>
+    </ng-template>
 
-        <ng-template [ngIf]="page == 'stepper'">
+    <ng-template [ngIf]="page == 'stepper'">
 
-            <mat-stepper #stepper>
-                <mat-step [stepControl]="firstFormGroup" errorMessage="Name is required.">
-                  <form >
-                    <ng-template matStepLabel>Fill out your name</ng-template>
-                    <mat-form-field appearance="fill">
-                      <mat-label>Name</mat-label>
-                      <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-                    </mat-form-field>
-                    <div>
-                      <p>Go to a different step to see the error state</p>
-                      <button mat-button matStepperNext>Next</button>
-                    </div>
-                  </form>
-                </mat-step>
-                <mat-step [stepControl]="secondFormGroup" errorMessage="Address is required.">
-                  <form >
-                    <ng-template matStepLabel>Fill out your address</ng-template>
-                    <mat-form-field appearance="fill">
-                      <mat-label>Address</mat-label>
-                      <input matInput placeholder="Ex. 1 Main St, New York, NY" formControlName="secondCtrl"
-                             required>
-                    </mat-form-field>
-                    <div>
-                      <p>Go to a different step to see the error state</p>
-                      <button mat-button matStepperPrevious>Back</button>
-                      <button mat-button matStepperNext>Next</button>
-                    </div>
-                  </form>
-                </mat-step>
-                <mat-step>
-                  <ng-template matStepLabel>Done</ng-template>
-                  <p>You are now done.</p>
-                  <div>
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-button (click)="stepper.reset()">Reset</button>
+      <mat-stepper [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Basic info</ng-template>
+            <div class="contain">
+              <h2>Basic Info</h2>
+              <div class="inner">
+                <div class="profile">
+                  <div class="profileImg"><img src="/assets/images/person.jpg" alt="">
                   </div>
-                </mat-step>
-              </mat-stepper>
+                  <div class="profileInfo">
+                    <h5>Lucky Daniel</h5>
+                    <small>Individual Account</small>
+                  </div>
+                </div>
 
-        </ng-template>
-        
-    </div>
+                <div class="form">
+                  <form class="row g-3">
+                    <div class="col-md-6">
+                      <label for="first" class="form-label">First Name</label>
+                      <input type="text" class="form-control" id="first">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="last" class="form-label">Last Name</label>
+                      <input type="text" class="form-control" id="last">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="dob" class="form-label">Date of birth</label>
+                      <input type="date" class="form-control" id="dob" placeholder="1234">
+                    </div>
+                    <div class="col-md-6">
+                      <p>Gender</p>
+                      <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="inlineRadio1">Male</label>
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                          value="option1">
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="inlineRadio2">Female</label>
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                          value="option2">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="phone" class="form-label">Phone Number</label>
+                      <input type="phone" class="form-control" id="phone">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="email" class="form-label">Email</label>
+                      <input type="email" class="form-control" name="" id="email">
+                    </div>
+
+                  </form>
+                </div>
+
+              </div>
+              <button class="btn btn-dark" mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup" label="Location">
+          <form [formGroup]="secondFormGroup">
+
+            <div class="contain">
+              <h2>Location</h2>
+
+              <div class="inner">
+                <div class="form">
+
+                  <form class="row g-3">
+                    <div class="col-md-6">
+                      <label for="inputState" class="form-label">State</label>
+                      <select id="inputState" class="form-select">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="inputState" class="form-label">State</label>
+                      <select id="inputState" class="form-select">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                      </select>
+                    </div>
+                    <div class="col-12">
+                      <label for="inputAddress" class="form-label">Address</label>
+                      <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                    </div>
+                   
+                  </form>
+                </div>
+              </div>
+              <div class="buttons">
+                <button class="btn btn-dark" mat-button matStepperPrevious>Back</button>
+                <button class="btn btn-dark" mat-button matStepperNext>Next</button>
+              </div>
+
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup" label="Service">
+          <form [formGroup]="secondFormGroup">
+
+            <div class="containTable">
+              <h2>Services</h2>
+              <div class="inner">
+                <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Country</th>
+                      <th scope="col">Area</th>
+                      <th scope="col">Population</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let country of countries; index as i">
+                      <th scope="row">{{ i + 1 }}</th>
+                      <td>
+                        <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="me-2"
+                          style="width: 20px">
+                        {{ country.name }}
+                      </td>
+                      <td>{{ country.area | number }}</td>
+                      <td>{{ country.population | number }}</td>
+                      <td>
+                        <mat-icon>{{country.dots}}</mat-icon>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              </div>
+              <div class="buttons">
+                <button class="btn btn-dark" mat-button matStepperPrevious>Back</button>
+                <button class="btn btn-dark" mat-button matStepperNext>Next</button>
+              </div>
+
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Verification</ng-template>
+          <div class="contain">
+            <h2>Proof of existence</h2>
+            <div class="inner">
+              <form class="row g-3">
+                <div class="col-md-12">
+                  <label for="caption" class="form-label">Document Caption</label>
+                  <input type="text" class="form-control" id="caption">
+                </div>
+                <div class="col-md-12">
+                  <label for="inputPassword4" class="form-label">Document Description</label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+
+                <div class="mb-3">
+                  <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+                    <ngx-dropzone-label>
+                      <div>
+                        <mat-icon>cloud_upload</mat-icon>
+                        <h3>Drop images here or click to select</h3>
+                      </div>
+                    </ngx-dropzone-label>
+                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
+                      [removable]="true" (removed)="onRemove(f)">
+                      <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                    </ngx-dropzone-image-preview>
+
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="buttons">
+              <button class="btn btn-dark" mat-button matStepperPrevious>Back</button>
+              <button class="btn btn-dark" mat-button (click)="stepper.reset()">Reset</button>
+
+            </div>
+          </div>
+        </mat-step>
+      </mat-stepper>
+
+    </ng-template>
+
+  </div>
 
 </div>

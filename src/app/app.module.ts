@@ -6,8 +6,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatBadgeModule} from '@angular/material/badge';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import {MatStepperModule} from '@angular/material/stepper';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { FormsModule, FormGroup } from '@angular/forms';
+// import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormsModule, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -42,8 +42,9 @@ import { AccreditationComponent } from './components/accreditation/accreditation
     MatBadgeModule,
     NgxDropzoneModule,
     MatStepperModule,
-    MatFormFieldModule,
+    // MatFormFieldModule,
     FormsModule,
+    ReactiveFormsModule
     
     
   

@@ -36,15 +36,73 @@
     button {
         background: #1C2B66;
         margin: 0 1.0rem;
-
     }
 }
 
 .main {
     padding: 3rem;
-
 }
+.contain{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    h2{
+        margin: 0;
+    }
+    .inner{
+        max-width: 60%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .profile{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            .profileImg{
+                max-width: 4rem;
+                img{
+                    width: 100%;
+                    border-radius: 50%;
+                    border: 2px solid rgb(224, 223, 223);
+                }
+            }
+            .profileInfo{
+                h5,small{
+                    margin: 0;
+                }
+            }
+        }
+        
+    }
+}
+.containTable{
+    text-align: center;
+    
+    .inner{
+        max-width: 60%;
+        margin: 0 auto;
+        tbody{
+            border: 0.5px solid rgba(28, 43, 102, 0.65);
+        }
+    }
+}
+.buttons{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+   
+}
+.btn{
+    background: #1C2B66;
+    border-radius: 10px;
+    width: 150px;
+}
+label{
+    font-weight: 500;
 
-.mat-form-field {
-    margin-top: 16px;
-  }
+line-height: 21px;
+}
