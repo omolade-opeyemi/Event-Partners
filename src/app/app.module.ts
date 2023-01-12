@@ -8,6 +8,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import {MatStepperModule} from '@angular/material/stepper';
 // import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +22,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { Side2Component } from './components/side2/side2.component';
 import { InvoiceComponent } from './components/invoice/invoice.component';
 import { AccreditationComponent } from './components/accreditation/accreditation.component';
+import { PricingComponent } from './components/pricing/pricing.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { AccreditationComponent } from './components/accreditation/accreditation
     DashboardComponent,
     Side2Component,
     InvoiceComponent,
-    AccreditationComponent
+    AccreditationComponent,
+    PricingComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,8 @@ import { AccreditationComponent } from './components/accreditation/accreditation
     MatStepperModule,
     // MatFormFieldModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSidenavModule
     
     
   

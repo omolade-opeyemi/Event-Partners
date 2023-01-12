@@ -5,8 +5,17 @@
     <app-header></app-header>
     <div class="main-header">
         <div class="welcome">
-            <h5 class="colour">👋 Hi Lucy</h5>
-            <h3>Let's Get Productive Today !</h3>
+            <ng-template [ngIf]="page != 'requests'">
+                <h5 class="colour">👋 Hi Lucy</h5>
+                <h3>Let's Get Productive Today !</h3>
+            </ng-template>
+
+            <ng-template [ngIf]="page == 'requests'">
+                <h2 class="colour">Dashboard</h2>
+                <h5 (click)="dashBoard()" class="colour">
+                    <mat-icon>chevron_left</mat-icon> Back
+                </h5>
+            </ng-template>
         </div>
         <div>
             <button class="btn btn-primary" (click)="open(addService)">+ Add Service</button>
@@ -15,166 +24,530 @@
 
     <div class="main">
 
-        <div class="row1">
-            <div class="part1">
-                <div class="service">
-                    <div class="top">
+        <!-- //////// Landing Page Dashboard /////// -->
+        <ng-template [ngIf]="page == 'one'">
+            <div class="row1">
+                <div class="part1">
+                    <div class="service" (click)="pendingReq()">
+                        <div class="top">
+                            <div class="image">
+                                <img src="/assets/images/Dsd.png" alt="">
+                            </div>
+                            <div class="info">
+                                <p>Service Reequests Pending</p>
+                                <h3>165</h3>
+                            </div>
+                        </div>
                         <div class="image">
-                            <img src="/assets/images/Dsd.png" alt="">
+                            <img src="/assets/images/Vector 3 (1).png" alt="">
+                        </div>
+                    </div>
+                    <div class="service" (click)="requestAtten()">
+                        <div class="top">
+                            <div class="image">
+                                <img src="/assets/images/Group 399.png" alt="">
+                            </div>
+                            <div class="info">
+                                <p>Requests Attended</p>
+                                <h3>165</h3>
+                            </div>
+                        </div>
+                        <div class="image">
+                            <img src="/assets/images/Vector 5.png" alt="">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="part2">
+                    <div class="accred">
+                        <div class="image">
+                            <img src="/assets/images/freepik--Stopwatch--inject-112.png" alt="">
                         </div>
                         <div class="info">
-                            <p>Service Reequests Pending</p>
-                            <h3>165</h3>
+                            <div>
+                                <h4>Accreditation</h4>
+                                <p>Lorem ipsum dolor, sit amet consectetur
+                                    adipisicing elit. Voluptate blanditiis</p>
+                            </div>
+                            <button class="btn btn-outline-light d-flex justify-content-end">Proceed</button>
+
                         </div>
                     </div>
-                    <div class="image">
-                        <img src="/assets/images/Vector 3 (1).png" alt="">
-                    </div>
-                </div>
-                <div class="service">
-                    <div class="top">
+                    <div class="all">
                         <div class="image">
-                            <img src="/assets/images/Group 399.png" alt="">
+                            <img src="/assets/images/vbf.png" alt="">
                         </div>
                         <div class="info">
-                            <p>Requests Attended</p>
-                            <h3>165</h3>
+                            <h1 class="colour">165</h1>
+                            <h4 class="colour">All Service</h4>
                         </div>
-                    </div>
-                    <div class="image">
-                        <img src="/assets/images/Vector 5.png" alt="">
                     </div>
                 </div>
 
             </div>
-            <div class="part2">
-                <div class="accred">
-                    <div class="image">
-                        <img src="/assets/images/freepik--Stopwatch--inject-112.png" alt="">
-                    </div>
-                    <div class="info">
-                        <div>
-                            <h4>Accreditation</h4>
-                            <p>Lorem ipsum dolor, sit amet consectetur
-                                adipisicing elit. Voluptate blanditiis</p>
-                        </div>
-                        <button class="btn btn-outline-light d-flex justify-content-end">Proceed</button>
 
+            <div class="row2">
+                <div class="part1">
+                    <h2 class="colour">List of services</h2>
+                    <p>3 services added</p>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col">Service Name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Rating</th>
+                                    <th scope="col">Date Added</th>
+                                    <th scope="col">
+                                        <mat-icon>delete</mat-icon>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let country of countries; index as i">
+                                    <!-- <th scope="row">{{ i + 1 }}</th> -->
+                                    <th><input type="checkbox" class="form-check-input" id="exampleCheck1"></th>
+                                    <td>
+                                        <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
+                                            class="me-2" style="width: 20px">
+                                    </td>
+                                    <td>{{ country.name }}</td>
+                                    <td>{{ country.area | number }}</td>
+                                    <td>
+                                        <ngb-rating [rate]="3"></ngb-rating>
+                                    </td>
+                                    <td>{{country.date}}</td>
+                                    <td>
+                                        <mat-icon>&#8230;</mat-icon>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-                <div class="all">
-                    <div class="image">
-                        <img src="/assets/images/vbf.png" alt="">
-                    </div>
-                    <div class="info">
-                        <h1 class="colour">165</h1>
-                        <h4 class="colour">All Service</h4>
-                    </div>
-                </div>
-            </div>
 
-        </div>
-
-        <div class="row2">
-            <div class="part1">
-                <h2 class="colour">List of services</h2>
-                <p>3 services added</p>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col">Service Name</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Rating</th>
-                                <th scope="col">Date Added</th>
-                                <th scope="col">
-                                    <mat-icon>delete</mat-icon>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let country of countries; index as i">
-                                <!-- <th scope="row">{{ i + 1 }}</th> -->
-                                <th><input type="checkbox" class="form-check-input" id="exampleCheck1"></th>
-                                <td>
-                                    <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
-                                        class="me-2" style="width: 20px">
-                                </td>
-                                <td>{{ country.name }}</td>
-                                <td>{{ country.area | number }}</td>
-                                <td>
-                                    <ngb-rating [rate]="3"></ngb-rating>
-                                </td>
-                                <td>{{country.date}}</td>
-                                <td>
-                                    <mat-icon>&#8230;</mat-icon>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
-
-            </div>
-            <div class="part2">
-                <div class="rate">
-                    <div class="ratecount">
-                        <b>Rating</b>
-                        <p><span>3.6</span></p>
-                        <ngb-rating [rate]="3"></ngb-rating>
-                        <small>45678 Rating</small>
-                    </div>
-                    <div class="ratings">
-                        <div><span>5 &#11088; </span>
-                            <ngb-progressbar type="success" [value]="50"></ngb-progressbar> <span>800</span>
+                <div class="part2">
+                    <div class="rate">
+                        <div class="ratecount">
+                            <b>Rating</b>
+                            <p><span>3.6</span></p>
+                            <ngb-rating [rate]="3"></ngb-rating>
+                            <small>45678 Rating</small>
                         </div>
-                        <div><span>4 &#11088; </span>
-                            <ngb-progressbar type="info" [value]="75"></ngb-progressbar> <span>1.1k</span>
-                        </div>
-                        <div><span>3 &#11088; </span>
-                            <ngb-progressbar type="warning" [value]="30"></ngb-progressbar> <span>592</span>
-                        </div>
-                        <div><span>2 &#11088; </span>
-                            <ngb-progressbar type="primary" [value]="60"></ngb-progressbar> <span>934</span>
-                        </div>
-                        <div><span>1 &#11088; </span>
-                            <ngb-progressbar type="danger" [value]="20"></ngb-progressbar> <span>253</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="incoming">
-                    <div class="icomreq">
-                        <p>Incoming Requests</p>
-                        <mat-icon>notifications</mat-icon>
-                    </div>
-                    <div class="requests">
-                        <div><span>!</span></div>
-                        <div class="request">
-                            <p>Burna Live in Concert by <b>Christie Ann</b> is requesting for a Disck Jockey</p>
-                            <div class="reqtbtns">
-                                <button class="btn btn-success">Accept</button>
-                                <button class="btn btn-outline-danger">Reject</button>
+                        <div class="ratings">
+                            <div><span>5 &#11088; </span>
+                                <ngb-progressbar type="success" [value]="50"></ngb-progressbar> <span>800</span>
+                            </div>
+                            <div><span>4 &#11088; </span>
+                                <ngb-progressbar type="info" [value]="75"></ngb-progressbar> <span>1.1k</span>
+                            </div>
+                            <div><span>3 &#11088; </span>
+                                <ngb-progressbar type="warning" [value]="30"></ngb-progressbar> <span>592</span>
+                            </div>
+                            <div><span>2 &#11088; </span>
+                                <ngb-progressbar type="primary" [value]="60"></ngb-progressbar> <span>934</span>
+                            </div>
+                            <div><span>1 &#11088; </span>
+                                <ngb-progressbar type="danger" [value]="20"></ngb-progressbar> <span>253</span>
                             </div>
                         </div>
                     </div>
-                    <div class="requests">
-                        <div><span>!</span></div>
-                        <div class="request">
-                            <p>Burna Live in Concert by <b>Christie Ann</b> is requesting for a Disck Jockey</p>
-                            <div class="reqtbtns">
-                                <button class="btn btn-success">Accept</button>
-                                <button class="btn btn-outline-danger">Reject</button>
+                    <div class="incoming">
+                        <div class="icomreq">
+                            <p>Incoming Requests</p>
+                            <mat-icon>notifications</mat-icon>
+                        </div>
+                        <div class="requests">
+                            <div><span>!</span></div>
+                            <div class="request">
+                                <p>Burna Live in Concert by <b>Christie Ann</b> is requesting for a Disck Jockey</p>
+                                <div class="reqtbtns">
+                                    <button class="btn btn-success">Accept</button>
+                                    <button class="btn btn-outline-danger">Reject</button>
+                                </div>
                             </div>
                         </div>
+                        <div class="requests">
+                            <div><span>!</span></div>
+                            <div class="request">
+                                <p>Burna Live in Concert by <b>Christie Ann</b> is requesting for a Disck Jockey</p>
+                                <div class="reqtbtns">
+                                    <button class="btn btn-success">Accept</button>
+                                    <button class="btn btn-outline-danger">Reject</button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+                </div>
+
+            </div>
+        </ng-template>
+
+        <!-- //////////// Request Page //////// -->
+        <ng-template [ngIf]="page == 'requests'">
+
+            <div class="pendingReq">
+                <div class="header">
+                    <div (click)="pendingRequest()">
+                        <h1 [ngClass]="{'heading1':requestHead == 'pending', 'heading2':requestHead == 'attended'}">Pending Request</h1>
+                        <div  [ngClass]="{'active':requestHead == 'pending', 'inactive':requestHead == 'attended'}"></div>
+                    </div>
+                    <div (click)="requestAttended()">
+                        <h1 [ngClass]="{'heading1':requestHead == 'attended', 'heading2':requestHead == 'pending'}">Request Attended</h1>
+                        <div  [ngClass]="{'active':requestHead == 'attended', 'inactive':requestHead == 'pending'}"></div>
+                    </div>
+                </div>
+                <div class="section">
+
+                    <!-- ////////// Pending Request /////////// -->
+                    <ng-template [ngIf]="request == 'pending'">
+                        <ng-template [ngIf]="sidebar == true">
+                            <div class="sidebar">
+                                <div class="sidebar-title">
+                                    <h1>Service Request</h1>
+                                    <p>7 service requests for this event</p>
+                                </div>
+                                <div class="sidebar-services">
+                                    <div class="sidebar-services-header">
+                                        <p>Service</p>
+                                        <p>QTY</p>
+                                    </div>
+                                    <hr />
+                                    <div class="sidebar-service">
+                                        <input type="checkbox" name="" id="" />
+                                        <div class="sidebar-service-item">
+                                            <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                alt="" />
+                                            <div class="menu">
+                                                <p class="menu-title">Pesto Pasta Grill</p>
+                                                <p class="menu-subtitle">Special Food Dish</p>
+                                            </div>
+                                        </div>
+                                        <p class="qty">25</p>
+                                    </div>
+
+                                    <div class="sidebar-service">
+                                        <input type="checkbox" name="" id="" />
+                                        <div class="sidebar-service-item">
+                                            <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                alt="" />
+                                            <div class="menu">
+                                                <p class="menu-title">Pesto Pasta Grill</p>
+                                                <p class="menu-subtitle">Special Food Dish</p>
+                                            </div>
+                                        </div>
+                                        <p class="qty">25</p>
+                                    </div>
+
+                                    <div class="sidebar-service">
+                                        <input type="checkbox" name="" id="" />
+                                        <div class="sidebar-service-item">
+                                            <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                alt="" />
+                                            <div class="menu">
+                                                <p class="menu-title">Pesto Pasta Grill</p>
+                                                <p class="menu-subtitle">Special Food Dish</p>
+                                            </div>
+                                        </div>
+                                        <p class="qty">25</p>
+                                    </div>
+
+                                    <div class="sidebar-service">
+                                        <input type="checkbox" name="" id="" />
+                                        <div class="sidebar-service-item">
+                                            <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                alt="" />
+                                            <div class="menu">
+                                                <p class="menu-title">Pesto Pasta Grill</p>
+                                                <p class="menu-subtitle">Special Food Dish</p>
+                                            </div>
+                                        </div>
+                                        <p class="qty">25</p>
+                                    </div>
+                                    <div class="sidebar-btn">
+                                        <button class="btn-accept">Accept</button>
+                                        <button class="btn-reject">Reject</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <mat-drawer-container class="example-container" autosize>
+                            <mat-drawer #drawer class="example-sidenav" mode="side" position="end">
+                                <div class="sidebar">
+                                    <div class="sidebar-title">
+                                        <h1>Service Request</h1>
+                                        <p>7 service requests for this event</p>
+                                    </div>
+                                    <div class="sidebar-services">
+                                        <div class="sidebar-services-header">
+                                            <p>Service</p>
+                                            <p>QTY</p>
+                                        </div>
+                                        <hr />
+                                        <div class="sidebar-service">
+                                            <input type="checkbox" name="" id="" />
+                                            <div class="sidebar-service-item">
+                                                <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                    alt="" />
+                                                <div class="menu">
+                                                    <p class="menu-title">Pesto Pasta Grill</p>
+                                                    <p class="menu-subtitle">Special Food Dish</p>
+                                                </div>
+                                            </div>
+                                            <p class="qty">25</p>
+                                        </div>
+
+                                        <div class="sidebar-service">
+                                            <input type="checkbox" name="" id="" />
+                                            <div class="sidebar-service-item">
+                                                <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                    alt="" />
+                                                <div class="menu">
+                                                    <p class="menu-title">Pesto Pasta Grill</p>
+                                                    <p class="menu-subtitle">Special Food Dish</p>
+                                                </div>
+                                            </div>
+                                            <p class="qty">25</p>
+                                        </div>
+
+                                        <div class="sidebar-service">
+                                            <input type="checkbox" name="" id="" />
+                                            <div class="sidebar-service-item">
+                                                <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                    alt="" />
+                                                <div class="menu">
+                                                    <p class="menu-title">Pesto Pasta Grill</p>
+                                                    <p class="menu-subtitle">Special Food Dish</p>
+                                                </div>
+                                            </div>
+                                            <p class="qty">25</p>
+                                        </div>
+
+                                        <div class="sidebar-service">
+                                            <input type="checkbox" name="" id="" />
+                                            <div class="sidebar-service-item">
+                                                <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                    alt="" />
+                                                <div class="menu">
+                                                    <p class="menu-title">Pesto Pasta Grill</p>
+                                                    <p class="menu-subtitle">Special Food Dish</p>
+                                                </div>
+                                            </div>
+                                            <p class="qty">25</p>
+                                        </div>
+                                        <div class="sidebar-btn">
+                                            <button class="btn-accept">Accept</button>
+                                            <button class="btn-reject">Reject</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-drawer>
+                            <div class="example-sidenav-content">
+                                <div class="request-container">
+                                    <div class="request-card" (click)="drawer.toggle()">
+                                        <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                            alt="" class="request-card-img" />
+                                        <h1 class="">Burna live in concert</h1>
+                                        <p class="by">By</p>
+                                        <div class="avatar">
+                                            <img class=""
+                                                src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                alt="" />
+                                            <p class="">Christine Ann</p>
+                                        </div>
+                                        <div class="event">
+                                            <p>Event Date: Sept 26, 2022</p>
+                                            <p>Event Date: Sept 26, 2022</p>
+                                        </div>
+                                        <p class="notice">Service requested: 7</p>
+                                    </div>
+
+                                    <div class="request-card">
+                                        <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                            alt="" class="request-card-img" />
+                                        <h1 class="">Burna live in concert</h1>
+                                        <p class="by">By</p>
+                                        <div class="avatar">
+                                            <img class=""
+                                                src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                alt="" />
+                                            <p class="">Christine Ann</p>
+                                        </div>
+                                        <div class="event">
+                                            <p>Event Date: Sept 26, 2022</p>
+                                            <p>Event Date: Sept 26, 2022</p>
+                                        </div>
+                                        <p class="notice">Service requested: 7</p>
+                                    </div>
+
+                                    <div class="request-card">
+                                        <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                            alt="" class="request-card-img" />
+                                        <h1 class="">Burna live in concert</h1>
+                                        <p class="by">By</p>
+                                        <div class="avatar">
+                                            <img class=""
+                                                src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                alt="" />
+                                            <p class="">Christine Ann</p>
+                                        </div>
+                                        <div class="event">
+                                            <p>Event Date: Sept 26, 2022</p>
+                                            <p>Event Date: Sept 26, 2022</p>
+                                        </div>
+                                        <p class="notice">Service requested: 7</p>
+                                    </div>
+
+                                    <div class="request-card">
+                                        <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                            alt="" class="request-card-img" />
+                                        <h1 class="">Burna live in concert</h1>
+                                        <p class="by">By</p>
+                                        <div class="avatar">
+                                            <img class=""
+                                                src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                alt="" />
+                                            <p class="">Christine Ann</p>
+                                        </div>
+                                        <div class="event">
+                                            <p>Event Date: Sept 26, 2022</p>
+                                            <p>Event Date: Sept 26, 2022</p>
+                                        </div>
+                                        <p class="notice">Service requested: 7</p>
+                                    </div>
+
+                                    <div class="request-card">
+                                        <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                            alt="" class="request-card-img" />
+                                        <h1 class="">Burna live in concert</h1>
+                                        <p class="by">By</p>
+                                        <div class="avatar">
+                                            <img class=""
+                                                src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                alt="" />
+                                            <p class="">Christine Ann</p>
+                                        </div>
+                                        <div class="event">
+                                            <p>Event Date: Sept 26, 2022</p>
+                                            <p>Event Date: Sept 26, 2022</p>
+                                        </div>
+                                        <p class="notice">Service requested: 7</p>
+                                    </div>
+
+                                    <div class="request-card">
+                                        <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                            alt="" class="request-card-img" />
+                                        <h1 class="">Burna live in concert</h1>
+                                        <p class="by">By</p>
+                                        <div class="avatar">
+                                            <img class=""
+                                                src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                alt="" />
+                                            <p class="">Christine Ann</p>
+                                        </div>
+                                        <div class="event">
+                                            <p>Event Date: Sept 26, 2022</p>
+                                            <p>Event Date: Sept 26, 2022</p>
+                                        </div>
+                                        <p class="notice">Service requested: 7</p>
+                                    </div>
+
+                                    <div class="request-card">
+                                        <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                            alt="" class="request-card-img" />
+                                        <h1 class="">Burna live in concert</h1>
+                                        <p class="by">By</p>
+                                        <div class="avatar">
+                                            <img class=""
+                                                src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                alt="" />
+                                            <p class="">Christine Ann</p>
+                                        </div>
+                                        <div class="event">
+                                            <p>Event Date: Sept 26, 2022</p>
+                                            <p>Event Date: Sept 26, 2022</p>
+                                        </div>
+                                        <p class="notice">Service requested: 7</p>
+                                    </div>
+
+                                    <div class="request-card">
+                                        <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                            alt="" class="request-card-img" />
+                                        <h1 class="">Burna live in concert</h1>
+                                        <p class="by">By</p>
+                                        <div class="avatar">
+                                            <img class=""
+                                                src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                alt="" />
+                                            <p class="">Christine Ann</p>
+                                        </div>
+                                        <div class="event">
+                                            <p>Event Date: Sept 26, 2022</p>
+                                            <p>Event Date: Sept 26, 2022</p>
+                                        </div>
+                                        <p class="notice">Service requested: 7</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-drawer-container>
+                    </ng-template>
+
+                    <!-- ////////////// Attended Request //////// -->
+                    <ng-template [ngIf]="request == 'attended'">
+                        <div class="pendingReq">
+                            <div class="table-responsive">
+                                <div class="filter colour">Last 7 Days <mat-icon>expand_more</mat-icon></div>
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr class="colour">
+                                            <!-- <th scope="col">#</th> -->
+                                            <th scope="col">Event Creator</th>
+                                            <th scope="col">Event name</th>
+                                            <th scope="col">Service</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let request of requests; index as i">
+                                            <!-- <th scope="row">{{ i + 1 }}</th> -->
+                                            <td>
+                                                <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + request.flag"
+                                                    class="me-2" style="width: 20px" />
+                                                {{ request.name }}
+                                            </td>
+                                            <td>{{ request.name }}</td>
+                                            <td>{{ request.service }}</td>
+                                            <td>{{ request.amount }}</td>
+                                            <td>{{ request.date }}</td>
+                                            <td>
+                                                <mat-icon>{{request.icon}}</mat-icon>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </ng-template>
 
                 </div>
             </div>
 
-        </div>
+        </ng-template>
+
+        <!-- ///////// Request Attended Page /////// -->
+
 
         <!-- //////////// Add Service Modal //////// -->
+
         <ng-template #addService let-c="close" let-d="dismiss">
             <div class="modal-header">
                 <h4 class="modal-title" id="modal-basic-title">Add a New Service</h4>
@@ -224,7 +597,7 @@
                                 [file]="f" [removable]="true" (removed)="onRemove(f)">
                                 <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                             </ngx-dropzone-image-preview>
-                            
+
                         </div>
                     </div>
 
@@ -236,22 +609,21 @@
 
             </div>
         </ng-template>
-
         <!-- /////////// Service Addedd Successfully modal /////////// -->
 
         <ng-template #success let-modal>
-            
+
             <div class="modal-body">
-              <div class="successmodal">
-                <h4>Congratulations! Your service has been addedd successfully</h4>
-                <div class="img">
-                    <img src="/assets/images/undraw_Mail_sent_re_0ofv 1.png" alt="">
+                <div class="successmodal">
+                    <h4>Congratulations! Your service has been addedd successfully</h4>
+                    <div class="img">
+                        <img src="/assets/images/undraw_Mail_sent_re_0ofv 1.png" alt="">
+                    </div>
+                    <button class="btn btn-light" (click)="modal.close('Close click')">Close</button>
                 </div>
-                <button class="btn btn-light" (click)="modal.close('Close click')">Close</button>
-              </div>
             </div>
-            
-          </ng-template>
+
+        </ng-template>
     </div>
 
 </div>

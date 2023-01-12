@@ -1,14 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router'
 import { InteractionService } from 'src/app/services/interaction.service';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 
 interface Country {
   name: string;
   flag: string;
   area: number;
   population: number;
+  date:string;
+  icon:String
+}
+interface Requests {
+  creator: string;
+  flag: string;
+  name: string;
+  service: string;
+  amount: number;
   date:string;
   icon:String
 }
@@ -47,11 +57,57 @@ const COUNTRIES: Country[] = [
   }
 ];
 
+const REQUESTS: Requests[] = [
+  {
+    creator: 'Russia',
+    flag: 'f/f3/Flag_of_Russia.svg',
+    name: 'Burna',
+    service: 'Disk',
+    amount:2022,
+    date:'Sept 26, 2022',
+    icon:'more_horiz'
+  },{
+    creator: 'Russia',
+    flag: 'f/f3/Flag_of_Russia.svg',
+    name: 'Burna',
+    service: 'Disk',
+    amount:2022,
+    date:'Sept 26, 2022',
+    icon:'more_horiz'
+  },{
+    creator: 'Russia',
+    flag: 'f/f3/Flag_of_Russia.svg',
+    name: 'Burna',
+    service: 'Disk',
+    amount:2022,
+    date:'Sept 26, 2022',
+    icon:'more_horiz'
+  },{
+    creator: 'Russia',
+    flag: 'f/f3/Flag_of_Russia.svg',
+    name: 'Burna',
+    service: 'Disk',
+    amount:2022,
+    date:'Sept 26, 2022',
+    icon:'more_horiz'
+  },{
+    creator: 'Russia',
+    flag: 'f/f3/Flag_of_Russia.svg',
+    name: 'Burna',
+    service: 'Disk',
+    amount:2022,
+    date:'Sept 26, 2022',
+    icon:'more_horiz'
+  }
+];
+
+
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class DashboardComponent implements OnInit {
   files: File[] = [];
@@ -60,6 +116,7 @@ export class DashboardComponent implements OnInit {
     private interact:InteractionService,
     public router: Router,
     configModal: NgbModalConfig,
+    private offcanvasService: NgbOffcanvas,
      private modalService: NgbModal) {
     config.max = 5;
     config.readonly = true;
@@ -67,15 +124,59 @@ export class DashboardComponent implements OnInit {
     configModal.keyboard = false;
    }
 
+   closeResult: string | undefined;
   collapsed=false
   screenWidth = 0
   authpage=''
   countries = COUNTRIES;
+  requests = REQUESTS;
+  page='';
+  request=''
+  requestHead=''
+  sidebar=false;
+  showFiller = true;
  
   ngOnInit(): void {
+    this.page='one'
     this.interact.sharedscreenWidth.subscribe(message => {this.collapsed=message});
     this.interact.screenSize$.subscribe(message => {this.screenWidth=message})
   }
+
+  openEnd(content: TemplateRef<any>) {
+    this.offcanvasService.open(content, { position: 'end', backdrop: false });
+  }
+  dashBoard(){
+    this.page= 'one'
+  }
+  pendingReq(){
+    this.page= 'requests'
+    this.requestHead='pending'
+    this.request = 'pending'
+  }
+  requestAtten(){
+    this.page= 'requests'
+    this.requestHead='attended'
+    this.request = 'attended'
+  }
+  pendingRequest(){
+    this.requestHead='pending'
+    this.request = 'pending'
+  }
+  requestAttended(){
+    this.requestHead='attended'
+    this.request = 'attended'
+  }
+  toggleSideBar(){
+    this.sidebar = !this.sidebar;
+    if( this.sidebar == true){
+      // this.openEnd(content)
+    }
+    else{
+      // this.offcanvasService.dismiss(content)
+    }
+    
+  }
+ 
   isauthRouth(){
     this.authpage='/auth';
     return this.router.url === '/auth';

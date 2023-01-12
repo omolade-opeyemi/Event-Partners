@@ -17,5 +17,10 @@ export class HeaderComponent implements OnInit {
   active = 1;
   show='two'
   rev=true;
+  authpage=''
+
+  isauthRouth(){
+    return this.router.url == '/pricing';
+  }
 
 }

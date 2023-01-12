@@ -2,201 +2,208 @@
 
 <div class="main">
 
-    <div class="section1">
-  
-      <ng-template [ngIf]="page=='one'">
-        <div class="sectionin" @fade>
-          <div class="contain">
-            <div class="one">
-              <h1>Partner as a vendor</h1>
-              <p>Register as a vendor and provide services to <br> event creators</p>
-              <div class="buttonss">
-                <button (click)="register()" class="btn register">Register</button>
-                <button (click)="login()" class="btn login color">Back? Log in</button>
+  <div class="section1">
+
+    <ng-template [ngIf]="page=='one'">
+      <div class="sectionin" @fade>
+        <div class="contain">
+          <div class="one">
+            <h1>Partner as a vendor</h1>
+            <p>Register as a vendor and provide services to <br> event creators</p>
+            <div class="buttonss">
+              <button (click)="register()" class="btn register">Register</button>
+              <button (click)="login()" class="btn login color">Back? Log in</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </ng-template>
+
+    <ng-template [ngIf]="page=='two'">
+      <div class="sectionin" @fade>
+        <div class="contain">
+          <span id="backP" (click)="bHome()">
+            <mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png" alt="">
+          </span>
+          <div class="bodyframe">
+            <form class="formin">
+              <h2>Login</h2>
+              <p>New user ? <span class="color" (click)="register()">Create account</span></p>
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" name="email" id="email">
+              <button (click)="lpassword()">Continue</button>
+              <h1 class="li"><span> or </span></h1>
+              <button id="btnlg"><img class="btnlg" src="assets/images/google-logo-9808 1.png" alt=""> Sign in with
+                google</button>
+              <p class="forgotpassword">Forgot password ? <span class="color" (click)="resetPassword()">Reset</span></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template [ngIf]="page=='three'">
+      <div class="sectionin" @fade>
+        <div class="contain">
+          <span id="backP" (click)="bLogin()">
+            <mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png" alt="">
+          </span>
+          <div class="bodyframe">
+            <form class="formp">
+              <h2>Enter your password</h2>
+              <div class="info">
+                <img src="assets/images/person.jpg" alt="">
+                <p><span>Business account</span> <span>Example@gmail.com</span></p>
+              </div>
+              <label for="password">Password</label>
+              <input type="password" name="password" class="form-control">
+              <button class="btn" (click)="dashBoard()">Continue</button>
+              <div class="form-check form-switch d-flex justify-content-center">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                <label class="form-check-label" for="flexSwitchCheckChecked">stay signed in</label>
+              </div>
+              <hr>
+              <p>Forgot your password? <span class="color" (click)="resetPassword()">Reset</span></p>
+              <p class="color"> Sign in to a different account </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template [ngIf]="page=='four'">
+      <div class="sectionin" @fade>
+        <div class="contain">
+          <span id="backP" (click)="bHome()">
+            <mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png" alt="">
+          </span>
+          <div class="bodyframe">
+            <h1>Create account</h1>
+            <p>Aready have an account? <span>Sign in</span></p>
+            <p>Chose the type of account you want to create.</p>
+            <div class="type">
+              <div class="bus" (click)="business()">
+                <span class="back"><img src="assets/images/Business Illustration.png" alt=""></span><b>Business</b>
+                <span class="lower">Create an event as a registered business</span>
+              </div>
+              <div class="ind" (click)="individual()">
+                <span class="back"><img src="assets/images/Individual Illustration.png"
+                    alt=""></span><b>Individual</b><span class="lower">Create an event as an individual</span>
               </div>
             </div>
-  
-          </div>
-         
-        </div>
-        
-      </ng-template>
-  
-      <ng-template [ngIf]="page=='two'">
-        <div class="sectionin" @fade>
-          <div class="contain">
-            <span id="backP" (click)="bHome()"><mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png"
-                alt=""></span>
-            <div class="bodyframe">
-              <form class="formin">
-                <h2>Login</h2>
-                <p>New user ? <span class="color" (click)="register()">Create account</span></p>
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" name="email" id="email">
-                <button (click)="lpassword()">Continue</button>
-                <h1 class="li"><span> or </span></h1>
-                <button id="btnlg"><img class="btnlg" src="assets/images/google-logo-9808 1.png" alt=""> Sign in with
-                  google</button>
-                <p class="forgotpassword">Forgot password ? <span class="color" (click)="resetPassword()">Reset</span></p>
-              </form>
-            </div>
           </div>
         </div>
-      </ng-template>
-  
-      <ng-template [ngIf]="page=='three'">
-        <div class="sectionin" @fade>
-          <div class="contain">
-            <span id="backP" (click)="bLogin()"><mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png"
-                alt=""></span>
-            <div class="bodyframe">
-              <form class="formp">
-                <h2>Enter your password</h2>
-                <div class="info">
-                  <img src="assets/images/person.jpg" alt="">
-                  <p><span>Business account</span> <span>Example@gmail.com</span></p>
-                </div>
-                <label for="password">Password</label>
-                <input type="password" name="password" class="form-control">
-                <button class="btn" (click)="dashBoard()">Continue</button>
-                <div class="form-check form-switch d-flex justify-content-center">
-                  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-                  <label class="form-check-label" for="flexSwitchCheckChecked">stay signed in</label>
-                </div>
-                <hr>
-                <p>Forgot your password? <span class="color" (click)="resetPassword()">Reset</span></p>
-                <p class="color"> Sign in to a different account </p>
-              </form>
-            </div>
-          </div>
-        </div>
-      </ng-template>
-  
-      <ng-template [ngIf]="page=='four'">
-        <div class="sectionin" @fade>
-          <div class="contain">
-            <span id="backP" (click)="bHome()"><mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png"
-                alt=""></span>
-            <div class="bodyframe">
-              <h1>Create account</h1>
-              <p>Aready have an account? <span>Sign in</span></p>
-              <p>Chose the type of account you want to create.</p>
-              <div class="type">
-                <div class="bus" (click)="business()">
-                  <span class="back"><img src="assets/images/Business Illustration.png" alt=""></span><b>Business</b>
-                  <span class="lower">Create an event as a registered business</span>
-                </div>
-                <div class="ind" (click)="individual()">
-                  <span class="back"><img src="assets/images/Individual Illustration.png"
-                      alt=""></span><b>Individual</b><span class="lower">Create an event as an individual</span>
-                </div>
+      </div>
+    </ng-template>
+
+    <!-- ////// Personal business ///// -->
+    <ng-template [ngIf]="page=='five'">
+      <div class="sectionin" @fade>
+        <div class="contain">
+          <span id="backP" (click)="register()">
+            <mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png" alt="">
+          </span>
+          <div class="bodyframe">
+            <h2>Create account</h2>
+            <p>Fill the form to create an Individual account</p>
+            <form class="row g-3">
+              <div class="col-md-6">
+                <label for="first" class="form-label">First name</label>
+                <input type="text" name="first" class="form-control" id="first">
               </div>
-            </div>
+              <div class="col-md-6">
+                <label for="last" class="form-label">Last name</label>
+                <input type="text" ngModel name="last" class="form-control" id="last">
+              </div>
+              <div class="col-12">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" ngModel name="email" class="form-control" id="email">
+              </div>
+              <div class="col-12">
+                <label for="date" class="form-label">Date of birth</label>
+                <input type="date" ngModel name="dob" max="2004-12-31" class="form-control" id="date">
+              </div>
+              <div class="col-12">
+                <label for="email" class="form-label">Phone number</label>
+                <input placeholder="+234..." type="tel" ngModel name="phone" class="form-control" id="phone">
+              </div>
+              <div class="col-ms-12">
+                <b>Gender</b>
+              </div>
+              <div class="form-check col-md-3 ">
+                <input class="form-check-input active" type="radio" ngModel name="gender" id="male" value="M">
+                <label class="form-check-label" for="male">
+                  Male
+                </label>
+              </div>
+              <div class="form-check col-md-3">
+                <input class="form-check-input" type="radio" ngModel name="gender" id="female" value="F">
+                <label class="form-check-label" for="female">
+                  Female
+                </label>
+              </div>
+              <div class="col-12 d-grid">
+                <button (click)="Iloc()" type="submit" class="btn btn-primary bgcolor">Next</button>
+              </div>
+            </form>
+
           </div>
         </div>
-      </ng-template>
-  
-      <!-- ////// Personal business ///// -->
-      <ng-template [ngIf]="page=='five'">
-        <div class="sectionin" @fade>
-          <div class="contain">
-            <span id="backP" (click)="register()"><mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png"
-                alt=""></span>
-            <div class="bodyframe">
-              <h2>Create account</h2>
-              <p>Fill the form to create an Individual account</p>
-              <form class="row g-3">
-                <div class="col-md-6">
-                  <label for="first" class="form-label">First name</label>
-                  <input type="text" name="first" class="form-control" id="first">
-                </div>
-                <div class="col-md-6">
-                  <label for="last" class="form-label">Last name</label>
-                  <input type="text" ngModel name="last" class="form-control" id="last">
-                </div>
-                <div class="col-12">
-                  <label for="email" class="form-label">Email address</label>
-                  <input type="email" ngModel name="email" class="form-control" id="email">
-                </div>
-                <div class="col-12">
-                  <label for="date" class="form-label">Date of birth</label>
-                  <input type="date" ngModel name="dob" max="2004-12-31" class="form-control" id="date">
-                </div>
-                <div class="col-12">
-                  <label for="email" class="form-label">Phone number</label>
-                  <input placeholder="+234..." type="tel" ngModel name="phone" class="form-control" id="phone">
-                </div>
-                <div class="col-ms-12">
-                  <b>Gender</b>
-                </div>
-                <div class="form-check col-md-3 ">
-                  <input class="form-check-input active" type="radio" ngModel name="gender" id="male" value="M">
-                  <label class="form-check-label" for="male">
-                    Male
-                  </label>
-                </div>
-                <div class="form-check col-md-3">
-                  <input class="form-check-input" type="radio" ngModel name="gender" id="female" value="F">
-                  <label class="form-check-label" for="female">
-                    Female
-                  </label>
-                </div>
-                <div class="col-12 d-grid">
-                  <button (click)="Iloc()" type="submit" class="btn btn-primary bgcolor">Next</button>
-                </div>
-              </form>
-  
-            </div>
+      </div>
+    </ng-template>
+
+    <ng-template [ngIf]="page=='six'">
+      <div class="sectionin" @fade>
+        <div class="contain">
+          <span (click)="bindividual()" id="backP">
+            <mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png" alt="">
+          </span>
+          <div class="bodyframe">
+            <h2>Create account</h2>
+            <p>Please, let's know your location</p>
+            <form class="row g-3">
+              <div class="col-md-6">
+                <label for="inputState" class="form-label">State</label>
+                <select id="inputState" ngModel name="state" class="form-select">
+                  <option value="">state</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="lga" class="form-label">Lga</label>
+                <select id="lga" ngModel name="lga" class="form-select">
+                  <option>lga</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" ngModel name="address" class="form-control" id="address">
+              </div>
+              <div class="col-12 d-grid">
+                <button (click)="Ipassword()" type="submit" class="btn btn-primary bgcolor">Next</button>
+              </div>
+            </form>
           </div>
         </div>
-      </ng-template>
-  
-      <ng-template [ngIf]="page=='six'">
-        <div class="sectionin" @fade>
-          <div class="contain">
-            <span (click)="bindividual()" id="backP"><mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png"
-                alt=""></span>
-            <div class="bodyframe">
-              <h2>Create account</h2>
-              <p>Please, let's know your location</p>
-              <form class="row g-3">
-                <div class="col-md-6">
-                  <label for="inputState" class="form-label">State</label>
-                  <select id="inputState" ngModel name="state" class="form-select">
-                    <option value="">state</option>
-                  </select>
-                </div>
-                <div class="col-md-6">
-                  <label for="lga" class="form-label">Lga</label>
-                  <select id="lga" ngModel name="lga" class="form-select">
-                    <option>lga</option>
-                  </select>
-                </div>
-                <div class="col-12">
-                  <label for="address" class="form-label">Address</label>
-                  <input type="text" ngModel name="address" class="form-control" id="address">
-                </div>
-                <div class="col-12 d-grid">
-                  <button (click)="Ipassword()" type="submit" class="btn btn-primary bgcolor">Next</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </ng-template>
-  
-      <ng-template [ngIf]="page=='seven'">
-        <div class="sectionin" @fade>
-          <div class="contain">
-            <span id="backP" (click)="bIloc()"><mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png"
-              alt=""></span>        <div class="bodyframe">
+      </div>
+    </ng-template>
+
+    <ng-template [ngIf]="page=='seven'">
+      <div class="sectionin" @fade>
+        <div class="contain">
+          <span id="backP" (click)="bIloc()">
+            <mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png" alt="">
+          </span>
+          <div class="bodyframe">
             <h2>Password</h2>
             <p>Set your password</p>
             <form class="row g-3">
               <div class="col-12">
                 <label for="pass" class="form-label">Password</label>
                 <input type="password" ngModel name="password1" class="form-control" id="pass">
-                
+
               </div>
               <div class="col-12">
                 <label for="cpass" class="form-label">Confirm password</label>
@@ -208,53 +215,57 @@
             </form>
           </div>
         </div>
-        </div>
-      </ng-template>
+      </div>
+    </ng-template>
     <!-- register personal ends -->
-  
-      <!-- register business starts here -->
-      <ng-template [ngIf]="page=='eight'">
-        <div class="sectionin" @fade>
-          <div class="contain">
-            <span id="backP" (click)="register()"><mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png"
-              alt=""></span>           <div class="bodyframe">
-              <h2>Create account</h2>
-              <p>Fill the form to create your business account</p>
-              <form class="row g-3">
-                <div class="col-12">
-                  <label for="company" class="form-label">Company name</label>
-                  <input type="text" class="form-control" ngModel name="company" id="company">
-                </div>
-                <div class="col-12" data-dropup-auto="false">
-                  <select class="form-select" name="biztype" id="type" ngModel>
-                    <option value="">Type of business</option>
-                  </select>
-                </div>
-                <div class="col-12">
-                  <label for="email" class="form-label">Email address</label>
-                  <input type="email" class="form-control" name="email" ngModel id="email">
-                </div>
-                <div class="col-12">
-                  <label for="phone" class="form-label">Phone number</label>
-                  <input type="tel" name="phone" class="form-control" ngModel id="phone">
-                </div>
-                <div class="col-12 d-grid">
-                  <button (click)="BLoc()" type="submit" class="btn btn-primary bgcolor">Next</button>
-                </div>
-              </form>
-            </div>
+
+    <!-- register business starts here -->
+    <ng-template [ngIf]="page=='eight'">
+      <div class="sectionin" @fade>
+        <div class="contain">
+          <span id="backP" (click)="register()">
+            <mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png" alt="">
+          </span>
+          <div class="bodyframe">
+            <h2>Create account</h2>
+            <p>Fill the form to create your business account</p>
+            <form class="row g-3">
+              <div class="col-12">
+                <label for="company" class="form-label">Company name</label>
+                <input type="text" class="form-control" ngModel name="company" id="company">
+              </div>
+              <div class="col-12" data-dropup-auto="false">
+                <select class="form-select" name="biztype" id="type" ngModel>
+                  <option value="">Type of business</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" name="email" ngModel id="email">
+              </div>
+              <div class="col-12">
+                <label for="phone" class="form-label">Phone number</label>
+                <input type="tel" name="phone" class="form-control" ngModel id="phone">
+              </div>
+              <div class="col-12 d-grid">
+                <button (click)="BLoc()" type="submit" class="btn btn-primary bgcolor">Next</button>
+              </div>
+            </form>
           </div>
         </div>
-      </ng-template>
-  
-      <ng-template [ngIf]="page=='nine'">
-        <div class="sectionin" @fade>
-          <div class="contain">
-            <span id="backP" (click)="bBusiness()"><mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png"
-              alt=""></span>        <div class="bodyframe">
+      </div>
+    </ng-template>
+
+    <ng-template [ngIf]="page=='nine'">
+      <div class="sectionin" @fade>
+        <div class="contain">
+          <span id="backP" (click)="bBusiness()">
+            <mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png" alt="">
+          </span>
+          <div class="bodyframe">
             <h2>Create account</h2>
             <p>Please, let's know your location</p>
-            <form class="row g-3" >
+            <form class="row g-3">
               <div class="col-md-6">
                 <label for="inputState" class="form-label">State</label>
                 <select id="inputState" class="form-select" ngModel name="state">
@@ -277,31 +288,33 @@
             </form>
           </div>
         </div>
-        </div>
-      </ng-template>
-  
-      <ng-template [ngIf]="page=='ten'">
-        <div class="sectionin" @fade>
-          <div class="contain">
-            <span id="backP" (click)="bBLoc()"><mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png"
-              alt=""></span>        <div class="bodyframe">
+      </div>
+    </ng-template>
+
+    <ng-template [ngIf]="page=='ten'">
+      <div class="sectionin" @fade>
+        <div class="contain">
+          <span id="backP" (click)="bBLoc()">
+            <mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png" alt="">
+          </span>
+          <div class="bodyframe">
             <h2>Create account</h2>
             <p id="ctp">Fill the form to create the bussiness <b> contact person </b></p>
             <form class="row g-3">
               <div class="col-md-6">
                 <label for="first" class="form-label">First name</label>
                 <input type="text" class="form-control" name="first" id="first">
-                
+
               </div>
               <div class="col-md-6">
                 <label for="last" class="form-label">Last name</label>
                 <input type="text" class="form-control" id="last" name="last">
-                
+
               </div>
               <div class="col-12">
                 <label for="date" class="form-label">Date of birth</label>
                 <input max="2004-12-31" type="date" class="form-control" id="date" name="dob">
-                
+
               </div>
               <div class="col-12">
                 <label for="email" class="form-label">Phone number</label>
@@ -329,22 +342,24 @@
             </form>
           </div>
         </div>
-        </div>
-  
-      </ng-template>
-  
-      <ng-template [ngIf]="page=='eleven'">
-        <div class="sectionin" @fade>
-          <div class="contain">
-            <span id="backP" (click)="bBusinessContact()"><mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png"
-              alt=""></span>        <div class="bodyframe">
+      </div>
+
+    </ng-template>
+
+    <ng-template [ngIf]="page=='eleven'">
+      <div class="sectionin" @fade>
+        <div class="contain">
+          <span id="backP" (click)="bBusinessContact()">
+            <mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png" alt="">
+          </span>
+          <div class="bodyframe">
             <h2>Password</h2>
             <p>Set your password</p>
             <form class="row g-3">
               <div class="col-12">
                 <label for="pass" class="form-label">Password</label>
                 <input type="password" class="form-control" id="pass" name="password1">
-              
+
               </div>
               <div class="col-12">
                 <label for="cpass" class="form-label">Confirm password</label>
@@ -356,62 +371,63 @@
             </form>
           </div>
         </div>
-        </div>
-      </ng-template>
-        <!-- register business ends here -->
-  
-        <!-- ////// OTP ///// -->
-        <ng-template [ngIf]="page=='otp'">
-          <div class="sectionin" @fade>
-            <div class="frameemail">
-              <h1>Check your Email</h1>
-              <p>We've sent a secure code to your email</p>
-              <p>Type in the secure code to verify your account</p>
-              <img src="assets/images/undraw_Mail_sent_re_0ofv 1.png" alt="">
-              <div>
-                <form class="otp">
-                  <input #txt1 maxlength="1" (keyup)="move($event,'',txt1,txt2)" type="password" name="txt1" ngModel>
-                  <span>-</span>
-                  <input #txt2 maxlength="1" type="password" (keyup)="move($event,txt1,txt2,txt3)" name="txt2" ngModel>
-                  <span>-</span>
-                  <input #txt3 maxlength="1" type="password" (keyup)="move($event,txt2,txt3,txt4)" name="txt3" ngModel>
-                  <span>-</span>
-                  <input #txt4 maxlength="1" type="password" (keyup)="move($event,txt3,txt4,txt5)" name="txt4" ngModel>
-                  <span>-</span>
-                  <input #txt5 maxlength="1" type="password" (keyup)="move($event,txt4,txt5,txt6)" name="txt5" ngModel>
-                  <span>-</span>
-                  <input #txt6 maxlength="1" type="password" (keyup)="move($event,txt5,txt6,'')" name="txt6" ngModel>
-                </form>
-              </div>
-              <button (click)="bHome()" class="btn btn-primary bgcolor">Proceed</button>
-              <button (click)="bHome()" id="resend" class="btn color">Resend Email</button>
-            </div>
-          </div>
-        </ng-template>
-  
-        <!-- ///////// Reset password //////// -->
-        <ng-template [ngIf]="page=='twelve'">
-          <div class="sectionin" @fade>
-            <div class="contain">
-              <span id="backP" (click)="bHome()"><mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png"
-                  alt=""></span>
-              <div class="bodyframe">
-                <form class="formin">
-                  <h2>Forgot password ?</h2>
-                  <p class="color">A reset link would be sent to your email address</p>
-                  <label for="email">Email address</label>
-                  <input type="email" class="form-control" name="email" id="email">
-                  <button (click)="lpassword()">Reset your password</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </ng-template>
-    </div>
-  
-    <div class="section2">
-      <div class="inner">
-        <img src="assets/images/Login Illustration.png" alt="">
       </div>
+    </ng-template>
+    <!-- register business ends here -->
+
+    <!-- ////// OTP ///// -->
+    <ng-template [ngIf]="page=='otp'">
+      <div class="sectionin" @fade>
+        <div class="frameemail">
+          <h1>Check your Email</h1>
+          <p>We've sent a secure code to your email</p>
+          <p>Type in the secure code to verify your account</p>
+          <img src="assets/images/undraw_Mail_sent_re_0ofv 1.png" alt="">
+          <div>
+            <form class="otp">
+              <input #txt1 maxlength="1" (keyup)="move($event,'',txt1,txt2)" type="password" name="txt1" ngModel>
+              <span>-</span>
+              <input #txt2 maxlength="1" type="password" (keyup)="move($event,txt1,txt2,txt3)" name="txt2" ngModel>
+              <span>-</span>
+              <input #txt3 maxlength="1" type="password" (keyup)="move($event,txt2,txt3,txt4)" name="txt3" ngModel>
+              <span>-</span>
+              <input #txt4 maxlength="1" type="password" (keyup)="move($event,txt3,txt4,txt5)" name="txt4" ngModel>
+              <span>-</span>
+              <input #txt5 maxlength="1" type="password" (keyup)="move($event,txt4,txt5,txt6)" name="txt5" ngModel>
+              <span>-</span>
+              <input #txt6 maxlength="1" type="password" (keyup)="move($event,txt5,txt6,'')" name="txt6" ngModel>
+            </form>
+          </div>
+          <button (click)="bHome()" class="btn btn-primary bgcolor">Proceed</button>
+          <button (click)="bHome()" id="resend" class="btn color">Resend Email</button>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- ///////// Reset password //////// -->
+    <ng-template [ngIf]="page=='twelve'">
+      <div class="sectionin" @fade>
+        <div class="contain">
+          <span id="backP" (click)="bHome()">
+            <mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png" alt="">
+          </span>
+          <div class="bodyframe">
+            <form class="formin">
+              <h2>Forgot password ?</h2>
+              <p class="color">A reset link would be sent to your email address</p>
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" name="email" id="email">
+              <button (click)="lpassword()">Reset your password</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="section2">
+    <div class="inner">
+      <img src="assets/images/Login Illustration.png" alt="">
     </div>
   </div>
+</div>
