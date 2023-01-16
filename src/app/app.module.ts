@@ -7,8 +7,11 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import {MatStepperModule} from '@angular/material/stepper';
 // import {MatFormFieldModule} from '@angular/material/form-field';
-import { FormsModule, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { HttpClientModule} from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -48,7 +51,9 @@ import { PricingComponent } from './components/pricing/pricing.component';
     // MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSidenavModule
+    MatSidenavModule,
+    HttpClientModule,
+    ToastrModule.forRoot(), // ToastrModule added
     
     
   

@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   }
   collapsed = true;
   active = 1;
-  show='two'
+  show='one'
   rev=true;
   authpage=''
 

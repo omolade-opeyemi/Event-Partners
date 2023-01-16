@@ -6,7 +6,7 @@ a{
 
 .nav{
     background: #fff;;
-    position: relative;
+    position: fixed;
     padding: 0.2rem;
     width: 100%;
     /* padding-left:2% ; */
@@ -14,7 +14,7 @@ a{
     min-height: 10vh;
     /* overflow: hidden; */
     top: 0;
-    z-index: 3;
+    // z-index: 1;
 }
 .navborder{
     border-bottom: 2px solid #1C2B66; 

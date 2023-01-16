@@ -4,10 +4,21 @@
     width: 100vw;
     max-height: 90vh;
     background-color: #fff;
-    overflow:scroll;
+    overflow:auto;
     bottom: 0;
     position: fixed;
     padding: 10px;
+    
+}
+
+.alert{
+    margin-top: 2px;
+    padding: 5px;
+    small{
+        padding: 0;
+        margin: 0;
+    
+    }
 }
 
 .section1,
@@ -87,7 +98,7 @@ h2 {
     position: relative;
     justify-content: center;
     align-items: center;
-    min-height: 90vh;
+    min-height: 80vh;
     padding: 0;
 }
 .contain {

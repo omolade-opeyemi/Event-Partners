@@ -8,7 +8,7 @@
       <div class="sectionin" @fade>
         <div class="contain">
           <div class="one">
-            <h1>Partner as a vendor</h1>
+            <h1 (click)="notify()">Partner as a vendor</h1>
             <p>Register as a vendor and provide services to <br> event creators</p>
             <div class="buttonss">
               <button (click)="register()" class="btn register">Register</button>
@@ -109,44 +109,64 @@
           <div class="bodyframe">
             <h2>Create account</h2>
             <p>Fill the form to create an Individual account</p>
-            <form class="row g-3">
+            <form class="row g-3" #individualreg="ngForm" (ngSubmit)="Iloc(individualreg.value)">
               <div class="col-md-6">
                 <label for="first" class="form-label">First name</label>
-                <input type="text" name="first" class="form-control" id="first">
+                <input type="text" [(ngModel)]="individualReg.firstName" name="first" class="form-control" id="first" required #first="ngModel">
+                <div class="alert alert-danger" role="alert" *ngIf="first.invalid && (first.dirty || first.touched)">
+                 <small *ngIf="first.errors?.['required']">first name is required</small> 
+                </div>
               </div>
               <div class="col-md-6">
                 <label for="last" class="form-label">Last name</label>
-                <input type="text" ngModel name="last" class="form-control" id="last">
+                <input type="text" [(ngModel)]="individualReg.lastName" name="last" class="form-control" id="last" required #last="ngModel">
+                <div class="alert alert-danger" role="alert" *ngIf="last.invalid && (last.dirty || last.touched)">
+                  <small *ngIf="last.errors?.['required']">last name is required</small> 
+                 </div>
               </div>
               <div class="col-12">
                 <label for="email" class="form-label">Email address</label>
-                <input type="email" ngModel name="email" class="form-control" id="email">
+                <input type="email" [(ngModel)]="individualLog.email" name="email" class="form-control" id="email" required email #email="ngModel">
+                <div class="alert alert-danger" role="alert" *ngIf="email.invalid && (email.dirty || email.touched)">
+                  <small *ngIf="email.errors?.['required']">email name is required</small> 
+                  <small *ngIf="email.errors?.['email']">enter a valid email</small> 
+                 </div>
               </div>
               <div class="col-12">
                 <label for="date" class="form-label">Date of birth</label>
-                <input type="date" ngModel name="dob" max="2004-12-31" class="form-control" id="date">
+                <input type="date" [(ngModel)]="individualReg.dateOfBirth" name="dob" max="2004-12-31" class="form-control" id="date" required #date="ngModel">
+                <div class="alert alert-danger" role="alert" *ngIf="date.invalid && (date.dirty || date.touched)">
+                  <small *ngIf="date.errors?.['required']">date of birth is required</small> 
+                 </div>
               </div>
               <div class="col-12">
                 <label for="email" class="form-label">Phone number</label>
-                <input placeholder="+234..." type="tel" ngModel name="phone" class="form-control" id="phone">
+                <input placeholder="+234..." type="tel" [(ngModel)]="individualReg.mobileNumber" name="phone" class="form-control" id="phone" required #phone="ngModel">
+                <div class="alert alert-danger" role="alert" *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+                  <small *ngIf="phone.errors?.['required']">phone number is required</small> 
+                 </div>
               </div>
               <div class="col-ms-12">
                 <b>Gender</b>
               </div>
               <div class="form-check col-md-3 ">
-                <input class="form-check-input active" type="radio" ngModel name="gender" id="male" value="M">
+                <input class="form-check-input active" type="radio" [(ngModel)]="individualReg.gender" name="gender" id="male" value="M" required #gender="ngModel">
                 <label class="form-check-label" for="male">
                   Male
                 </label>
               </div>
               <div class="form-check col-md-3">
-                <input class="form-check-input" type="radio" ngModel name="gender" id="female" value="F">
+                <input class="form-check-input" type="radio" ngModel name="gender" id="female" value="F" [(ngModel)]="individualReg.gender" required #gender="ngModel">
                 <label class="form-check-label" for="female">
                   Female
                 </label>
               </div>
+              <div class="alert alert-danger" role="alert" *ngIf="gender.invalid && (gender.dirty || gender.touched)">
+                <small *ngIf="gender.errors?.['required']">This field is required</small> 
+               </div>
               <div class="col-12 d-grid">
-                <button (click)="Iloc()" type="submit" class="btn btn-primary bgcolor">Next</button>
+                <!-- (click)="Iloc()" -->
+                <button  type="submit" class="btn btn-primary bgcolor" [disabled]="!individualreg.valid">Next</button>
               </div>
             </form>
 
@@ -164,25 +184,37 @@
           <div class="bodyframe">
             <h2>Create account</h2>
             <p>Please, let's know your location</p>
-            <form class="row g-3">
+            <form class="row g-3" #individualloc="ngForm" (ngSubmit)="Ipassword(individualloc.value)">
               <div class="col-md-6">
                 <label for="inputState" class="form-label">State</label>
-                <select id="inputState" ngModel name="state" class="form-select">
-                  <option value="">state</option>
+                <select id="inputState" ngModel name="state" class="form-select" [(ngModel)]="individualReg.state" required #state="ngModel">
+                  <option value="">----</option>
+                  <option value="lagos">Lagos</option>
                 </select>
+                <div class="alert alert-danger" role="alert" *ngIf="state.invalid && (state.dirty || state.touched)">
+                  <small *ngIf="state.errors?.['required']">This field is required</small> 
+                 </div>
               </div>
               <div class="col-md-6">
                 <label for="lga" class="form-label">Lga</label>
-                <select id="lga" ngModel name="lga" class="form-select">
-                  <option>lga</option>
+                <select id="lga" ngModel name="lgaId" class="form-select" [(ngModel)]="individualReg.lgaId" required #lgaId="ngModel">
+                  <option value= 0> ---- </option>
+                  <option value="203">Ikeja</option>
                 </select>
+                <div class="alert alert-danger" role="alert" *ngIf="lgaId.invalid && (lgaId.dirty || lgaId.touched)">
+                  <small *ngIf="lgaId.errors?.['required']">This field is required</small> 
+                 </div>
               </div>
               <div class="col-12">
-                <label for="address" class="form-label">Address</label>
-                <input type="text" ngModel name="address" class="form-control" id="address">
+                <label for="street" class="form-label">Street</label>
+                <input type="text" ngModel name="address" class="form-control" id="street" [(ngModel)]="individualReg.street" required #street="ngModel">
+                <div class="alert alert-danger" role="alert" *ngIf="street.invalid && (street.dirty || street.touched)">
+                  <small *ngIf="street.errors?.['required']">This field is required</small> 
+                 </div>
               </div>
               <div class="col-12 d-grid">
-                <button (click)="Ipassword()" type="submit" class="btn btn-primary bgcolor">Next</button>
+                <!-- (click)="Ipassword()" -->
+                <button  type="submit" class="btn btn-primary bgcolor" [disabled]="!individualloc.valid">Next</button>
               </div>
             </form>
           </div>
@@ -199,18 +231,30 @@
           <div class="bodyframe">
             <h2>Password</h2>
             <p>Set your password</p>
-            <form class="row g-3">
+            <form class="row g-3" #personalPassword="ngForm" (ngSubmit)="registerIndividual(personalPassword.value)">
               <div class="col-12">
                 <label for="pass" class="form-label">Password</label>
-                <input type="password" ngModel name="password1" class="form-control" id="pass">
-
+                <input type="password" ngModel name="password1" class="form-control" id="pass"
+                [(ngModel)]="individualLog.password" [pattern]="passwordPtn" required #pass="ngModel">
+                <div class="alert alert-danger" role="alert" *ngIf="pass.invalid && (pass.dirty || pass.touched)">
+                  <small *ngIf="pass.errors?.['required']">This field is required</small> 
+                  <small *ngIf="pass.errors?.['pattern']">Password must be at least 8 characters, and must contain at least a number, a capital letter, a small
+                    letter an a special character.</small> 
+                 </div>
               </div>
               <div class="col-12">
                 <label for="cpass" class="form-label">Confirm password</label>
-                <input type="password" ngModel name="password2" class="form-control" id="cpass">
+                <input type="password" ngModel name="password2" class="form-control" id="cpass" 
+                [(ngModel)]="password2" required #cpass="ngModel">
+                <div class="alert alert-danger" role="alert" *ngIf="individualLog.password !== password2 && (cpass.touched||cpass.dirty)">
+                  <!-- <small *ngIf="cpass.errors?.['required'] ">This field is required</small>  -->
+                  <small>Password mismatch</small>
+                 </div>
               </div>
               <div class="col-12 d-grid">
-                <button (click)="otp()" type="submit" class="btn btn-primary bgcolor">Register</button>
+                <!-- (click)="otp()" -->
+                <button  type="submit" class="btn btn-primary bgcolor"
+                [disabled]="!personalPassword.valid || (individualLog.password !== password2)">Register</button>
               </div>
             </form>
           </div>
