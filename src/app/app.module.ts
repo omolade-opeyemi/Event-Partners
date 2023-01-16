@@ -9,7 +9,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 // import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 
 
@@ -26,6 +26,7 @@ import { Side2Component } from './components/side2/side2.component';
 import { InvoiceComponent } from './components/invoice/invoice.component';
 import { AccreditationComponent } from './components/accreditation/accreditation.component';
 import { PricingComponent } from './components/pricing/pricing.component';
+import { InterceptorService } from './services/interceptor.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,11 @@ import { PricingComponent } from './components/pricing/pricing.component';
     
   
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass:  InterceptorService,
+    multi: true
+  },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

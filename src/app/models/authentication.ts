@@ -6,7 +6,6 @@ export class AccountLogin{
 }
 
 export class individualAccount {
-
     constructor(
       public firstName: string,
       public lastName: string,
@@ -34,7 +33,7 @@ export class individualAccount {
 
 export class createBussiness{
   constructor(
-    public companyName: string,
+    public supplierName: string,
     public industryId: number,
     public industry: string,
     public phoneNumber: string,

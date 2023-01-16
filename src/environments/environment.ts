@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  onlinePortalUrl : "https://dev-online-backend.azurewebsites.net/",
+  email: 'online.portal@halogen-group.com',
+  password: 'zXz@Ud', // 'rD:yfBj8;?%cdp*&38k',
+
+
 };
 
 /*
