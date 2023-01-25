@@ -11,6 +11,11 @@ import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from "ngx-spinner";
+import {MatMenuModule} from '@angular/material/menu';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 
 
 
@@ -49,11 +54,15 @@ import { InterceptorService } from './services/interceptor.service';
     MatBadgeModule,
     NgxDropzoneModule,
     MatStepperModule,
+    NgxSpinnerModule,
     // MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
     MatSidenavModule,
     HttpClientModule,
+    MatMenuModule,
+    MatDialogModule,
+    MatFormFieldModule,
     ToastrModule.forRoot(), // ToastrModule added
     
     

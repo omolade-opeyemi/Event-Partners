@@ -59,7 +59,8 @@
 
                 </div>
                 <div class="part2">
-                    <div class="accred">
+                    <ng-template [ngIf]="status == 'REQUEST_PENDING'">
+                    <div class="accred" >
                         <div class="image">
                             <img src="/assets/images/freepik--Stopwatch--inject-112.png" alt="">
                         </div>
@@ -69,10 +70,23 @@
                                 <p>Lorem ipsum dolor, sit amet consectetur
                                     adipisicing elit. Voluptate blanditiis</p>
                             </div>
-                            <button class="btn btn-outline-light d-flex justify-content-end">Proceed</button>
-
+                            <button class="btn btn-outline-light d-flex justify-content-end" (click)="accreditation()">Proceed</button>
                         </div>
                     </div>
+                </ng-template>
+
+                <ng-template [ngIf]="status != 'REQUEST_PENDING'">
+                    <div class="accredwaiting">
+                        <div class="image">
+                            <img src="/assets/images/Loader.png" alt="">
+                        </div>
+                        <div class="info">
+                                <h5>Accreditation is</h5>
+                                <h5>awaiting confirmation</h5>
+                        </div>
+                    </div>
+                </ng-template>
+
                     <div class="all">
                         <div class="image">
                             <img src="/assets/images/vbf.png" alt="">
@@ -279,7 +293,7 @@
                                 <div class="sidebar">
                                     <div class="sidebar-title">
                                         <h1>Service Request</h1>
-                                        <p>7 service requests for this event</p>
+                                        <p>{{requestsDetail.length}} service requests for this event</p>
                                     </div>
                                     <div class="sidebar-services">
                                         <div class="sidebar-services-header">
@@ -287,57 +301,19 @@
                                             <p>QTY</p>
                                         </div>
                                         <hr />
-                                        <div class="sidebar-service">
-                                            <input type="checkbox" name="" id="" />
+                                        <div class="sidebar-service" *ngFor="let detail of requestsDetail; index as i">
+                                            <input type="checkbox" name="" id="" ngForm [(ngModel)]="events" />
                                             <div class="sidebar-service-item">
-                                                <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
+                                                <img src="{{detail.serviceImage}}"
                                                     alt="" />
                                                 <div class="menu">
-                                                    <p class="menu-title">Pesto Pasta Grill</p>
-                                                    <p class="menu-subtitle">Special Food Dish</p>
+                                                    <p class="menu-title">{{detail.serviceName}}</p>
+                                                    <p class="menu-subtitle">{{detail.type}}</p>
                                                 </div>
                                             </div>
-                                            <p class="qty">25</p>
+                                            <p class="qty">{{detail.quanty}}</p>
                                         </div>
 
-                                        <div class="sidebar-service">
-                                            <input type="checkbox" name="" id="" />
-                                            <div class="sidebar-service-item">
-                                                <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
-                                                    alt="" />
-                                                <div class="menu">
-                                                    <p class="menu-title">Pesto Pasta Grill</p>
-                                                    <p class="menu-subtitle">Special Food Dish</p>
-                                                </div>
-                                            </div>
-                                            <p class="qty">25</p>
-                                        </div>
-
-                                        <div class="sidebar-service">
-                                            <input type="checkbox" name="" id="" />
-                                            <div class="sidebar-service-item">
-                                                <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
-                                                    alt="" />
-                                                <div class="menu">
-                                                    <p class="menu-title">Pesto Pasta Grill</p>
-                                                    <p class="menu-subtitle">Special Food Dish</p>
-                                                </div>
-                                            </div>
-                                            <p class="qty">25</p>
-                                        </div>
-
-                                        <div class="sidebar-service">
-                                            <input type="checkbox" name="" id="" />
-                                            <div class="sidebar-service-item">
-                                                <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
-                                                    alt="" />
-                                                <div class="menu">
-                                                    <p class="menu-title">Pesto Pasta Grill</p>
-                                                    <p class="menu-subtitle">Special Food Dish</p>
-                                                </div>
-                                            </div>
-                                            <p class="qty">25</p>
-                                        </div>
                                         <div class="sidebar-btn">
                                             <button class="btn-accept">Accept</button>
                                             <button class="btn-reject">Reject</button>
@@ -347,7 +323,25 @@
                             </mat-drawer>
                             <div class="example-sidenav-content">
                                 <div class="request-container">
-                                    <div class="request-card" (click)="drawer.toggle()">
+                                    <div class="request-card"  *ngFor="let pending of pendingRequests; index as i" (click)="drawer.toggle()">
+                                        <img src="{{pending.eventImage}}"
+                                            alt="" class="request-card-img" />
+                                        <h1 class="">{{pending.eventName}}</h1>
+                                        <p class="by">By</p>
+                                        <div class="avatar">
+                                            <img class=""
+                                                src="{{pending.creatorImage}}"
+                                                alt="" />
+                                            <p class="">{{pending.eventCreator}}</p>
+                                        </div>
+                                        <div class="event">
+                                            <p>Event Date: {{pending.eventDate}}</p>
+                                            <p>Event Time: {{pending.eventTime}}</p>
+                                        </div>
+                                        <p class="notice">Service requested: {{pending.serviceRequestCount}}</p>
+                                    </div>
+
+                                    <!-- <div class="request-card">
                                         <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
                                             alt="" class="request-card-img" />
                                         <h1 class="">Burna live in concert</h1>
@@ -471,25 +465,7 @@
                                             <p>Event Date: Sept 26, 2022</p>
                                         </div>
                                         <p class="notice">Service requested: 7</p>
-                                    </div>
-
-                                    <div class="request-card">
-                                        <img src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
-                                            alt="" class="request-card-img" />
-                                        <h1 class="">Burna live in concert</h1>
-                                        <p class="by">By</p>
-                                        <div class="avatar">
-                                            <img class=""
-                                                src="https://www.currentschoolnews.com/wp-content/uploads/2022/06/naruto.jpg"
-                                                alt="" />
-                                            <p class="">Christine Ann</p>
-                                        </div>
-                                        <div class="event">
-                                            <p>Event Date: Sept 26, 2022</p>
-                                            <p>Event Date: Sept 26, 2022</p>
-                                        </div>
-                                        <p class="notice">Service requested: 7</p>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </mat-drawer-container>
@@ -514,19 +490,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let request of requests; index as i">
+                                        <tr *ngFor="let attend of attendedRequests; index as i">
                                             <!-- <th scope="row">{{ i + 1 }}</th> -->
                                             <td>
-                                                <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + request.flag"
+                                                <img src="{{attend.creatorImage}}"
                                                     class="me-2" style="width: 20px" />
-                                                {{ request.name }}
+                                                {{ attend.eventCreator }}
                                             </td>
-                                            <td>{{ request.name }}</td>
-                                            <td>{{ request.service }}</td>
-                                            <td>{{ request.amount }}</td>
-                                            <td>{{ request.date }}</td>
+                                            <td>{{ attend.eventName }}</td>
+                                            <td>{{ attend.serviceName }}</td>
+                                            <td>{{ attend.quantity }}</td>
+                                            <td>{{ attend.eventDate }}</td>
                                             <td>
-                                                <mat-icon>{{request.icon}}</mat-icon>
+                                                <mat-icon>more_horiz</mat-icon>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -554,33 +530,34 @@
                 <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form #addService ="ngForm">
                     <div class="mb-3">
                         <label for="Select" class="form-label">Service Type</label>
-                        <select class="form-select" aria-label="Default select example">
+                        <select class="form-select" aria-label="Default select example" 
+                        name="serviceType" ngModel>
                             <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option *ngFor="let item of categoryData">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Service Caption</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        name="serviceCaption" ngModel>
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                        name="serviceDescription" ngModel></textarea>
                     </div>
                     <div class="negotiate">
                         <div class="mb-3">
                             <label for="formGroupExampleInput" class="form-label">Rate</label>
                             <input type="text" class="form-control" id="formGroupExampleInput"
-                                placeholder=" &#x20A6; 350 ">
+                                placeholder=" &#x20A6; 350 " name="rate" ngModel>
                         </div>
                         <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="negotiable" ngModel>
                             <label class="form-check-label" for="exampleCheck1">Negotiatable</label>
                         </div>
 
@@ -600,13 +577,11 @@
 
                         </div>
                     </div>
-
                 </form>
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button type="button" class="btn btn-light cancel" (click)="c('Save click')">Cancel</button>
-                <button type="button" class="btn addService" (click)="serviceSuccess(success)">+ Add Service</button>
-
+                <button type="button" class="btn addService" (click)="serviceSuccess(success, addService.value)">+ Add Service</button>
             </div>
         </ng-template>
         <!-- /////////// Service Addedd Successfully modal /////////// -->
@@ -627,3 +602,4 @@
     </div>
 
 </div>
+<ngx-spinner type="ball-scale-multiple" ><p style="color: white" > Loading... </p></ngx-spinner>

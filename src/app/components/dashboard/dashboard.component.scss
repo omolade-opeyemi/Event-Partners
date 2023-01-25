@@ -110,6 +110,38 @@
             }
         }
 
+        .accredwaiting {
+          background: #fff;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+
+          .image {
+              width: 90px;
+              // height: 80px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin: 10px;
+
+              img {
+                  width: 100%;
+                  // height: 100%;
+              }
+          }
+
+          .info {
+            color: #1C2B66;
+            padding: 10px;
+            text-align: center;
+          }
+
+          h5 {
+              margin: 0;
+          }
+      }
+
         .all {
             display: flex;
             align-items: center;

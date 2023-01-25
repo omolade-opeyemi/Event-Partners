@@ -2,6 +2,7 @@ import { animate, keyframes, style, transition, trigger } from '@angular/animati
 import { Component, HostListener, OnInit } from '@angular/core';
 import { navbarData, navbarLow } from 'src/app/models/side-nav';
 import { InteractionService } from 'src/app/services/interaction.service';
+import { Router } from '@angular/router'
 
 interface SideNavToggle {
   screenWidth: number;
@@ -44,7 +45,9 @@ export class SidenavComponent implements OnInit {
   navData = navbarData;
   navDataLow = navbarLow;
 
-  constructor(private interaction: InteractionService) { }
+  constructor(private interaction: InteractionService,
+    public router: Router,
+    ) { }
   @HostListener('window:resize', ['$event'])
 
   onResize(event: any) {
@@ -69,6 +72,10 @@ export class SidenavComponent implements OnInit {
     this.collapsed = false;
     this.interaction.getscreenWidth(this.collapsed);
     this.interaction.getscreenSize(this.screenWidth);
+  }
+  upgrade(){
+    this.router.navigate(['/pricing'])
+
   }
 
 }

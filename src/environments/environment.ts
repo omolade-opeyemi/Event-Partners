@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   onlinePortalUrl : "https://dev-online-backend.azurewebsites.net/",
+  halobizUrl: "https://dev-halobiz-backend.azurewebsites.net/",
   email: 'online.portal@halogen-group.com',
   password: 'zXz@Ud', // 'rD:yfBj8;?%cdp*&38k',
 

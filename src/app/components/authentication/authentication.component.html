@@ -8,7 +8,7 @@
       <div class="sectionin" @fade>
         <div class="contain">
           <div class="one">
-            <h1 (click)="notify()">Partner as a vendor</h1>
+            <h1>Partner as a vendor</h1>
             <p>Register as a vendor and provide services to <br> event creators</p>
             <div class="buttonss">
               <button (click)="register()" class="btn register">Register</button>
@@ -22,6 +22,7 @@
 
     </ng-template>
 
+    <!-- ---------------  Login starts here ------- -->
     <ng-template [ngIf]="page=='two'">
       <div class="sectionin" @fade>
         <div class="contain">
@@ -29,11 +30,12 @@
             <mat-icon>arrow_back_ios</mat-icon> <img src="assets/images/Logo.png" alt="">
           </span>
           <div class="bodyframe">
-            <form class="formin">
+            <form class="formin" #emial="ngForm">
               <h2>Login</h2>
               <p>New user ? <span class="color" (click)="register()">Create account</span></p>
               <label for="email">Email address</label>
-              <input type="email" class="form-control" name="email" id="email">
+              <input type="email" class="form-control" name="email" id="email" ngModel
+              [(ngModel)]="accountLogin.email">
               <button (click)="lpassword()">Continue</button>
               <h1 class="li"><span> or </span></h1>
               <button id="btnlg"><img class="btnlg" src="assets/images/google-logo-9808 1.png" alt=""> Sign in with
@@ -59,7 +61,7 @@
                 <p><span>Business account</span> <span>Example@gmail.com</span></p>
               </div>
               <label for="password">Password</label>
-              <input type="password" name="password" class="form-control">
+              <input type="password" name="password" class="form-control" ngModel [(ngModel)]="accountLogin.password">
               <button class="btn" (click)="dashBoard()">Continue</button>
               <div class="form-check form-switch d-flex justify-content-center">
                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
@@ -74,6 +76,7 @@
       </div>
     </ng-template>
 
+    <!-- ------------- Account Type ------------- -->
     <ng-template [ngIf]="page=='four'">
       <div class="sectionin" @fade>
         <div class="contain">
@@ -112,7 +115,8 @@
             <form class="row g-3" #individualreg="ngForm" (ngSubmit)="Iloc(individualreg.value)">
               <div class="col-md-6">
                 <label for="first" class="form-label">First name</label>
-                <input type="text" [(ngModel)]="individualReg.firstName" name="first" class="form-control" id="first" required #first="ngModel">
+                <input type="text" [(ngModel)]="individualReg.firstName"
+                 name="first" class="form-control" id="first" required #first="ngModel">
                 <div class="alert alert-danger" role="alert" *ngIf="first.invalid && (first.dirty || first.touched)">
                  <small *ngIf="first.errors?.['required']">first name is required</small> 
                 </div>
@@ -187,9 +191,10 @@
             <form class="row g-3" #individualloc="ngForm" (ngSubmit)="Ipassword(individualloc.value)">
               <div class="col-md-6">
                 <label for="inputState" class="form-label">State</label>
-                <select id="inputState" ngModel name="state" class="form-select" [(ngModel)]="individualReg.state" required #state="ngModel">
+                <select id="inputState" ngModel name="state" class="form-select" [(ngModel)]="statelga" 
+                required #state="ngModel" (change)="getlga(state.value)">
                   <option value="">----</option>
-                  <option value="lagos">Lagos</option>
+                  <option *ngFor="let item of states"  value="{{item.stateId}},{{item.stateName}}">{{item.stateName}}</option>
                 </select>
                 <div class="alert alert-danger" role="alert" *ngIf="state.invalid && (state.dirty || state.touched)">
                   <small *ngIf="state.errors?.['required']">This field is required</small> 
@@ -199,7 +204,7 @@
                 <label for="lga" class="form-label">Lga</label>
                 <select id="lga" ngModel name="lgaId" class="form-select" [(ngModel)]="individualReg.lgaId" required #lgaId="ngModel">
                   <option value= 0> ---- </option>
-                  <option value="203">Ikeja</option>
+                  <option *ngFor="let item of lga" value="{{item.lgaId}}">{{item.lgaName}}</option>
                 </select>
                 <div class="alert alert-danger" role="alert" *ngIf="lgaId.invalid && (lgaId.dirty || lgaId.touched)">
                   <small *ngIf="lgaId.errors?.['required']">This field is required</small> 
@@ -252,7 +257,6 @@
                  </div>
               </div>
               <div class="col-12 d-grid">
-                <!-- (click)="otp()" -->
                 <button  type="submit" class="btn btn-primary bgcolor"
                 [disabled]="!personalPassword.valid || (individualLog.password !== password2)">Register</button>
               </div>
@@ -273,26 +277,36 @@
           <div class="bodyframe">
             <h2>Create account</h2>
             <p>Fill the form to create your business account</p>
-            <form class="row g-3">
+            <form class="row g-3" #bussinessreg="ngForm" (ngSubmit)="BLoc(bussinessreg.value)">
               <div class="col-12">
                 <label for="company" class="form-label">Company name</label>
-                <input type="text" class="form-control" ngModel name="company" id="company">
+                <input type="text" class="form-control" ngModel 
+                [(ngModel)]="bussinessReg.supplierName" name="company" id="company"
+                required #first="ngModel">
+                <div class="alert alert-danger" role="alert" *ngIf="first.invalid && (first.dirty || first.touched)">
+                  <small *ngIf="first.errors?.['required']">first name is required</small> 
+                 </div>
               </div>
               <div class="col-12" data-dropup-auto="false">
-                <select class="form-select" name="biztype" id="type" ngModel>
+                <select class="form-select" name="biztype" id="type" 
+                [(ngModel)]="bussinessReg.description" ngModel>
                   <option value="">Type of business</option>
+                  <option *ngFor="let item of bizType" >{{item.name}}</option>
                 </select>
               </div>
               <div class="col-12">
                 <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" name="email" ngModel id="email">
+                <input type="email" class="form-control" name="email" ngModel 
+                [(ngModel)]="individualLog.email" id="email">
               </div>
               <div class="col-12">
                 <label for="phone" class="form-label">Phone number</label>
-                <input type="tel" name="phone" class="form-control" ngModel id="phone">
+                <input type="tel" name="phone" class="form-control" 
+                [(ngModel)]="bussinessReg.mobileNumber" ngModel id="phone">
               </div>
               <div class="col-12 d-grid">
-                <button (click)="BLoc()" type="submit" class="btn btn-primary bgcolor">Next</button>
+                <!-- (click)="BLoc()" -->
+                <button  type="submit" class="btn btn-primary bgcolor">Next</button>
               </div>
             </form>
           </div>
@@ -309,25 +323,31 @@
           <div class="bodyframe">
             <h2>Create account</h2>
             <p>Please, let's know your location</p>
-            <form class="row g-3">
+            <form class="row g-3" #bussinessloc ="ngForm" (ngSubmit)="businessContact(bussinessloc.value)">
               <div class="col-md-6">
                 <label for="inputState" class="form-label">State</label>
-                <select id="inputState" class="form-select" ngModel name="state">
-                  <option selected>State</option>
+                <select id="inputState" class="form-select" ngModel required #state="ngModel"
+                [(ngModel)]="statelga" name="state" (change)="getLgaBiz(state.value)">
+                  <option value="" selected>----</option>
+                  <option *ngFor="let item of states"  value="{{item.stateId}},{{item.stateName}}">{{item.stateName}}</option>
                 </select>
               </div>
               <div class="col-md-6">
                 <label for="lga" class="form-label">Lga</label>
-                <select id="lga" class="form-select" ngModel name="lga">
-                  <option>lga</option>
+                <select id="lga" class="form-select" ngModel 
+                [(ngModel)]="bussinessReg.lgaId" name="lga">
+                  <option value=0>lga</option>
+                  <option *ngFor="let item of lga" value="{{item.lgaId}}">{{item.lgaName}}</option>
                 </select>
               </div>
               <div class="col-12">
-                <label for="address" class="form-label">Address</label>
-                <input type="address" class="form-control" id="address" name="address">
+                <label for="address" class="form-label">Street</label>
+                <input type="address" class="form-control" id="address" 
+                [(ngModel)]="bussinessReg.street" name="address">
               </div>
               <div class="col-12 d-grid">
-                <button (click)="businessContact()" type="submit" class="btn btn-primary bgcolor">Next</button>
+                <!-- (click)="businessContact()" -->
+                <button type="submit" class="btn btn-primary bgcolor">Next</button>
               </div>
             </form>
           </div>
@@ -344,44 +364,50 @@
           <div class="bodyframe">
             <h2>Create account</h2>
             <p id="ctp">Fill the form to create the bussiness <b> contact person </b></p>
-            <form class="row g-3">
+            <form class="row g-3" #contactperson ="ngForm" (ngSubmit)="businessPassword(contactperson.value)">
               <div class="col-md-6">
                 <label for="first" class="form-label">First name</label>
-                <input type="text" class="form-control" name="first" id="first">
+                <input type="text" class="form-control" name="first" 
+                [(ngModel)]="firstName" id="first">
 
               </div>
               <div class="col-md-6">
                 <label for="last" class="form-label">Last name</label>
-                <input type="text" class="form-control" id="last" name="last">
+                <input type="text" class="form-control" id="last" name="last"
+                [(ngModel)]="lastName">
 
               </div>
               <div class="col-12">
                 <label for="date" class="form-label">Date of birth</label>
-                <input max="2004-12-31" type="date" class="form-control" id="date" name="dob">
+                <input max="2004-12-31" type="date" class="form-control" 
+                id="date" name="dob">
 
               </div>
               <div class="col-12">
                 <label for="email" class="form-label">Phone number</label>
-                <input type="tel" class="form-control" id="phone" name="phone">
+                <input type="tel" class="form-control" id="phone" 
+                [(ngModel)]="bussinessReg.primaryContactMobile" name="phone">
               </div>
               <div class="col-12">
                 <b>Gender</b>
               </div>
               <!-- <div class="col-md-10" id="gend" > -->
               <div class="form-check col-md-3">
-                <input class="form-check-input" type="radio" name="gender" id="male" value="M">
+                <input class="form-check-input" type="radio" name="gender" 
+                [(ngModel)]="bussinessReg.primaryContactGender" id="male" value="M">
                 <label class="form-check-label" for="male">
                   Male
                 </label>
               </div>
               <div class="form-check disabled col-md-6">
-                <input class="form-check-input" type="radio" name="gender" id="female" value="F">
+                <input class="form-check-input" type="radio" name="gender" 
+                [(ngModel)]="bussinessReg.primaryContactGender" id="female" value="F">
                 <label class="form-check-label" for="female">
                   Female
                 </label>
               </div>
               <div class="col-12 d-grid">
-                <button (click)="businessPassword()" type="submit" class="btn btn-primary bgcolor">Next</button>
+                <button type="submit" class="btn btn-primary bgcolor">Next</button>
               </div>
             </form>
           </div>
@@ -399,18 +425,21 @@
           <div class="bodyframe">
             <h2>Password</h2>
             <p>Set your password</p>
-            <form class="row g-3">
+            <form class="row g-3" #bussinessPassword ="ngForm" (ngSubmit)="registerBusiness(bussinessPassword.value)">
               <div class="col-12">
                 <label for="pass" class="form-label">Password</label>
-                <input type="password" class="form-control" id="pass" name="password1">
+                <input type="password" class="form-control" id="pass" name="password1"
+                [(ngModel)]="individualLog.password">
 
               </div>
               <div class="col-12">
                 <label for="cpass" class="form-label">Confirm password</label>
-                <input type="password" class="form-control" id="cpass" name="password2">
+                <input type="password" class="form-control" id="cpass" name="password2"
+                [(ngModel)]="password2">
               </div>
               <div class="col-12 d-grid">
-                <button (click)="otp()" type="submit" class="btn btn-primary bgcolor">Register</button>
+                <!-- (click)="otp()" -->
+                <button type="submit" class="btn btn-primary bgcolor">Register</button>
               </div>
             </form>
           </div>
@@ -428,7 +457,7 @@
           <p>Type in the secure code to verify your account</p>
           <img src="assets/images/undraw_Mail_sent_re_0ofv 1.png" alt="">
           <div>
-            <form class="otp">
+            <form class="otp" #otpForm="ngForm" >
               <input #txt1 maxlength="1" (keyup)="move($event,'',txt1,txt2)" type="password" name="txt1" ngModel>
               <span>-</span>
               <input #txt2 maxlength="1" type="password" (keyup)="move($event,txt1,txt2,txt3)" name="txt2" ngModel>
@@ -442,8 +471,8 @@
               <input #txt6 maxlength="1" type="password" (keyup)="move($event,txt5,txt6,'')" name="txt6" ngModel>
             </form>
           </div>
-          <button (click)="bHome()" class="btn btn-primary bgcolor">Proceed</button>
-          <button (click)="bHome()" id="resend" class="btn color">Resend Email</button>
+          <button (click)="getOtp(otpForm.value)" class="btn btn-primary bgcolor">Proceed</button>
+          <button (click)="resendOtp()" id="resend" class="btn color">Resend Email</button>
         </div>
       </div>
     </ng-template>
@@ -461,7 +490,7 @@
               <p class="color">A reset link would be sent to your email address</p>
               <label for="email">Email address</label>
               <input type="email" class="form-control" name="email" id="email">
-              <button (click)="lpassword()">Reset your password</button>
+              <button (click)="otp()">Reset your password</button>
             </form>
           </div>
         </div>

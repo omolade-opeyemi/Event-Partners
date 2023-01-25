@@ -7,6 +7,12 @@ import { Subject } from 'rxjs';
 export class InteractionService {
 
   constructor() { }
+
+  private navbar = new Subject<string>();
+  sharednavbar$ = this.navbar.asObservable();
+  getnavbar(message:string){
+    this.navbar.next(message)
+  }
   
   private screenWidth = new Subject<boolean>();
   sharedscreenWidth = this.screenWidth.asObservable();
