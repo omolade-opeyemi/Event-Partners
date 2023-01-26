@@ -5,6 +5,10 @@ import { individualAccount, AccountLogin, CreateBussiness, Login } from 'src/app
 import { NgForm } from '@angular/forms';
 import { EndpointsService } from 'src/app/services/endpoints.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { InteractionService } from 'src/app/services/interaction.service';
+import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+
+
 @Component({
   selector: 'app-authentication',
   templateUrl: './authentication.component.html',
@@ -18,6 +22,10 @@ export class AuthenticationComponent implements OnInit {
   constructor(private route:Router,
     private endpoint: EndpointsService,
     private notifyService: NotificationService,
+    private interact: InteractionService,
+    private spinner: NgxSpinnerService,
+
+
     ) { }
   page:any
 
@@ -70,21 +78,25 @@ export class AuthenticationComponent implements OnInit {
 
   
   dashBoard(){
+    this.spinner.show();
     this.endpoint.supplierLogin(this.accountLogin).subscribe((data)=>{
-      this.response = data;      
+      this.response = data;  
+      this.spinner.hide();
       if (this.response.responseCode == '00'){
         let loginData = this.response.responseData;
         localStorage.setItem('token', loginData.token);
-        localStorage.setItem('profileId', loginData.userProfile.id)
-        let userProfile = loginData.userProfile;
-        console.log(userProfile);
+        localStorage.setItem('profileId', loginData.userProfile.id);
+        localStorage.setItem('name', loginData.userProfile.name),
+        this.interact.getnavbar("two")
+        // let userProfile = loginData.userProfile;
         this.route.navigate(['/dashboard']);
       }
       else{
         this.notifyService.showError(this.response.responseMsg)
       }
     },(error) => {
-      this.notifyService.showError(error.error.title);
+      this.notifyService.showError(error.error.responseMsg);
+      this.spinner.hide();
     })
   }
   getlga(value: any) {
@@ -117,7 +129,7 @@ export class AuthenticationComponent implements OnInit {
     this.page='four'
   }
   individual(){
-    this.individualReg.supplierCategoryId = 1;
+    this.individualReg.supplierCategoryId = 2;
     this.page='five'
   }
 
@@ -141,7 +153,7 @@ export class AuthenticationComponent implements OnInit {
     this.page='six'
   }
   business(){
-    this.bussinessReg.supplierCategoryId = 2;
+    this.bussinessReg.supplierCategoryId = 3;
     this.page='eight'
   }
   BLoc(data:NgForm){

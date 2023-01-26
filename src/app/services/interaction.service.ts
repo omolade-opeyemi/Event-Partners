@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +28,26 @@ export class InteractionService {
 
   getscreenSize(message: number){
     this.screenSize.next(message);
+  }
+
+  private name = new BehaviorSubject('');
+  sharedUserName$ = this.name.asObservable();
+
+  getUserName(message: string ){
+    this.name.next(message);
+  }
+
+  private userId = new BehaviorSubject('');
+  userId$ =  this.userId.asObservable();
+
+  getUserId(message:string){
+    this.userId.next(message);
+  }
+
+  private service = new BehaviorSubject('');
+  service$= this.service.asObservable();
+
+  getService(message:string){
+    this.service.next(message)
   }
 }

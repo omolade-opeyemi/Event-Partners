@@ -79,10 +79,11 @@
     }
 }
 .containTable{
-    text-align: center;
-    
+    h2{
+            text-align: center;
+    }
     .inner{
-        max-width: 60%;
+        max-width: 70%;
         margin: 0 auto;
         tbody{
             border: 0.5px solid rgba(28, 43, 102, 0.65);

@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { InteractionService } from 'src/app/services/interaction.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Invoicing, InvoiceDetails } from 'src/app/models/invoicing';
+import { EndpointsService } from 'src/app/services/endpoints.service';
+import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+import { NotificationService } from 'src/app/services/notification.service';
+
+
 
 interface Country {
   name: string;
@@ -55,15 +61,28 @@ export class InvoiceComponent implements OnInit {
 
   constructor(private interact:InteractionService,
     public router: Router,
-    private modalService: NgbModal) { }
+    private endpoint: EndpointsService,
+    private modalService: NgbModal,
+    private notify: NotificationService,
+    private spinner: NgxSpinnerService,
+
+    ) { }
+
+    invoicing = new Invoicing('','','','','',true,[]);
+    invoicingDetail = new InvoiceDetails(0,0)
   collapsed=false
   screenWidth = 0
   authpage=''
   countries = COUNTRIES;
+  response: any
+
   ngOnInit(): void {
     this.interact.sharedscreenWidth.subscribe(message => {this.collapsed=message});
     this.interact.screenSize$.subscribe(message => {this.screenWidth=message})
-  
+  }
+
+  getInvoiceNumber(){
+    
   }
   isauthRouth(){
     this.authpage='/auth';
@@ -81,7 +100,48 @@ export class InvoiceComponent implements OnInit {
   }
 
   openLg(content: any) {
-    this.modalService.open(content, { size: 'lg' });
+    this.spinner.show()
+    this.endpoint.getSupplierInvoiceNumber(Number(localStorage.getItem('profileId'))).subscribe(
+      (data)=>{
+        this.response = data;
+        this.spinner.hide()
+        if( this.response.responseCode == '00'){
+          this.getSupplierServices();
+          this.invoicing.invoiceId = this.response.responseData;
+          this.modalService.open(content, { size: 'lg' });
+        }
+        else{
+          this.notify.showError(this.response.responseMsg)
+        }
+    },(error) => {
+      this.spinner.hide();
+      this.notify.showError(error.error.responseMsg);
+    })
+  }
+
+  serviceRate:any
+  supplierResponse: any;
+  supplerData: any;
+  getSupplierServices() {
+    // Number(localStorage.getItem('profileId'))
+    this.endpoint.getSupplierService(Number(localStorage.getItem('profileId'))).subscribe((data) => {
+      this.supplierResponse = data;
+      console.warn(this.supplierResponse);
+      if (this.supplierResponse.responseCode == '00') {
+        this.supplerData = this.supplierResponse.responseData
+      }
+      else {
+        this.notify.showError(this.supplierResponse.responseMsg)
+      }
+    }, (error) => {
+
+      this.notify.showError(error.message);
+    })
+  }
+
+  getRate(value: any) {
+    this.invoicingDetail.serviceId = value.split(',')[0];
+    this.invoicingDetail.rate = value.split(',')[1];
   }
 
 

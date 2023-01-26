@@ -15,6 +15,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import {MatMenuModule} from '@angular/material/menu';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {NgxPaginationModule} from 'ngx-pagination';
+
 
 
 
@@ -32,6 +34,8 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
 import { AccreditationComponent } from './components/accreditation/accreditation.component';
 import { PricingComponent } from './components/pricing/pricing.component';
 import { InterceptorService } from './services/interceptor.service';
+import { InteractionService } from './services/interaction.service';
+import { SplitPipe } from './pipes/split.pipe';
 
 @NgModule({
   declarations: [
@@ -43,7 +47,8 @@ import { InterceptorService } from './services/interceptor.service';
     Side2Component,
     InvoiceComponent,
     AccreditationComponent,
-    PricingComponent
+    PricingComponent,
+    SplitPipe
   ],
   imports: [
     BrowserModule,
@@ -63,6 +68,7 @@ import { InterceptorService } from './services/interceptor.service';
     MatMenuModule,
     MatDialogModule,
     MatFormFieldModule,
+    NgxPaginationModule,
     ToastrModule.forRoot(), // ToastrModule added
     
     
@@ -72,7 +78,7 @@ import { InterceptorService } from './services/interceptor.service';
     provide: HTTP_INTERCEPTORS,
     useClass:  InterceptorService,
     multi: true
-  },],
+  }, InteractionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

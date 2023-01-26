@@ -12,6 +12,7 @@ import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 
 
 
+
 interface Country {
   name: string;
   flag: string;
@@ -153,6 +154,9 @@ export class DashboardComponent implements OnInit {
   showFiller = true;
   response: any;
   status = ''
+  userName:any;
+  totalLength: any;
+  pg: number = 1;
 
   ngOnInit(): void {
     if (localStorage.getItem('token')) {
@@ -162,7 +166,12 @@ export class DashboardComponent implements OnInit {
       this.accreditationStatus();
       this.getRequests();
       this.interact.sharedscreenWidth.subscribe(message => { this.collapsed = message });
-      this.interact.screenSize$.subscribe(message => { this.screenWidth = message })
+      this.interact.screenSize$.subscribe(message => { this.screenWidth = message });
+      this.interact.getnavbar("two");
+      this.userName = localStorage.getItem('name')
+      this.interact.getUserName(String(localStorage.getItem('name')));
+      this.interact.getUserId(String(localStorage.getItem('profileId')))
+
     }
     else {
       this.router.navigate(['/']);
@@ -200,7 +209,7 @@ export class DashboardComponent implements OnInit {
   supplerData: any;
   getSupplierServices() {
     // Number(localStorage.getItem('profileId'))
-    this.endpoint.getSupplierService(89).subscribe((data) => {
+    this.endpoint.getSupplierService(Number(localStorage.getItem('profileId'))).subscribe((data) => {
       this.supplierResponse = data;
       console.warn(this.supplierResponse);
       if (this.supplierResponse.responseCode == '00') {
@@ -210,7 +219,6 @@ export class DashboardComponent implements OnInit {
         this.notify.showError(this.supplierResponse.responseMsg)
       }
     }, (error) => {
-      console.log(error);
 
       this.notify.showError(error.message);
     })
@@ -243,6 +251,7 @@ export class DashboardComponent implements OnInit {
   requestsDetail: any[]=[]
   toggleSideBar(data:any) {
     this.spinner.show();
+    this.events = [];
     this.endpoint.getRequestDetail(Number(localStorage.getItem('profileId')), data).subscribe((data)=>{
       this.response = data;
       this.spinner.hide();
@@ -259,12 +268,48 @@ export class DashboardComponent implements OnInit {
     
   }
 
-  events=[]
-  eventRequestAction(){
+  events: any[]=[]
+  isChecked:any
+  checkValue(event: any){
+    if ( this.isChecked == true){
+      console.log(this.isChecked);
+      this.events.push(event)
+    console.log(this.events);
+    }
+    else{
+      const index = this.events.indexOf(event);
+      this.events.splice(index, 1)
+      console.log(this.events);
+      console.log(this.isChecked);
+    }
+    
+ }
+  eventRequestAction(data:boolean){
+    for(let i of this.events){
+      this.services.quantity = i.quantity;
+      this.services.serviceId = i.eventId;
+      console.log(this.services);
+      this.requestAction.services.push(this.services)
+    }
+    this.requestAction.supplierId = Number(localStorage.getItem('profileId'));
+    this.requestAction.eventId = this.events[0].eventId;
+    this.requestAction.accept = data;
+    console.log(this.requestAction);    
+    
     this.spinner.show();
     this.endpoint.eventRequestAction(this.requestAction).subscribe((data)=>{
       console.log(data);
-      
+      this.response = data;
+      this.spinner.hide();
+      if( this.response.responseCode == '00'){
+        this.notify.showInfo(this.response.responseMsg)
+      }
+      else{
+        this.notify.showError(this.response.responseMsg)
+      }
+    },(error) => {
+      this.notify.showError(error.error.responseMsg);
+      this.spinner.hide();
     })
   }
 
@@ -360,15 +405,16 @@ export class DashboardComponent implements OnInit {
   onSelect(event: any) {
     console.log(event);
     this.files.push(...event.addedFiles);
+    
+  }
+
+  profileImageUpload(success: any, data: any) {
     for (let i = 0; i < this.files.length; i++) {
       // const [file] = this.files[i];
       this.profileImgeFile = this.files[i];
-      this.profileImageUpload();
+      this.imageUpload(this.profileImgeFile);
     }
-  }
-
-  profileImageUpload() {
-    this.imageUpload(this.profileImgeFile);
+    this.serviceSuccess(success, data)
   }
 
   onRemove(event: File) {

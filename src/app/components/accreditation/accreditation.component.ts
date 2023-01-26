@@ -80,6 +80,7 @@ export class AccreditationComponent implements OnInit {
   states:any=[];
   lga:any = [];
   statelga = '';
+  reload:any
 
   
   addBasicInfo = new BasicInfo('','','','','','');
@@ -116,12 +117,23 @@ export class AccreditationComponent implements OnInit {
       console.log(this.addProofOfExistence);
     }
     ngOnInit(): void {
-      this.getStates();
+      if (localStorage.getItem('token') ){
+        this.getStates();
       this.getSupplierServices();
       this.page='introMsg';
       this.interact.sharedscreenWidth.subscribe(message => {this.collapsed=message});
-      this.interact.screenSize$.subscribe(message => {this.screenWidth=message})
-    }
+      this.interact.screenSize$.subscribe(message => {this.screenWidth=message});
+      this.interact.service$.subscribe(message => {
+        this.reload = message;
+        if( this.reload == 'yes'){
+          this.getSupplierServices();
+        }
+      })
+      }
+      else{
+          this.router.navigate(['/']);
+      }
+       }
 
     openDialog(i:any): void {
       this.dialog.open(DialogAnimationExampleDialogComponent, {
@@ -250,17 +262,17 @@ export class AccreditationComponent implements OnInit {
     }
     profileImgeFile: any;
     onSelect(event: { addedFiles: any; }) {
-      console.log(event);
       this.files.push(...event.addedFiles);
-      for (let i = 0; i < this.files.length; i++) {
-        // const [file] = this.files[i];
-        this.profileImgeFile = this.files[i];
-        this.profileImageUpload();
-      }
+      
     }
 
     profileImageUpload() {
-      this.imageUpload(this.profileImgeFile);
+      for (let i = 0; i < this.files.length; i++) {
+        // const [file] = this.files[i];
+        this.profileImgeFile = this.files[i];
+        this.imageUpload(this.profileImgeFile);
+      }
+      this.accreditationRequest();
     }
   
     onRemove(event: File) {

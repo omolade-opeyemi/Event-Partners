@@ -60,40 +60,49 @@
                     (click)="modal.dismiss('Cross click')"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3">
+                <form class="row g-3" #invoiCingForm="ngForm">
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Invoice ID</label>
-                        <input type="text" class="form-control" id="inputEmail4">
+                        <input type="text" class="form-control" id="invoiceid" readonly
+                        [(ngModel)]="invoicing.invoiceId" ngModel name="invoiceid">
                     </div>
                     <div class="col-md-6">
                         <label for="inputPassword4" class="form-label">Date</label>
-                        <input type="date" class="form-control" id="inputPassword4">
+                        <input type="date" class="form-control" id="date"
+                        [(ngModel)]="invoicing.date" ngModel name="date">
                     </div>
                     <div class="col-12">
                         <label for="inputAddress" class="form-label">Recipient Name</label>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                        <input type="text" class="form-control" id="name" placeholder="1234 Main St"
+                        [(ngModel)]="invoicing.recipientName" ngModel name="name">
                     </div>
                     
                     <div class="col-md-6">
                         <label for="inputCity" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="inputCity">
+                        <input type="email" class="form-control" id="email"
+                        [(ngModel)]="invoicing.email" ngModel name="email">
                     </div>
                     <div class="col-md-6">
                         <label for="inputCity" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="inputCity" placeholder="Apartment, studio, or floor">
+                        <input type="text" class="form-control" id="address" placeholder="Apartment, studio, or floor"
+                        [(ngModel)]="invoicing.address" ngModel name="address">
                     </div>
                     <hr>
                     <h4>Service Description</h4>
                     <div class="col-md-6">
                         <label for="type" class="form-label">Service Type</label>
-                        <select id="type" class="form-select">
+                        <select id="type" class="form-select"
+                        [(ngModel)]="serviceRate" ngModel name="service"
+                        (change)="getRate(rate.value)" #rate="ngModel">
                             <option selected>Choose...</option>
-                            <option>...</option>
+                            <option *ngFor="let item of supplerData" 
+                            value="{{item.serviceId}},{{item.price}}">{{item.serviceType}}</option>
                           </select>
                     </div>
                     <div class="col-md-6">
                         <label for="rate" class="form-label">Rate</label>
-                        <input type="text" class="form-control" id="rate">
+                        <input type="text" class="form-control" id="rate"
+                        [(ngModel)]="invoicingDetail.rate" ngModel name="rate">
                     </div>
                 </form>
             </div>
@@ -104,3 +113,4 @@
         </ng-template>
     </div>
 </div>
+<ngx-spinner type="ball-scale-multiple" ><p style="color: white" > Loading... </p></ngx-spinner>

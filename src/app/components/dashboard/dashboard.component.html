@@ -6,7 +6,7 @@
     <div class="main-header">
         <div class="welcome">
             <ng-template [ngIf]="page != 'requests'">
-                <h5 class="colour">👋 Hi Lucy</h5>
+                <h5 class="colour">👋 Hi {{userName}}</h5>
                 <h3>Let's Get Productive Today !</h3>
             </ng-template>
 
@@ -120,26 +120,30 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let country of countries; index as i">
+                                <tr *ngFor="let country of supplerData | paginate: { itemsPerPage: 4, currentPage: pg, totalItems:totalLength }; index as i">
                                     <!-- <th scope="row">{{ i + 1 }}</th> -->
                                     <th><input type="checkbox" class="form-check-input" id="exampleCheck1"></th>
                                     <td>
-                                        <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
+                                        <img src="{{country.images}}"
                                             class="me-2" style="width: 20px">
                                     </td>
-                                    <td>{{ country.name }}</td>
-                                    <td>{{ country.area | number }}</td>
+                                    <td>{{ country.serviceName}}</td>
+                                    <td>{{ country.price | number }}</td>
                                     <td>
                                         <ngb-rating [rate]="3"></ngb-rating>
                                     </td>
-                                    <td>{{country.date}}</td>
+                                    <td>{{country.dateCreated| split: "T": 0}}</td>
                                     <td>
                                         <mat-icon>&#8230;</mat-icon>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="pagination">
+                            <pagination-controls (pageChange)="pg = $event"></pagination-controls>
+                        </div>
                     </div>
+                    
 
                 </div>
                 <div class="part2">
@@ -302,7 +306,9 @@
                                         </div>
                                         <hr />
                                         <div class="sidebar-service" *ngFor="let detail of requestsDetail; index as i">
-                                            <input type="checkbox" name="" id="" ngForm [(ngModel)]="events" />
+                                            
+                                            <input type="checkbox" name="select" id="" ngForm [(ngModel)]="isChecked"
+                                            (change)="checkValue(isChecked? detail: detail)" />
                                             <div class="sidebar-service-item">
                                                 <img src="{{detail.serviceImage}}"
                                                     alt="" />
@@ -311,19 +317,20 @@
                                                     <p class="menu-subtitle">{{detail.type}}</p>
                                                 </div>
                                             </div>
-                                            <p class="qty">{{detail.quanty}}</p>
+                                        
+                                            <p class="qty">{{detail.quantity}}</p>
                                         </div>
 
                                         <div class="sidebar-btn">
-                                            <button class="btn-accept">Accept</button>
-                                            <button class="btn-reject">Reject</button>
+                                            <button class="btn-accept" (click)="eventRequestAction(true)">Accept</button>
+                                            <button class="btn-reject" (click)="eventRequestAction(false)">Reject</button>
                                         </div>
                                     </div>
                                 </div>
                             </mat-drawer>
                             <div class="example-sidenav-content">
                                 <div class="request-container">
-                                    <div class="request-card"  *ngFor="let pending of pendingRequests; index as i" (click)="drawer.toggle()">
+                                    <div class="request-card"  *ngFor="let pending of pendingRequests; index as i" (click)="drawer.toggle();toggleSideBar(pending.eventId) ">
                                         <img src="{{pending.eventImage}}"
                                             alt="" class="request-card-img" />
                                         <h1 class="">{{pending.eventName}}</h1>
@@ -498,7 +505,7 @@
                                                 {{ attend.eventCreator }}
                                             </td>
                                             <td>{{ attend.eventName }}</td>
-                                            <td>{{ attend.serviceName }}</td>
+                                            <td>{{ attend.serviceType }}</td>
                                             <td>{{ attend.quantity }}</td>
                                             <td>{{ attend.eventDate }}</td>
                                             <td>
@@ -563,7 +570,7 @@
 
                     </div>
                     <div class="mb-3">
-                        <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+                        <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" [maxFileSize]="2000000" (change)="onSelect($event)">
                             <ngx-dropzone-label>
                                 <div>
                                     <mat-icon>cloud_upload</mat-icon>
@@ -572,7 +579,7 @@
                             </ngx-dropzone-label>
                             <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
                                 [file]="f" [removable]="true" (removed)="onRemove(f)">
-                                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                                <ngx-dropzone-label>({{ f.type }})</ngx-dropzone-label>
                             </ngx-dropzone-image-preview>
 
                         </div>
@@ -581,7 +588,7 @@
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button type="button" class="btn btn-light cancel" (click)="c('Save click')">Cancel</button>
-                <button type="button" class="btn addService" (click)="serviceSuccess(success, addService.value)">+ Add Service</button>
+                <button type="button" class="btn addService" (click)="profileImageUpload(success, addService.value)">+ Add Service</button>
             </div>
         </ng-template>
         <!-- /////////// Service Addedd Successfully modal /////////// -->
