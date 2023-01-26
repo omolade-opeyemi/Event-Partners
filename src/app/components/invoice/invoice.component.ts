@@ -78,10 +78,27 @@ export class InvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.interact.sharedscreenWidth.subscribe(message => {this.collapsed=message});
-    this.interact.screenSize$.subscribe(message => {this.screenWidth=message})
+    this.interact.screenSize$.subscribe(message => {this.screenWidth=message});
+    this.getSupplierInvoices();
   }
 
-  getInvoiceNumber(){
+  supplierInvoices:any;
+  getSupplierInvoices(){
+    this.spinner.show();
+    this.endpoint.getSupplierInvoices(Number(localStorage.getItem('profileId'))).subscribe((data)=>{
+      this.response = data;
+      this.spinner.hide();
+      if(this.response.responseCode == '00'){
+        this.supplierInvoices = this.response.responseData;
+      }
+      else{
+        this.notify.showError(this.response.responseMsg)
+      }
+
+    },(error) => {      
+      this.notify.showError(error.message);
+            this.spinner.hide();
+    })
     
   }
   isauthRouth(){
@@ -113,9 +130,10 @@ export class InvoiceComponent implements OnInit {
         else{
           this.notify.showError(this.response.responseMsg)
         }
-    },(error) => {
-      this.spinner.hide();
-      this.notify.showError(error.error.responseMsg);
+    },(error) => {      
+      this.notify.showError(error.message);
+            this.spinner.hide();
+
     })
   }
 
@@ -123,10 +141,8 @@ export class InvoiceComponent implements OnInit {
   supplierResponse: any;
   supplerData: any;
   getSupplierServices() {
-    // Number(localStorage.getItem('profileId'))
     this.endpoint.getSupplierService(Number(localStorage.getItem('profileId'))).subscribe((data) => {
       this.supplierResponse = data;
-      console.warn(this.supplierResponse);
       if (this.supplierResponse.responseCode == '00') {
         this.supplerData = this.supplierResponse.responseData
       }
@@ -134,7 +150,6 @@ export class InvoiceComponent implements OnInit {
         this.notify.showError(this.supplierResponse.responseMsg)
       }
     }, (error) => {
-
       this.notify.showError(error.message);
     })
   }
@@ -144,5 +159,23 @@ export class InvoiceComponent implements OnInit {
     this.invoicingDetail.rate = value.split(',')[1];
   }
 
-
+  createSupplierInvoice(data:any){
+    this.invoicing.isSent = data;
+    this.invoicing.supplierInvoiceDetails . push(this.invoicingDetail);
+    console.log(this.invoicing);
+    this.spinner.show();
+  this.endpoint.createSupplierInvoice(this.invoicing).subscribe((data)=>{
+    this.response = data;
+    this.spinner.hide();
+    if( this.response.responseCode == '00'){
+      this.notify.showSuccess('successfull')
+    }
+    else{
+      this.notify.showError(this.response.responseMsg)
+    }
+  },(error) => {
+    this.notify.showError(error.message);
+    this.spinner.hide();
+  })
+}
 }

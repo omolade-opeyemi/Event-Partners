@@ -30,17 +30,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let country of countries; index as i">
+                    <tr *ngFor="let country of supplierInvoices; index as i">
                         <!-- <th scope="row">{{ i + 1 }}</th> -->
                         <th scope="row"><input type="checkbox" name="" id=""></th>
-                        <td>{{country.event}}</td>
+                        <td>#{{country.invoiceId}}</td>
                         <td>
                             <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="me-2"
                                 style="width: 20px">
-                            {{ country.name }}
+                            {{ country.eventCreator }}
                         </td>
-                        <td>{{ country.area | number }}</td>
-                        <td>{{ country.population | number }}</td>
+                        <td>{{ country.email }}</td>
+                        <td>{{ country.date | split: "T": 0 }}</td>
                         <td>
                             <div [ngClass]="{'done': country.status =='Done','pending': country.status =='Pending'}">{{
                                 country.status }}</div>
@@ -107,8 +107,8 @@
                 </form>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button type="button" class="btn btn-light cancel" (click)="modal.close('Close click')">Close</button>
-                <button type="button" class="btn addService">Create Invoice</button>
+                <button type="button" class="btn btn-light cancel" (click)="modal.close('Close click'); createSupplierInvoice(true)">Send Invoice</button>
+                <button type="button" class="btn addService" (click)="modal.close('Close click');createSupplierInvoice(false)">Create Invoice</button>
             </div>
         </ng-template>
     </div>

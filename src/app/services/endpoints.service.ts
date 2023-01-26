@@ -75,5 +75,12 @@ export class EndpointsService {
   getSupplierInvoiceNumber(id:number): Observable<any>{
     return this.http.get(this.baseUrl+ 'api/EventPlanning/GetSupplierInvoiceNumber?profileId='+id)
   }
+  createSupplierInvoice(data:any): Observable<any>{
+    return this.http.post(this.baseUrl+ 'api/EventPlanning/CreateSupplierInvoice', data)
+  }
+  getSupplierInvoices(id:any): Observable<any>{
+    return this.http.get(this.baseUrl+ 'api/EventPlanning/GetSupplierInvoices?profileId='+id)
+
+  }
 }
 
