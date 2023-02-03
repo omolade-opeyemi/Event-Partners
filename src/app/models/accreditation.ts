@@ -1,10 +1,7 @@
 export class Accreditation {
     constructor(
       public profileId: number,
-      public basicInfo: BasicInfo,
-      public supplierLocation: SupplierLocation,
-      public supplierServices: SupplierService[],
-      public proofOfExistence: ProofOfExistence,
+      public proofOfExistence: ProofOfExistence[],
       public paymentDetails: PaymentDetails
     ){}
   }
@@ -52,4 +49,16 @@ export class Accreditation {
     ){}
   }
 
-  
+  export class Payment{
+    constructor(
+      public profileId: string,
+      public securityQuestion: string,
+      public securityAnswer: string,
+      public walletPin: string,
+      public confirmPin:string,
+      public amount:number,
+      public platForm:string,
+      public gateway:string
+
+    ){}
+  }

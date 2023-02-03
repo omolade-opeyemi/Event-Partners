@@ -16,7 +16,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {NgxPaginationModule} from 'ngx-pagination';
-
+import {MatExpansionModule} from '@angular/material/expansion';
+import { Angular4PaystackModule } from 'angular4-paystack';
 
 
 
@@ -69,8 +70,10 @@ import { SplitPipe } from './pipes/split.pipe';
     MatDialogModule,
     MatFormFieldModule,
     NgxPaginationModule,
-    ToastrModule.forRoot(), // ToastrModule added
-    
+    MatExpansionModule,
+    ToastrModule.forRoot(), // ToastrModule 
+    Angular4PaystackModule.forRoot('pk_test_xxxxxxxxxxxxxxxxxxxxxxxx'),
+
     
   
   ],

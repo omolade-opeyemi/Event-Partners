@@ -34,8 +34,8 @@
                                 <img src="/assets/images/Dsd.png" alt="">
                             </div>
                             <div class="info">
-                                <p>Service Reequests Pending</p>
-                                <h3>165</h3>
+                                <p>Service Requests Pending</p>
+                                <h3>{{supplierDashboard.serviceRequestPending}}</h3>
                             </div>
                         </div>
                         <div class="image">
@@ -48,8 +48,8 @@
                                 <img src="/assets/images/Group 399.png" alt="">
                             </div>
                             <div class="info">
-                                <p>Requests Attended</p>
-                                <h3>165</h3>
+                                <p>Service Requests Attended</p>
+                                <h3>{{supplierDashboard.serviceRequestAttended}}</h3>
                             </div>
                         </div>
                         <div class="image">
@@ -59,7 +59,7 @@
 
                 </div>
                 <div class="part2">
-                    <ng-template [ngIf]="status == 'REQUEST_PENDING'">
+                    <ng-template [ngIf]="supplierDashboard.accreditationStatus == 'UNACCREDITED'">
                     <div class="accred" >
                         <div class="image">
                             <img src="/assets/images/freepik--Stopwatch--inject-112.png" alt="">
@@ -67,15 +67,14 @@
                         <div class="info">
                             <div>
                                 <h4>Accreditation</h4>
-                                <p>Lorem ipsum dolor, sit amet consectetur
-                                    adipisicing elit. Voluptate blanditiis</p>
+                                <p>You are not currently accredited. Click the button below to start the process.</p>
                             </div>
                             <button class="btn btn-outline-light d-flex justify-content-end" (click)="accreditation()">Proceed</button>
                         </div>
                     </div>
                 </ng-template>
 
-                <ng-template [ngIf]="status != 'REQUEST_PENDING'">
+                <ng-template [ngIf]="supplierDashboard.accreditationStatus != 'UNACCREDITED'">
                     <div class="accredwaiting">
                         <div class="image">
                             <img src="/assets/images/Loader.png" alt="">
@@ -92,7 +91,7 @@
                             <img src="/assets/images/vbf.png" alt="">
                         </div>
                         <div class="info">
-                            <h1 class="colour">165</h1>
+                            <h1 class="colour">{{supplierDashboard.serviceCount}}</h1>
                             <h4 class="colour">All Service</h4>
                         </div>
                     </div>
@@ -103,13 +102,20 @@
             <div class="row2">
                 <div class="part1">
                     <h2 class="colour">List of services</h2>
-                    <p>3 services added</p>
+                    <div class="servicehead">
+                        <!-- {{supplierDashboard.serviceCount}} -->
+                        <p>{{supplierDashboard.serviceCount}} services added</p>
+                        <div class="search">
+                            <input type="search" placeholder="search" class="form-control" #search (keyup)="filter(search.value)">
+                            <!-- <button type="button" >search</button> -->
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col"></th>
-                                    <th scope="col"></th>
+                                    <th scope="col">Service Category</th>
                                     <th scope="col">Service Name</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Rating</th>
@@ -120,14 +126,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let country of supplerData | paginate: { itemsPerPage: 4, currentPage: pg, totalItems:totalLength }; index as i">
+                                <tr *ngFor="let country of filterd | paginate: { itemsPerPage: 4, currentPage: pg, totalItems:totalLength }; index as i">
                                     <!-- <th scope="row">{{ i + 1 }}</th> -->
                                     <th><input type="checkbox" class="form-check-input" id="exampleCheck1"></th>
-                                    <td>
+                                    <!-- <td>
                                         <img src="{{country.images}}"
                                             class="me-2" style="width: 20px">
+                                    </td> -->
+                                    <td>
+                                        {{ country.serviceCategory}}
                                     </td>
-                                    <td>{{ country.serviceName}}</td>
+                                    <td>{{ country.serviceType}}</td>
                                     <td>{{ country.price | number }}</td>
                                     <td>
                                         <ngb-rating [rate]="3"></ngb-rating>
@@ -137,6 +146,37 @@
                                         <mat-icon>&#8230;</mat-icon>
                                     </td>
                                 </tr>
+                                <!-- <tr>
+                                    <td colspan="7">
+                                        <mat-accordion>
+                                            <mat-expansion-panel hideToggle>
+                                              <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                  This is the expansion title
+                                                </mat-panel-title>
+                                                <mat-panel-description>
+                                                  This is a summary of the content
+                                                </mat-panel-description>
+                                              </mat-expansion-panel-header>
+                                              <p>This is the primary content of the panel.</p>
+                                            </mat-expansion-panel>
+                                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                                 (closed)="panelOpenState = false">
+                                              <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    Self aware panel
+                                                </mat-panel-title>
+                                                <mat-panel-description>
+                                                  Currently I am y8f8  lpyf66o{{panelOpenState ? 'open' : 'closed'}}
+                                                </mat-panel-description>
+                                              </mat-expansion-panel-header>
+                                              <p>I'm visible because I am open</p>
+                                            </mat-expansion-panel>
+                                          </mat-accordion>
+                                          
+                                    </td>
+                                </tr> -->
+                                
                             </tbody>
                         </table>
                         <div class="pagination">
@@ -539,11 +579,19 @@
             <div class="modal-body">
                 <form #addService ="ngForm">
                     <div class="mb-3">
+                        <label for="Select" class="form-label">Service Category</label>
+                        <select class="form-select" aria-label="Default select example" 
+                        name="serviceType" #category="ngModel" ngModel (change)="getCategory(category.value)">
+                            <option selected>Open this select menu</option>
+                            <option *ngFor="let item of categoryData" value="{{item.id}},{{item.name}}">{{item.name}}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="Select" class="form-label">Service Type</label>
                         <select class="form-select" aria-label="Default select example" 
                         name="serviceType" ngModel>
                             <option selected>Open this select menu</option>
-                            <option *ngFor="let item of categoryData">{{item.name}}</option>
+                            <option *ngFor="let item of serviveTypes">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -559,7 +607,7 @@
                     </div>
                     <div class="negotiate">
                         <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Rate</label>
+                            <label for="formGroupExampleInput" class="form-label">Rate per unit</label>
                             <input type="text" class="form-control" id="formGroupExampleInput"
                                 placeholder=" &#x20A6; 350 " name="rate" ngModel>
                         </div>

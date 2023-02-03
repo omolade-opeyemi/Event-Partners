@@ -5,7 +5,7 @@
   <app-header></app-header>
   <div class="main-header">
     <div class="welcome">
-      <h5 class="colour">👋 Hi Lucy</h5>
+      <h5 class="colour">👋 Hi {{userName}}</h5>
       <h3>Let's Get Productive Today !</h3>
     </div>
     <!-- <div>
@@ -71,7 +71,7 @@
                   <div class="profileImg"><img src="/assets/images/person.jpg" alt="">
                   </div>
                   <div class="profileInfo">
-                    <h5>Lucky Daniel</h5>
+                    <h5>{{userName}}</h5>
                     <small>Individual Account</small>
                   </div>
                 </div>
@@ -80,40 +80,40 @@
                   <form class="row g-3" #basicInfo="ngForm">
                     <div class="col-md-6">
                       <label for="first" class="form-label">First Name</label>
-                      <input type="text" class="form-control" id="first"
+                      <input type="text" class="form-control" id="first" disabled="true"
                       ngModel name="first" [(ngModel)]="addBasicInfo.firstName">
                     </div>
                     <div class="col-md-6">
                       <label for="last" class="form-label">Last Name</label>
-                      <input type="text" class="form-control" id="last"
+                      <input type="text" class="form-control" id="last" disabled="true"
                       ngModel name="last" [(ngModel)]="addBasicInfo.lastName">
                     </div>
                     <div class="col-md-6">
                       <label for="dob" class="form-label">Date of birth</label>
-                      <input type="date" class="form-control" id="dob" placeholder="1234"
+                      <input type="date" class="form-control" id="dob" placeholder="1234" disabled="true"
                       ngModel name="dob" [(ngModel)]="addBasicInfo.dateOfBirth">
                     </div>
                     <div class="col-md-6">
                       <p>Gender</p>
                       <div class="form-check form-check-inline">
                         <label class="form-check-label" for="inlineRadio1">Male</label>
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" disabled="true"
                           value="Male" ngModel [(ngModel)]="addBasicInfo.gender">
                       </div>
                       <div class="form-check form-check-inline">
                         <label class="form-check-label" for="inlineRadio2">Female</label>
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" disabled="true"
                           value="Female" ngModel [(ngModel)]="addBasicInfo.gender">
                       </div>
                     </div>
                     <div class="col-md-6">
                       <label for="phone" class="form-label">Phone Number</label>
-                      <input type="phone" class="form-control" id="phone"
+                      <input type="phone" class="form-control" id="phone" disabled="true"
                       name="phone" ngModel [(ngModel)]="addBasicInfo.phoneNumber">
                     </div>
                     <div class="col-md-6">
                       <label for="email" class="form-label">Email</label>
-                      <input type="email" class="form-control" name="" id="email"
+                      <input type="email" class="form-control" name="" id="email" disabled="true"
                       name="email" ngModel [(ngModel)]="addBasicInfo.email">
                     </div>
                   </form>
@@ -134,23 +134,23 @@
                   <form class="row g-3" #location="ngForm">
                     <div class="col-md-6">
                       <label for="inputState" class="form-label">State</label>
-                      <select id="inputState" class="form-select" name="state"
-                      [(ngModel)]="statelga"  #state="ngModel" (change)="getlga(state.value)">
-                        <option selected>Choose...</option>
-                        <option *ngFor="let item of states"  value="{{item.stateId}},{{item.stateName}}">{{item.stateName}}</option>
+                      <select id="inputState" class="form-select" name="state" disabled="true"
+                      [(ngModel)]="addSupplierLocation.state"  #state="ngModel" >
+                        <!-- <option selected>Choose...</option> -->
+                        <option selected>{{addSupplierLocation.state}}</option>
                       </select>
                     </div>
                     <div class="col-md-6">
                       <label for="inputState" class="form-label">Lga</label>
-                      <select id="inputState" class="form-select" 
+                      <select id="inputState" class="form-select" disabled="true"
                       ngModel [(ngModel)]="addSupplierLocation.lga" name="lga">
-                        <option selected>Choose...</option>
-                        <option *ngFor="let item of lga" value="{{item.lgaName}}">{{item.lgaName}}</option>
+                        <!-- <option selected>Choose...</option> -->
+                        <option selected>{{addSupplierLocation.lga}}</option>
                       </select>
                     </div>
                     <div class="col-12">
                       <label for="inputAddress" class="form-label">Street</label>
-                      <input type="address" class="form-control" id="inputAddress" placeholder="1234 Main St"
+                      <input type="address" class="form-control" id="inputAddress" placeholder="1234 Main St" disabled="true"
                       ngModel [(ngModel)]="addSupplierLocation.address" name="address">
                     </div> 
                   </form>
@@ -182,15 +182,15 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let country of supplerData; index as i">
+                    <tr *ngFor="let country of supplierData; index as i">
                       <th scope="row">{{ i + 1 }}</th>
                       <td>
                         <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="me-2"
                           style="width: 20px"> -->
-                        {{ country.serviceName }}
+                        {{ country.name }}
                       </td>
                       <td>{{ country.serviceType }}</td>
-                      <td>{{ country.price | number }}</td>
+                      <td>{{ country.rate | number }}</td>
                       <td mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" style="cursor: pointer;">
                         <mat-icon>more_horiz</mat-icon>
                       </td>
@@ -225,21 +225,46 @@
             </div>
           </form>
         </mat-step>
-        <mat-step>
-          <ng-template matStepLabel>Verification</ng-template>
+        <mat-step [stepControl]="secondFormGroup" label="Verification">
+          <!-- <ng-template matStepLabel>Verification</ng-template> -->
           <div class="contain">
             <h2>Proof of existence</h2>
+            <div class="alert alert-primary" role="alert">
+              Multiple proof of existence documents can be uploaded. <a (click)="open(content)" class="alert-link">Check types here</a>
+            </div>
+
+            <!-- ------------------ Example Modal ----------- -->
+            <ng-template #content let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Proof of Existence</h4>
+                <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+              </div>
+              <div class="modal-body">
+                <ul>
+                  <li>Boots</li>
+                  <li>Clogs</li>
+                  <li>Loafers</li>
+                  <li>Moccasins</li>
+                  <li>Sneakers</li>
+                </ul>
+              </div>
+            </ng-template>
+
+            <!-- -------------------- Example Modal Ends ----------------- -->
+
             <div class="inner">
-              <form class="row g-3" #proofOfExistence="ngForm">
+              <form class="row g-3" #proofOfExistence="ngForm" >
                 <div class="col-md-12">
                   <label for="caption" class="form-label">Document Caption</label>
                   <input type="text" class="form-control" id="caption" name="caption"
-                  ngModel [(ngModel)]="addProofOfExistence.documentCaption">
+                  ngModel [(ngModel)]="addProofOfExistence.documentCaption" >
+                  <!-- [(ngModel)]="addProofOfExistence.documentCaption" -->
                 </div>
                 <div class="col-md-12">
                   <label for="inputPassword4" class="form-label">Document Description</label>
                   <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"
                   ngModel [(ngModel)]="addProofOfExistence.documentDescription"></textarea>
+                  <!-- [(ngModel)]="addProofOfExistence.documentDescription" -->
                 </div>
                 <div class="mb-3">
                   <div class="custom-dropzone" ngx-dropzone  (change)="onSelect($event)">
@@ -257,10 +282,147 @@
                   </div>
                 </div>
               </form>
+              <div class="buttons">
+                <button class="btn btn-dark" mat-button (click)="profileImageUpload(proofOfExistence.value)">+ Add</button>
+                <!-- (click)="stepper.reset()" -->
+              </div>
+              <hr>
+              
+              <h3>Documents Uploaded</h3>
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col">Document Caption</th>
+                      <th scope="col">Document Description</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let country of proofOfExistences; index as i">
+                      <th scope="row">{{ i + 1 }}</th>
+                      <td>
+                        <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="me-2"
+                          style="width: 20px"> -->
+                        {{ country.documentCaption }}
+                      </td>
+                      <td colspan="3">{{ country.documentDescription }}</td>
+                      <!-- <td>{{ country.price | number }}</td> -->
+                      <!-- <td mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" style="cursor: pointer;">
+                        <mat-icon>more_horiz</mat-icon>
+                      </td> -->
+                      <!-- ---------- Side menu -------------- -->
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item >
+                          <mat-icon>edit</mat-icon>
+                          <span>Edit</span>
+                        </button>
+                        <button mat-menu-item>
+                          <mat-icon>content_copy</mat-icon>
+                          <span>Duplicate</span>
+                        </button>
+                        <button mat-menu-item 
+                        mat-raised-button (click)="openDialog(i)">
+                          <mat-icon>delete</mat-icon>
+                          <span>Delete</span>
+                        </button>
+                      </mat-menu>
+                      <!-- ------------- Side menu ends ------------- -->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div class="buttons">
               <button class="btn btn-dark" mat-button matStepperPrevious >Back</button>
-              <button class="btn btn-dark" mat-button (click)="profileImageUpload()">Submit</button>
+              <button class="btn btn-dark" mat-button matStepperNext >Complete</button>
+              <!-- (click)="stepper.reset()" -->
+            </div>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Payment</ng-template>
+          <div class="contain">
+            <div class="inner">
+              <div class="modal-body">
+                <h1>How would you like to top-up</h1>
+                <div class="paymentOptionGroup">
+                    <div class="paymentOption">
+                        <div class="paymentGateway">
+                            <input type="radio" id="flutterwave" ngModel name="payment" id="flutterwave" disabled="true"
+                                value="flutterwave" [(ngModel)]="paymentDetails.paymentGateway">
+                            <label for="flutter"><img src="/assets/images/Flutterwave-logo 2.png"
+                                    alt="">Flutterwave</label>
+                        </div>
+                        <div class="paymentGateway">
+                            <input type="radio" id="paystack" ngModel name="payment" id="paystack"
+                                value="paystack" [(ngModel)]="paymentDetails.paymentGateway">
+                            <label for="flutter"><img src="/assets/images/Paystack-mark-white-twitter 2.png" alt="">
+                                Paystack</label>
+                        </div>
+                        <div class="paymentGateway">
+                            <input type="radio" ngModel name="payment" id="remita" value="remita" disabled="true"
+                                [(ngModel)]="paymentDetails.paymentGateway">
+                            <label for="flutter"><img src="/assets/images/unnamed 2.png" alt="">Remita</label>
+                        </div>
+                        <div class="paymentGateway">
+                            <input type="radio" ngModel name="payment" id="inter" value="inter" disabled="true"
+                                [(ngModel)]="paymentDetails.paymentGateway">
+                            <label for="flutter"><img src="/assets/images/cropped-favicon 2.png" alt="">Interswitch
+                                webpay</label>
+                        </div>
+                    </div>
+                    <img src="/assets/images/Wallet-rafiki 2 (1).png" alt="" width="100%">
+                </div>
+
+                <div class="amount">
+                    <p>Amount(&#8358;)</p>
+                    <div class="enterAmount">
+                        <span style="color: red;">{{paymentMessage}}</span>
+                        <input type="text" placeholder="min 100" ngModel name="long" #long="ngModel"
+                            [(ngModel)]="paymentDetails.amount" disabled="true">
+                        <button
+                            [hidden]="(paymentDetails.paymentGateway == 'flutterwave' || paymentDetails.paymentGateway == 'remita' || paymentDetails.paymentGateway == 'inter' || paymentDetails.paymentGateway == '')"
+                            angular4-paystack [email]="'mailexample@mail.com'" [amount]="50000 * 100"
+                            [ref]="reference" [key]="key" [class]="'btn btn-primary'"
+                            (paymentInit)="paymentInit()" (onClose)="paymentCancel()"
+                            (callback)="paymentDone($event)">Pay with
+                            Paystack</button>
+                        <button 
+                            [hidden]="(payment.gateway == 'remita' || payment.gateway == 'inter' || payment.gateway == 'paystack' || payment.gateway == '')">Pay
+                            with Flutter</button>
+                        <button (click)="paymentInit()" disabled
+                            [hidden]="(payment.gateway == 'flutterwave' || payment.gateway == 'inter' || payment.gateway == 'paystack' || payment.gateway == '')">Pay
+                            with Remita</button>
+                        <button (click)="paymentInit()" disabled
+                            [hidden]="(payment.gateway == 'remita' || payment.gateway == 'flutterwave' || payment.gateway == 'paystack' || payment.gateway == '')">Pay
+                            with Interswitch</button>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="notes">
+                    <b>Please note</b>
+                    <ol>
+                        <li>Minimum top-up amount is NGN 100.00 - you can top-up at least NGN 100.00 in one
+                            transaction.
+                        </li>
+                        <li>Maximum per transaction is NGN 9,999,999.00 - you can deposit up to NGN 9,999,999.00
+                            in
+                            one
+                            transaction.</li>
+                        <li>Top-up is free, there are no transaction fees.</li>
+                    </ol>
+                </div>
+            </div>
+              
+              
+             
+            </div>
+            <div class="buttons">
+              <button class="btn btn-dark" mat-button matStepperPrevious >Back</button>
+              <!-- <button class="btn btn-dark" mat-button >Next</button> -->
               <!-- (click)="stepper.reset()" -->
             </div>
           </div>

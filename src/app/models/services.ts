@@ -1,6 +1,7 @@
 export class AddService {
     constructor(
       public profileId: number,
+      public serviceCategory: string,
       public serviceType: string,
       public serviceCaption: string,
       public serviceDescription: string,

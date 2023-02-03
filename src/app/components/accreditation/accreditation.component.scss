@@ -108,3 +108,80 @@ label{
 
 line-height: 21px;
 }
+
+
+
+.paymentOptionGroup{
+    display: flex;
+    align-items: center;
+    /* border: 2px solid; */
+    padding: 0 10px;
+    justify-content: space-between;
+}
+.paymentOptionGroup img{
+    width: 50%;
+}
+.alert-link{
+    cursor: pointer;
+    text-decoration: none;
+}
+.paymentGateway{
+    margin:10px;
+}
+.paymentGateway label{
+    margin-left: 10px;
+    font-weight: 600;
+font-size: 15px;
+}
+.paymentGateway input{
+    opacity: 0.5;
+
+}
+.paymentGateway img{
+    width: 25px;
+    margin-right: 5px;
+}
+.amount{
+    display: flex;
+    justify-content: center;
+}
+.amount p{
+    margin-top: 30px;
+}
+.amount .enterAmount{
+    display: flex;
+    flex-direction: column;
+
+}
+.amount .enterAmount input{
+    border: 0.5px solid rgba(0, 0, 0, 0.15);
+border-radius: 10px;
+outline-color: #007AFF;
+width: 300px;
+height: 45px;
+padding: 10px;
+}
+.amount .enterAmount button{
+    background: #2FA84F;
+border-radius: 10px;
+width: 300px;
+height: 45px;
+border: 0;
+}
+.amount .enterAmount >*{
+    margin: 5px ;
+}
+.modal-footer {
+    text-align:left;
+}
+.closebtn{
+    text-align: right;
+}
+.closebtn button{
+    margin: 10px;
+    background-color: #fff;
+    color: #373737;
+    font-weight: 600;
+    font-size: 16px;
+    border: 0;
+}

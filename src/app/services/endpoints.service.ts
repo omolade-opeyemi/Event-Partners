@@ -41,6 +41,9 @@ export class EndpointsService {
   getServiceCategories(): Observable<any>{
     return this.http.get(this.baseUrl+ 'api/EventCommon/GetServiceCategories')
   }
+  getServiceTypes(id:any): Observable<any>{
+    return this.http.get(this.baseUrl+ 'api/EventCommon/GetServiceTypes?categoryId='+id)
+  }
   addNewService(data:any): Observable<any>{
     return this.http.post(this.baseUrl+ 'api/EventSupplier/AddNewService',data)
   }
@@ -56,6 +59,9 @@ export class EndpointsService {
   }
   accreditationRequest(data:any): Observable<any>{
     return this.http.post(this.baseUrl+ 'api/EventSupplier/AccreditationRequest', data)
+  }
+  getDetailsForAccreditationRequest(id:number): Observable<any>{
+    return this.http.get(this.baseUrl+ 'api/EventSupplier/GetDetailsForAccreditationRequest?profileId='+id)
   }
   getRegistrationDetail(): Observable<any>{
     return this.http.get(this.baseUrl+ '/api/EventSupplierRegistration/GetRegistrationDetails')
@@ -80,7 +86,10 @@ export class EndpointsService {
   }
   getSupplierInvoices(id:any): Observable<any>{
     return this.http.get(this.baseUrl+ 'api/EventPlanning/GetSupplierInvoices?profileId='+id)
-
   }
+  getSupplierDashboard(id:number){
+    return this.http.get(this.baseUrl +'api/Dashboard/GetSupplierDashboardDetails?profileId='+id)
+  }
+
 }
 

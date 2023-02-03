@@ -9,6 +9,8 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { AddService, Services, RequestAction } from 'src/app/models/services';
 import { FileStorageService } from 'src/app/services/file-storage.service';
 import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+import { NgForm } from '@angular/forms';
+import { ThisReceiver } from '@angular/compiler';
 
 
 
@@ -138,8 +140,9 @@ export class DashboardComponent implements OnInit {
     configModal.keyboard = false;
   }
 
-  addServices = new AddService(0, '', '', '', 0, true, []);
-  services = new Services(0,0);
+  addServices = new AddService(0, '','', '', '', 0,false, []);
+  addServicesNew = new AddService(0, '','', '', '', 0,false, []);
+  servicess = new Services(0,0);
   requestAction= new RequestAction(0,0,[],true);
   closeResult: string | undefined;
   collapsed = false
@@ -157,12 +160,14 @@ export class DashboardComponent implements OnInit {
   userName:any;
   totalLength: any;
   pg: number = 1;
+  panelOpenState = false;
 
   ngOnInit(): void {
     if (localStorage.getItem('token')) {
       this.page = 'one';
       this.serviceCategory();
       this.getSupplierServices();
+      this.getSupplierDashboard()
       this.accreditationStatus();
       this.getRequests();
       this.interact.sharedscreenWidth.subscribe(message => { this.collapsed = message });
@@ -187,10 +192,29 @@ export class DashboardComponent implements OnInit {
     this.endpoint.getServiceCategories().subscribe((data) => {
       this.categoryResponse = data;
       if (this.categoryResponse.responseCode == '00') {
-        this.categoryData = this.categoryResponse.responseData.result;
+        this.categoryData = this.categoryResponse.responseData;
       }
       else {
         this.notify.showError(this.categoryResponse.responseData)
+      }
+    }, (error) => {
+      this.notify.showError(error.error.title);
+    })
+  }
+
+  getServiceTypes(){
+
+  }
+
+  supplierDashboard:any
+  getSupplierDashboard(){
+    this.endpoint.getSupplierDashboard(Number(localStorage.getItem('profileId'))).subscribe((data)=>{
+      this.response = data;
+      if(this.response.responseCode == '00'){
+        this.supplierDashboard = this.response.responseData
+      }
+      else{
+        this.notify.showError(this.response.responseMsg)
       }
     }, (error) => {
       this.notify.showError(error.error.title);
@@ -206,14 +230,17 @@ export class DashboardComponent implements OnInit {
   }
 
   supplierResponse: any;
-  supplerData: any;
+  supplerData: any[]=[ ];
+  supplierCategory: any[] = []
+  supplierServices: any[] = []
   getSupplierServices() {
     // Number(localStorage.getItem('profileId'))
     this.endpoint.getSupplierService(Number(localStorage.getItem('profileId'))).subscribe((data) => {
       this.supplierResponse = data;
       console.warn(this.supplierResponse);
       if (this.supplierResponse.responseCode == '00') {
-        this.supplerData = this.supplierResponse.responseData
+        this.supplerData = this.supplierResponse.responseData;    
+        this.filterd = this.supplerData
       }
       else {
         this.notify.showError(this.supplierResponse.responseMsg)
@@ -224,6 +251,19 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  search = ''
+  filterd:any[] = []
+  filter(data:string){
+    let filterObj =  []
+    if( data.length == 0){
+      filterObj = this.supplerData
+    }
+    else{
+      filterObj = this.supplerData.filter((item) => item.serviceCategory.includes(data) || item.serviceType.includes(data));
+    }
+    this.filterd = filterObj
+  }
+  
   openEnd(content: TemplateRef<any>) {
     this.offcanvasService.open(content, { position: 'end', backdrop: false });
   }
@@ -286,10 +326,10 @@ export class DashboardComponent implements OnInit {
  }
   eventRequestAction(data:boolean){
     for(let i of this.events){
-      this.services.quantity = i.quantity;
-      this.services.serviceId = i.eventId;
-      console.log(this.services);
-      this.requestAction.services.push(this.services)
+      this.servicess.quantity = i.quantity;
+      this.servicess.serviceId = i.eventId;
+      console.log(this.servicess);
+      this.requestAction.services.push(this.servicess)
     }
     this.requestAction.supplierId = Number(localStorage.getItem('profileId'));
     this.requestAction.eventId = this.events[0].eventId;
@@ -328,9 +368,25 @@ export class DashboardComponent implements OnInit {
   }
   open(addService: any) {
     this.modalService.open(addService);
+    this.files = []
+    this.addServices.pictureImages = []
+    this.addServices = this.addServicesNew;
+    console.log(this.addServices);
+    
   }
   addService() {
     this.modalService.dismissAll()
+  }
+  serviveTypes:any
+  getCategory(value:any){
+    this.addServices.serviceCategory =  value.split(',')[1];
+    this.endpoint.getServiceTypes(value.split(',')[0]).subscribe(data =>{
+      this.response = data;
+      this.serviveTypes = this.response.responseData
+
+    })
+    
+
   }
   serviceSuccess(success: any, data: any) {
     this.addService();
@@ -341,13 +397,15 @@ export class DashboardComponent implements OnInit {
     this.addServices.serviceDescription = data.serviceDescription;
     this.addServices.serviceRate = data.rate;
     this.addServices.negotiable = data.negotiable;
-    console.log(this.addServices);
+    if( data.negotiable == '')this.addServices.negotiable = false;
     this.endpoint.addNewService(this.addServices).subscribe((value) => {
       this.response = value;
       this.spinner.hide();
       if (this.response.responseCode == '00') {
         this.notify.showSuccess(this.response.responseMsg)
         this.modalService.open(success, { centered: true });
+        this.getSupplierServices();
+        this.supplierDashboard();
       }
       else {
         this.notify.showError(this.response.responseMsg)

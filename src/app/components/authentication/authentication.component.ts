@@ -27,8 +27,8 @@ export class AuthenticationComponent implements OnInit {
 
 
     ) { }
+    
   page:any
-
   passwordPtn = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
   individualLog = new AccountLogin('','');
   accountLogin = new Login('','');

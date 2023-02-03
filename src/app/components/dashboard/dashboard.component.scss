@@ -50,6 +50,9 @@
 
 }
 
+.mat-mdc-form-field + .mat-mdc-form-field {
+  margin-left: 8px;
+}
 .pagination{
   display: flex;
   justify-content: center;
@@ -65,6 +68,8 @@
         display: flex;
         gap: 20px;
         justify-content: space-between;
+
+        
     }
 
     .part2 {
@@ -73,6 +78,7 @@
         gap: 10px;
         flex-direction: column;
         justify-content: center;
+
 
         .accred {
             background: rgba(219, 62, 52, 0.78);
@@ -251,6 +257,18 @@
         padding: 20px;
         border-radius: 10px;
         flex-basis: 70%;
+        .servicehead{
+          display: flex;
+          gap: 50px;
+          justify-content: center;
+          align-items: center;
+          p{
+            margin: 0;
+          }
+          .search{
+            display: flex;
+          }
+        }
     }
 
     .part2 {
