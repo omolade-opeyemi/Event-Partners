@@ -167,7 +167,7 @@ export class DashboardComponent implements OnInit {
       this.page = 'one';
       this.serviceCategory();
       this.getSupplierServices();
-      this.getSupplierDashboard()
+      this.getSupplierDashboard();
       this.accreditationStatus();
       this.getRequests();
       this.interact.sharedscreenWidth.subscribe(message => { this.collapsed = message });
@@ -405,7 +405,8 @@ export class DashboardComponent implements OnInit {
         this.notify.showSuccess(this.response.responseMsg)
         this.modalService.open(success, { centered: true });
         this.getSupplierServices();
-        this.supplierDashboard();
+        this.getSupplierDashboard();
+
       }
       else {
         this.notify.showError(this.response.responseMsg)

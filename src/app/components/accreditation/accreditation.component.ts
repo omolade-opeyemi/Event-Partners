@@ -12,6 +12,7 @@ import { DialogAnimationExampleDialogComponent } from 'src/app/dialog-animation-
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
+
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { Accreditation, BasicInfo, PaymentDetails, ProofOfExistence, SupplierLocation, SupplierService, } from 'src/app/models/accreditation';
 import { environment } from 'src/environments/environment';
@@ -298,8 +299,9 @@ export class AccreditationComponent implements OnInit {
       this.response = data;
       this.spinner.hide();
       if (this.response.responseCode == '00') {
-        this.notifyService.showSuccess('Accreditation successful')
-        this.page = 'introMsg';
+        this.notifyService.showSuccess('Submitted successfully. Accreditation is awaiting confirmation.')
+        // this.page = 'introMsg';
+        this.router.navigate(['/dashboard']);
       }
       else {
         this.notifyService.showError(this.response.responseMsg)
