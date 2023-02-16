@@ -30,7 +30,8 @@ export class individualAccount {
     public primaryContactEmail: string,
     public primaryContactMobile: string,
     public primaryContactGender: string,
-    public accountLogin: AccountLogin
+    public accountLogin: AccountLogin,
+    public vendorType: string
   ) { }
 
 }

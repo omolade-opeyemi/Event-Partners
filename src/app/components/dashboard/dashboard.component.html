@@ -74,7 +74,7 @@
                     </div>
                 </ng-template>
 
-                <ng-template [ngIf]="supplierDashboard.accreditationStatus != 'UNACCREDITED'">
+                <ng-template [ngIf]="supplierDashboard.accreditationStatus == 'PENDING'">
                     <div class="accredwaiting">
                         <div class="image">
                             <img src="/assets/images/Loader.png" alt="">
@@ -82,6 +82,17 @@
                         <div class="info">
                                 <h5>Accreditation is</h5>
                                 <h5>awaiting confirmation</h5>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template [ngIf]="supplierDashboard.accreditationStatus == 'ACCREDITED'">
+                    <div class="accredwaiting">
+                        <div class="image">
+                            <img src="/assets/images/Loader.png" alt="">
+                        </div>
+                        <div class="info">
+                                <h5>Accreditation is</h5>
+                                <h5>Successful</h5>
                         </div>
                     </div>
                 </ng-template>
@@ -350,7 +361,7 @@
                                             <input type="checkbox" name="select" id="" ngForm [(ngModel)]="isChecked"
                                             (change)="checkValue(isChecked? detail: detail)" />
                                             <div class="sidebar-service-item">
-                                                <img src="{{detail.serviceImage}}"
+                                                <img [src]="detail.serviceImage ? detail.serviceImage : '/assets/images/food.jpg'"
                                                     alt="" />
                                                 <div class="menu">
                                                     <p class="menu-title">{{detail.serviceName}}</p>
@@ -371,7 +382,7 @@
                             <div class="example-sidenav-content">
                                 <div class="request-container">
                                     <div class="request-card"  *ngFor="let pending of pendingRequests; index as i" (click)="drawer.toggle();toggleSideBar(pending.eventId) ">
-                                        <img src="{{pending.eventImage}}"
+                                        <img [src]="pending.eventImage ? pending.eventImage: '/assets/images/Rectangle 669.png'"
                                             alt="" class="request-card-img" />
                                         <h1 class="">{{pending.eventName}}</h1>
                                         <p class="by">By</p>
@@ -382,8 +393,8 @@
                                             <p class="">{{pending.eventCreator}}</p>
                                         </div>
                                         <div class="event">
-                                            <p>Event Date: {{pending.eventDate}}</p>
-                                            <p>Event Time: {{pending.eventTime}}</p>
+                                            <p>Event Date: {{pending.eventDates[0].startDate}}</p>
+                                            <p>Event Time: {{pending.eventDates[0].startTime}}</p>
                                         </div>
                                         <p class="notice">Service requested: {{pending.serviceRequestCount}}</p>
                                     </div>
@@ -540,14 +551,14 @@
                                         <tr *ngFor="let attend of attendedRequests; index as i">
                                             <!-- <th scope="row">{{ i + 1 }}</th> -->
                                             <td>
-                                                <img src="{{attend.creatorImage}}"
+                                                <img [src]="attend.creatorImage ? attend.creatorImage: '/assets/images/Vector (6).png'"
                                                     class="me-2" style="width: 20px" />
                                                 {{ attend.eventCreator }}
                                             </td>
                                             <td>{{ attend.eventName }}</td>
                                             <td>{{ attend.serviceType }}</td>
                                             <td>{{ attend.quantity }}</td>
-                                            <td>{{ attend.eventDate }}</td>
+                                            <td>{{ attend.eventDates[0].startDate}}</td>
                                             <td>
                                                 <mat-icon>more_horiz</mat-icon>
                                             </td>

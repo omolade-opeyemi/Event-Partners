@@ -90,6 +90,12 @@ export class EndpointsService {
   getSupplierDashboard(id:number){
     return this.http.get(this.baseUrl +'api/Dashboard/GetSupplierDashboardDetails?profileId='+id)
   }
+  getAccreditationPrice(): Observable<any>{
+    return this.http.get(this.baseUrl+ '/api/EventSupplier/GetAccreditationPrice')
+  }
+  getVendorTypes(): Observable<any>{
+    return this.http.get(this.baseUrl + 'api/EventSupplier/GetVendorTypes')
+  }
 
 }
 

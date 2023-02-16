@@ -120,7 +120,7 @@ export class AccreditationComponent implements OnInit {
   addBasicInfo = new BasicInfo('', '', '', '', '', '');
   addSupplierLocation = new SupplierLocation('', '', '');
   // addSupplierService = new SupplierService
-  paymentDetails = new PaymentDetails('50000','','','');
+  paymentDetails = new PaymentDetails('','','','');
   deleteServices = new DeleteService(0, [])
   supplierService = new SupplierService('', 0);
   addSupplierServices: SupplierService[] = [];
@@ -159,10 +159,10 @@ export class AccreditationComponent implements OnInit {
       this.reference = `ref-${Math.ceil(Math.random() * 10e13)}`;
       this.addAccreditation.profileId = Number(localStorage.getItem('profileId'));
       this.getDetailsForAccreditationRequest();
+      this.getAccreditationPrice();
       this.interact.getUserName(String(localStorage.getItem('name')));
       this.interact.getUserId(String(localStorage.getItem('profileId')))
       this.userName = localStorage.getItem('name')
-
       this.page = 'introMsg';
       this.interact.sharedscreenWidth.subscribe(message => { this.collapsed = message });
       this.interact.screenSize$.subscribe(message => { this.screenWidth = message });
@@ -178,6 +178,7 @@ export class AccreditationComponent implements OnInit {
     }
   }
 
+  
   openDialog(i: any): void {
     this.dialog.open(DialogAnimationExampleDialogComponent, {
       width: '400px',
@@ -283,7 +284,22 @@ export class AccreditationComponent implements OnInit {
   acrreditation() {
     this.page = 'stepper'
   }
-
+  getAccreditationPrice(){
+    this.spinner.show();
+    this.endpoint.getAccreditationPrice().subscribe((data)=>{
+      this.response = data;
+      this.spinner.hide();
+      if (this.response.responseCode == '00'){
+        this.paymentDetails.amount = this.response.responseData.fees;
+      }
+      else{
+        this.notifyService.showError(this.response.responseMsg)
+      }
+    },(error) => {
+      this.notifyService.showError(error.error.responseMsg);
+      this.spinner.hide();
+    })
+  }
   deleteSupplierServices() {
     this.endpoint.deleteSupplierService(this.deleteServices).subscribe((data) => {
       console.log(data);

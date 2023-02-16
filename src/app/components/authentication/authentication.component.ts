@@ -32,7 +32,7 @@ export class AuthenticationComponent implements OnInit {
   passwordPtn = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
   individualLog = new AccountLogin('','');
   accountLogin = new Login('','');
-  individualReg = new individualAccount('','','',0,'','',0,'',0,'','','','','','','',this.individualLog);
+  individualReg = new individualAccount('','','',0,'','',0,'',0,'','','','','','','',this.individualLog,'');
   bussinessReg = new CreateBussiness('','',0,'',0,'',0,'','','','','','','',this.individualLog);
   password2 = '';
   firstName = '';
@@ -48,6 +48,22 @@ export class AuthenticationComponent implements OnInit {
     this.page='one'
     this.getStates();
     this.getBizTypes();
+    this.getVendorTypes();
+  }
+  vendorTypes:any;
+  getVendorTypes(){
+    this.endpoint.getVendorTypes().subscribe((data)=>{
+      this.response = data;
+      if(this.response.responseCode == '00'){
+        this.vendorTypes = this.response.responseData
+      }
+      else{
+        this.notifyService.showError(this.response.responseMsg)
+      }
+
+    },(error) => {
+      this.notifyService.showError(error.errorMessage);
+    })
   }
   getBizTypes(){
     this.endpoint.getBusinessType().subscribe((data)=>{
@@ -59,7 +75,7 @@ export class AuthenticationComponent implements OnInit {
         this.notifyService.showError(this.response.responseMsg)
       }
     },(error) => {
-      this.notifyService.showError(error.error.responseMsg);
+      this.notifyService.showError(error.errorMessage);
     })
   }
   getStates(){

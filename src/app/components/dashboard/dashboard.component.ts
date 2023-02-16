@@ -327,7 +327,7 @@ export class DashboardComponent implements OnInit {
   eventRequestAction(data:boolean){
     for(let i of this.events){
       this.servicess.quantity = i.quantity;
-      this.servicess.serviceId = i.eventId;
+      this.servicess.serviceId = i.serviceId;
       console.log(this.servicess);
       this.requestAction.services.push(this.servicess)
     }
@@ -343,6 +343,7 @@ export class DashboardComponent implements OnInit {
       this.spinner.hide();
       if( this.response.responseCode == '00'){
         this.notify.showInfo(this.response.responseMsg)
+        this.router.navigate(['/dashboard'])
       }
       else{
         this.notify.showError(this.response.responseMsg)

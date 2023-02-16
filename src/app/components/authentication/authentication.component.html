@@ -136,6 +136,27 @@
                   <small *ngIf="email.errors?.['email']">enter a valid email</small> 
                  </div>
               </div>
+              <!-- ----------- -->
+              <div class="col-md-6">
+                <label for="lga" class="form-label">Lga</label>
+                <select id="lga" ngModel name="lgaId" class="form-select" [(ngModel)]="individualReg.lgaId" required #lgaId="ngModel">
+                  <option value= 0> ---- </option>
+                  <option *ngFor="let item of lga" value="{{item.lgaId}}">{{item.lgaName}}</option>
+                </select>
+                <div class="alert alert-danger" role="alert" *ngIf="lgaId.invalid && (lgaId.dirty || lgaId.touched)">
+                  <small *ngIf="lgaId.errors?.['required']">This field is required</small> 
+                 </div>
+              </div>
+
+              <div class="col-12">
+                <label for="inputState" class="form-label">Vendor Types</label>
+                <select id="vtypes" class="form-select" ngModel name="vtypes" [(ngModel)]="individualReg.vendorType" required #vtypes="ngModel">
+                  <option *ngFor="let item of vendorTypes">{{item}}</option>
+                </select>
+                <div class="alert alert-danger" role="alert" *ngIf="vtypes.invalid && (vtypes.dirty || vtypes.touched)">
+                  <small *ngIf="vtypes.errors?.['required']">This field is required</small> 
+                 </div>
+              </div>
               <div class="col-12">
                 <label for="date" class="form-label">Date of birth</label>
                 <input type="date" [(ngModel)]="individualReg.dateOfBirth" name="dob" max="2004-12-31" class="form-control" id="date" required #date="ngModel">
