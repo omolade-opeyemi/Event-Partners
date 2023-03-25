@@ -11,6 +11,10 @@ import { FileStorageService } from 'src/app/services/file-storage.service';
 import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { NgForm } from '@angular/forms';
 import { ThisReceiver } from '@angular/compiler';
+import { Invoicing } from 'src/app/models/invoicing';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { DialogAnimationExampleDialogComponent } from 'src/app/dialog-animation-example-dialog/dialog-animation-example-dialog.component';
+import { CreateAccount } from 'src/app/models/accreditation';
 
 
 
@@ -131,6 +135,8 @@ export class DashboardComponent implements OnInit {
     private notify: NotificationService,
     private fileStorageService: FileStorageService,
     private spinner: NgxSpinnerService,
+    public dialog: MatDialog,
+
 
 
     private modalService: NgbModal) {
@@ -138,11 +144,15 @@ export class DashboardComponent implements OnInit {
     config.readonly = true;
     configModal.backdrop = 'static';
     configModal.keyboard = false;
+
+
   }
 
+  createAccount = new CreateAccount(0,'','','','','')
+  invoicing = new Invoicing('','','','','',true,0,[]);
   addServices = new AddService(0, '','', '', '', 0,false, []);
   addServicesNew = new AddService(0, '','', '', '', 0,false, []);
-  servicess = new Services(0,0);
+  servicess = new Services(0,0,0);
   requestAction= new RequestAction(0,0,[],true);
   closeResult: string | undefined;
   collapsed = false
@@ -161,6 +171,9 @@ export class DashboardComponent implements OnInit {
   totalLength: any;
   pg: number = 1;
   panelOpenState = false;
+  public isCollapsed = false;
+  reload: any;
+
 
   ngOnInit(): void {
     if (localStorage.getItem('token')) {
@@ -170,19 +183,158 @@ export class DashboardComponent implements OnInit {
       this.getSupplierDashboard();
       this.accreditationStatus();
       this.getRequests();
+      this.getSupplierService_v2()
       this.interact.sharedscreenWidth.subscribe(message => { this.collapsed = message });
       this.interact.screenSize$.subscribe(message => { this.screenWidth = message });
       this.interact.getnavbar("two");
       this.userName = localStorage.getItem('name')
       this.interact.getUserName(String(localStorage.getItem('name')));
       this.interact.getUserId(String(localStorage.getItem('profileId')))
-
+      this.interact.service$.subscribe(message => {
+        this.reload = message;
+        if( this.reload == 'yes'){
+          this.getSupplierService_v2();
+          this.getSupplierDashboard();
+        }
+      })
     }
     else {
       this.router.navigate(['/']);
     }
   }
 
+  setAccount:any;
+  setUpAccount(){
+    this.spinner.show();
+    this.createAccount.profileId = Number(localStorage.getItem('profileId'))
+    this.endpoint.createAccount(this.createAccount).subscribe((data)=>{
+      this.response = data;
+      this.spinner.hide();
+      if(this.response.responseCode == '00'){
+        this.notify.showSuccess(this.response.responseMsg);
+        this.setAccount = this.response.responseData;
+        this.getSupplierDashboard();
+        this.page = 'one';
+        this.resetForm();
+      }else{
+        this.notify.showError(this.response.responseMsg)
+      }
+    },
+    (error) => {
+      this.notify.showError(error.message);
+      this.spinner.hide();
+    }
+    )
+  }
+
+  resetForm(){
+    this.createAccount.accountName = '';
+    this.createAccount.bankAccountNumber = '';
+    this.createAccount.bankCode = '';
+    this.createAccount.bankName = '';
+    this.createAccount.bvn = '';
+    this.createAccount.profileId = 0
+  }
+
+  bank:any
+  getBank(data:any){
+    console.log(data);
+    this.createAccount.bankName = data.split(',')[0];
+    this.createAccount.bankCode = data.split(',')[1];
+    this.createAccount.accountName
+  }
+
+  testModal(nodal:any){
+    this.modalService.open(nodal)
+  }
+  accountSetup(){
+    this.page = 'account'
+    this.getBanks();
+    this.modalService.dismissAll();
+  }
+
+  banks:any;
+  getBanks(){
+    this.endpoint.getBank().subscribe((data)=>{
+      this.response = data;
+      if(this.response.responseCode == '00'){
+        this.banks = this.response.responseData;
+      }else{
+        this.notify.showError(this.response.responseMsg)
+      }
+    },(error) => {
+      this.notify.showError(error.message);
+    })
+  }
+  openDialog(i: any): void {
+    this.dialog.open(DialogAnimationExampleDialogComponent, {
+      width: '400px',
+      data: i,
+    });
+  }
+
+  createSupplierInvoice(data:any){
+    this.invoicing.isSent = data;
+    console.log(this.invoicing);
+    this.spinner.show();
+  this.endpoint.createSupplierInvoice(this.invoicing).subscribe((data)=>{
+    this.response = data;
+    this.spinner.hide();
+    if( this.response.responseCode == '00'){
+      this.notify.showSuccess('successfull')
+    }
+    else{
+      this.notify.showError(this.response.responseMsg)
+    }
+  },(error) => {
+    this.notify.showError(error.message);
+    this.spinner.hide();
+  })
+}
+
+total = 0;
+onChangeDiscount(){
+
+  var disc = (this.invoicing.discount / 100) * this.subTotal;
+  var vat = 0.075 * this.subTotal;
+  var total = this.subTotal - disc 
+  this.total = total
+}
+invoiceDetail:any;
+// supplierInvoiceDetails:any[]=[]
+subTotal:any;
+
+  openInvoiceCreation(content: any,eventId:any) {
+    this.spinner.show();
+    this.endpoint.generateSupplierInvoiceDetails(Number(localStorage.getItem('profileId')),
+    eventId).subscribe(data => {
+      this.response = data;
+      this.spinner.hide();
+      if(this.response.responseCode == '00'){
+        this.invoiceDetail = this.response.responseData;
+        this.invoicing.inovieceNumber = this.invoiceDetail.inovieceNumber;
+        this.invoicing.date = this.invoiceDetail.date.split('T')[0] ;
+        this.invoicing.recipientName = this.invoiceDetail.recipientName;
+        this.invoicing.email = this.invoiceDetail.email;
+        this.invoicing.address = this.invoiceDetail.address;
+        var subtotal = 0
+        this.invoicing.serviceDesriptionDetails = this.invoiceDetail.serviceDesriptionDetails;
+        for(let i=0;i<this.invoicing.serviceDesriptionDetails.length;i++){
+          subtotal  += this.invoicing.serviceDesriptionDetails[i].amount
+        }
+        this.subTotal = subtotal
+        this.total = this.subTotal;
+
+        this.modalService.open(content, { size: 'lg' });
+      }else{
+        this.notify.showError(this.response.responseMsg)
+      }
+    },(error) => {
+      this.notify.showError(error.error.title);
+      this.spinner.hide();
+    })
+    
+  }
   accreditation() {
     this.router.navigate(['/accreditation'])
   }
@@ -229,6 +381,20 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  services_v2: any[]=[]
+  getSupplierService_v2(){
+    this.endpoint.getSupplierService_v2(Number(localStorage.getItem('profileId'))).subscribe((data)=>{
+      this.response = data;
+      if(this.response.responseCode == '00'){
+        this.services_v2 = this.response.responseData;
+      }else{
+        this.notify.showError(this.response.responseMsg)
+      }
+    }, (error) => {
+      this.notify.showError(error.message);
+    })
+  }
+
   supplierResponse: any;
   supplerData: any[]=[ ];
   supplierCategory: any[] = []
@@ -246,7 +412,6 @@ export class DashboardComponent implements OnInit {
         this.notify.showError(this.supplierResponse.responseMsg)
       }
     }, (error) => {
-
       this.notify.showError(error.message);
     })
   }
@@ -289,10 +454,11 @@ export class DashboardComponent implements OnInit {
     this.request = 'attended'
   }
   requestsDetail: any[]=[]
-  toggleSideBar(data:any) {
+
+  getRequestDetail(){
     this.spinner.show();
     this.events = [];
-    this.endpoint.getRequestDetail(Number(localStorage.getItem('profileId')), data).subscribe((data)=>{
+    this.endpoint.getRequestDetail(Number(localStorage.getItem('profileId')), this.eventId).subscribe((data)=>{
       this.response = data;
       this.spinner.hide();
       if( this.response.responseCode == '00'){
@@ -305,45 +471,60 @@ export class DashboardComponent implements OnInit {
       this.notify.showError(error.error.responseMsg);
       this.spinner.hide();
     })
+  }
+
+  eventId:any;
+  toggleSideBar(data:any,drawer:any) {
+    this.eventId = data
+
+    if(drawer._opened){
+      this.getRequestDetail();
+    }
+    
     
   }
 
   events: any[]=[]
   isChecked:any
-  checkValue(event: any){
-    if ( this.isChecked == true){
-      console.log(this.isChecked);
-      this.events.push(event)
-    console.log(this.events);
+  checkValue(data: any, item: any){
+    if ( data.target.checked){
+      this.events.push(item)
+      console.log(this.events);
+      
     }
     else{
-      const index = this.events.indexOf(event);
+      const index = this.events.indexOf(item);
       this.events.splice(index, 1)
-      console.log(this.events);
-      console.log(this.isChecked);
+      
     }
     
  }
   eventRequestAction(data:boolean){
-    for(let i of this.events){
-      this.servicess.quantity = i.quantity;
-      this.servicess.serviceId = i.serviceId;
-      console.log(this.servicess);
-      this.requestAction.services.push(this.servicess)
+    this.requestAction.services = [];
+    for(let i=0;i < this.events.length; i++){
+      var servicess = new Services(0,0,0)
+      servicess.quantity = this.events[i].quantity;
+      servicess.serviceId = this.events[i].serviceId;
+      servicess.requestId = this.events[i].requestId;
+      // this.servicess.quantity = this.events[i].quantity;
+      // this.servicess.serviceId = this.events[i].serviceId;
+      this.requestAction.services.push(servicess)
     }
     this.requestAction.supplierId = Number(localStorage.getItem('profileId'));
     this.requestAction.eventId = this.events[0].eventId;
     this.requestAction.accept = data;
-    console.log(this.requestAction);    
+    console.log(this.requestAction);
+    
     
     this.spinner.show();
     this.endpoint.eventRequestAction(this.requestAction).subscribe((data)=>{
-      console.log(data);
       this.response = data;
       this.spinner.hide();
       if( this.response.responseCode == '00'){
         this.notify.showInfo(this.response.responseMsg)
-        this.router.navigate(['/dashboard'])
+        this.getRequests();
+        this.getRequestDetail();
+
       }
       else{
         this.notify.showError(this.response.responseMsg)
@@ -367,12 +548,17 @@ export class DashboardComponent implements OnInit {
     }
     return styleClass;
   }
-  open(addService: any) {
-    this.modalService.open(addService);
+
+  open(addService: any,account:any) {
+    if(this.supplierDashboard.paymentAccountStatus == 'SUCCESSFUL'){
+      this.modalService.open(addService);
     this.files = []
     this.addServices.pictureImages = []
     this.addServices = this.addServicesNew;
     console.log(this.addServices);
+    }else{
+      this.modalService.open(account);
+    }
     
   }
   addService() {
@@ -403,9 +589,10 @@ export class DashboardComponent implements OnInit {
       this.response = value;
       this.spinner.hide();
       if (this.response.responseCode == '00') {
+        this.url = [];
         this.notify.showSuccess(this.response.responseMsg)
         this.modalService.open(success, { centered: true });
-        this.getSupplierServices();
+        this.getSupplierService_v2();
         this.getSupplierDashboard();
 
       }
@@ -423,7 +610,6 @@ export class DashboardComponent implements OnInit {
     this.spinner.show();
     this.endpoint.getRequests(Number(localStorage.getItem('profileId'))).subscribe((data)=>{
       this.response = data;
-      console.log(data);
       this.spinner.hide();
       if( this.response.responseCode == '00'){
         this.pendingRequests = this.response.responseData.pendingRequests;
@@ -439,7 +625,6 @@ export class DashboardComponent implements OnInit {
   }
 
   imageUpload(selectedfile: any) {
-    // this.ngxService.start();
     this.spinner.show();
     this.fileStorageService.UploadFileFromDataUrl(selectedfile);
     this.fileStorageService.onUploadFinished.subscribe(
@@ -452,10 +637,11 @@ export class DashboardComponent implements OnInit {
           this.imageUrl = resp.responseData;
           this.url.push(this.imageUrl);
           this.addServices.pictureImages = this.url;
+
         }
       }, (error) => {
-        this.spinner.hide();
         this.notify.showError(error.message);
+        this.spinner.hide();
       }
     )
   }
@@ -463,22 +649,31 @@ export class DashboardComponent implements OnInit {
   url: string[] = [];
 
   onSelect(event: any) {
-    console.log(event);
     this.files.push(...event.addedFiles);
+    this.profileImageUpload()
+    console.log(this.files);
+
     
   }
 
-  profileImageUpload(success: any, data: any) {
-    for (let i = 0; i < this.files.length; i++) {
+  profileImageUpload() {
+    // for (let i = 0; i < this.files.length; i++) {
       // const [file] = this.files[i];
-      this.profileImgeFile = this.files[i];
+      // this.profileImgeFile = this.files[i];
+      this.profileImgeFile = this.files[this.files.length - 1];
+
       this.imageUpload(this.profileImgeFile);
-    }
-    this.serviceSuccess(success, data)
+    // }
   }
 
   onRemove(event: File) {
+    const index  = this.files.indexOf(event);
     this.files.splice(this.files.indexOf(event), 1);
+    this.url.splice(index, 1)
+    console.log(this.files);
+    console.warn(this.url);
+    
+    
   }
 
 

@@ -91,3 +91,240 @@
         color: #1C2B66;
     }
 }
+
+
+///////////////// Invoices //////////
+
+
+.event-invoice {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 90%;
+    margin: 1.5rem auto;
+  }
+  
+  .event-invoiceTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .invoiceTopHeader {
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 24px;
+  
+    color: #000000;
+  }
+  
+  .invoiceTopIcons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .invoiceTopIcons .mat-icon {
+    color: #1C2B66;
+    font-size: 26px;
+  }
+  
+  .event-invoiceBanner {
+    background: #F6F7FC;
+    min-height: fit-content;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .invoiceBannerTop {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  
+  .invoiceBannerLogo img {
+    width: 150px;
+    height: 94px;
+    object-fit: contain;
+  }
+  
+  .invoiceBannerContact p {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 140%;
+    /* or 10px */
+  
+    letter-spacing: -0.02em;
+  
+    color: #2D3748;
+  }
+  
+  .invoiceBannerContact p .mat-icon {
+    color: #1C2B66;
+  }
+  
+  .invoiceBannerBottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .invoiceBannerRecepient {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .invoiceBannerRecepient h5 {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+  
+  }
+  
+  .invoiceBannerRecepient p {
+    width: 40%;
+    min-width: 180px;
+    font-weight: 400;
+    line-height: 140%;
+    letter-spacing: -0.02em;
+    color: rgba(45, 55, 72, 0.3);
+  }
+  
+  .invoiceBannerRecContact p {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 140%;
+    /* or 10px */
+  
+    letter-spacing: -0.02em;
+  
+    color: #2D3748;
+  }
+  
+  .invoiceBannerRecContact p .mat-icon {
+    font-size: 18px;
+    color: #1C2B66;
+  }
+  
+  .invoiceBannerInvoice {
+    display: flex;
+    gap: 0.4rem;
+    flex-direction: column;
+  
+  }
+  
+  .invoiceBannerInvoice h3 {
+    font-size: 19px;
+    font-weight: 700;
+  
+  }
+  
+  .invoiceNoTitle {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  
+  .invoiceNoText {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 140%;
+    /* or 10px */
+    letter-spacing: -0.02em;
+    color: rgba(45, 55, 72, 0.3);
+  
+  }
+  
+  
+  
+  .event-InvoiceNotes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .event-InvoiceNotes h4 {
+    font-size: 16px;
+    font-weight: 600;
+  
+  }
+  
+  .event-InvoiceNotes p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 140%;
+    /* or 11px */
+    letter-spacing: -0.02em;
+    color: rgba(45, 55, 72, 0.3);
+  
+  }
+  
+  .eventInvoiceBtn {
+    text-align: center;
+  }
+  
+  .eventInvoiceBtn button {
+    padding: 1rem 4rem;
+    border-radius: 12px;
+    color: #1C2B66;
+    background: #fff;
+    border: 1px solid #1C2B66;
+  }
+  
+  th,
+  .discount,
+  .subtotal {
+    font-weight: 400;
+    line-height: 140%;
+    letter-spacing: -0.02em;
+    color: rgba(45, 55, 72, 0.3);
+  }
+  
+  .total {
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 140%;
+    letter-spacing: -0.02em;
+    color: #1C2B66;
+  }
+  
+  @media screen and (max-width:500px) {
+    .invoiceBannerLogo img {
+      width: 100px;
+      height: 54px;
+      object-fit: contain;
+    }
+  
+    .invoiceBannerContact p {
+      font-size: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.2rem;
+    }
+  
+    .invoiceBannerContact p .mat-icon {
+      font-size: 12px;
+    }
+  
+    .invoiceBannerRecepient p {
+      font-size: 13px;
+      width: 25%;
+      min-width: 100px;
+    }
+  
+    table {
+      font-size: 13px;
+    }
+  
+    .total {
+      font-size: 20px;
+    }
+  }

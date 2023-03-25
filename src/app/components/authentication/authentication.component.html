@@ -137,17 +137,6 @@
                  </div>
               </div>
               <!-- ----------- -->
-              <div class="col-md-6">
-                <label for="lga" class="form-label">Lga</label>
-                <select id="lga" ngModel name="lgaId" class="form-select" [(ngModel)]="individualReg.lgaId" required #lgaId="ngModel">
-                  <option value= 0> ---- </option>
-                  <option *ngFor="let item of lga" value="{{item.lgaId}}">{{item.lgaName}}</option>
-                </select>
-                <div class="alert alert-danger" role="alert" *ngIf="lgaId.invalid && (lgaId.dirty || lgaId.touched)">
-                  <small *ngIf="lgaId.errors?.['required']">This field is required</small> 
-                 </div>
-              </div>
-
               <div class="col-12">
                 <label for="inputState" class="form-label">Vendor Types</label>
                 <select id="vtypes" class="form-select" ngModel name="vtypes" [(ngModel)]="individualReg.vendorType" required #vtypes="ngModel">
@@ -221,9 +210,11 @@
                   <small *ngIf="state.errors?.['required']">This field is required</small> 
                  </div>
               </div>
+
+
               <div class="col-md-6">
                 <label for="lga" class="form-label">Lga</label>
-                <select id="lga" ngModel name="lgaId" class="form-select" [(ngModel)]="individualReg.lgaId" required #lgaId="ngModel">
+                <select id="lga" ngModel name="lgaId" class="form-select" (change)="getLgaId(lgaId.value)" [(ngModel)]="lgaIdd" required #lgaId="ngModel">
                   <option value= 0> ---- </option>
                   <option *ngFor="let item of lga" value="{{item.lgaId}}">{{item.lgaName}}</option>
                 </select>

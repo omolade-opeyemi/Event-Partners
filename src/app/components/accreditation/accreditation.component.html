@@ -123,6 +123,7 @@
             </div>
           </form>
         </mat-step>
+
         <mat-step [stepControl]="secondFormGroup" label="Location">
           <form [formGroup]="secondFormGroup" >
             <div class="contain">
@@ -164,56 +165,48 @@
             </div>
           </form>
         </mat-step>
+
         <mat-step [stepControl]="secondFormGroup" label="Service">
           <form [formGroup]="secondFormGroup">
 
             <div class="containTable">
               <h2>Services</h2>
               <div class="inner">
-                <div class="table-responsive">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col"></th>
-                      <th scope="col">Service Name</th>
-                      <th scope="col">Service Type</th>
-                      <th scope="col">Rate</th>
-                      <th scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let country of supplierData; index as i">
-                      <th scope="row">{{ i + 1 }}</th>
-                      <td>
-                        <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="me-2"
-                          style="width: 20px"> -->
-                        {{ country.name }}
-                      </td>
-                      <td>{{ country.serviceType }}</td>
-                      <td>{{ country.rate | number }}</td>
-                      <td mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" style="cursor: pointer;">
-                        <mat-icon>more_horiz</mat-icon>
-                      </td>
-                      <!-- ---------- Side menu -------------- -->
-                      <mat-menu #menu="matMenu">
-                        <button mat-menu-item >
-                          <mat-icon>edit</mat-icon>
-                          <span>Edit</span>
-                        </button>
-                        <button mat-menu-item>
-                          <mat-icon>content_copy</mat-icon>
-                          <span>Duplicate</span>
-                        </button>
-                        <button mat-menu-item 
-                        mat-raised-button (click)="openDialog(country.serviceId)">
-                          <mat-icon>delete</mat-icon>
-                          <span>Delete</span>
-                        </button>
-                      </mat-menu>
-                      <!-- ------------- Side menu ends ------------- -->
-                    </tr>
-                  </tbody>
-                </table>
+                <div class="accordion">
+                  <ngb-accordion activeIds="ngb-panel-0" *ngFor="let items of services_v2; index as i">
+                      <ngb-panel title="{{items.serviceCategory}}">
+                          <ng-template ngbPanelContent>
+                              <table class="table table-striped">
+                                  <thead>
+                                      <tr>
+                                          <th scope="col"></th>
+                                          <th scope="col">Service Name</th>
+                                          <th scope="col">Price</th>
+                                          <th scope="col">Rating</th>
+                                          <th scope="col">Date Added</th>
+                                          <th></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr *ngFor="let item of items.services; index as i" style="vertical-align: middle;">
+                                          <th scope="row"></th>
+                                          <!-- <th scope="row">{{ i + 1 }}</th> -->
+                                          <td>
+                                              <img [src]="item.image ? item.image : '/assets/images/food.jpg'"
+                                                  class="me-2" style="width: 70px" />
+                                              {{item.serviceName }}
+                                          </td>
+                                          <td>{{ item.price | number }}</td>
+                                          <td><ngb-rating [rate]="3"></ngb-rating></td>
+                                          <td>{{item.dateCreated | split: "T": 0}}</td>
+                                          <td style="cursor:pointer" (click)="openDialog(item.serviceId)">
+                                              <mat-icon>delete</mat-icon></td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </ng-template>
+                      </ngb-panel>
+                  </ngb-accordion>
               </div>
 
               </div>
@@ -225,6 +218,7 @@
             </div>
           </form>
         </mat-step>
+        
         <mat-step [stepControl]="secondFormGroup" label="Verification">
           <!-- <ng-template matStepLabel>Verification</ng-template> -->
           <div class="contain">
@@ -276,14 +270,14 @@
                     </ngx-dropzone-label>
                     <ngx-dropzone-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
                       [removable]="true" (removed)="onRemove(f)">
-                      <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                      <ngx-dropzone-label>{{ f.name | slice:0:6 }} ({{ f.type }})</ngx-dropzone-label>
                     </ngx-dropzone-preview>
                     
                   </div>
                 </div>
               </form>
               <div class="buttons">
-                <button class="btn btn-dark" mat-button (click)="profileImageUpload(proofOfExistence.value)">+ Add</button>
+                <button class="btn btn-dark" mat-button (click)="addProof(proofOfExistence.value)">+ Add</button>
                 <!-- (click)="stepper.reset()" -->
               </div>
               <hr>
@@ -307,7 +301,7 @@
                           style="width: 20px"> -->
                         {{ country.documentCaption }}
                       </td>
-                      <td colspan="3">{{ country.documentDescription }}</td>
+                      <td colspan="3">{{ country.documentDescription | slice:0:20 }}</td>
                       <!-- <td>{{ country.price | number }}</td> -->
                       <!-- <td mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" style="cursor: pointer;">
                         <mat-icon>more_horiz</mat-icon>
@@ -384,7 +378,7 @@
                             [(ngModel)]="paymentDetails.amount" disabled="true">
                         <button
                             [hidden]="(paymentDetails.paymentGateway == 'flutterwave' || paymentDetails.paymentGateway == 'remita' || paymentDetails.paymentGateway == 'inter' || paymentDetails.paymentGateway == '')"
-                            angular4-paystack [email]="'mailexample@mail.com'" [amount]="50000 * 100"
+                            angular4-paystack [email]="eml" [amount]="paymentDetails.amount * 100"
                             [ref]="reference" [key]="key" [class]="'btn btn-primary'"
                             (paymentInit)="paymentInit()" (onClose)="paymentCancel()"
                             (callback)="paymentDone($event)">Pay with

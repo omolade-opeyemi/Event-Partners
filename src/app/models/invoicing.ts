@@ -1,12 +1,13 @@
 export class Invoicing{
     constructor(
-      public invoiceId: string,
+      public inovieceNumber: string,
       public date: string,
       public recipientName: string,
       public email: string,
       public address: string,
       public isSent: boolean,
-      public supplierInvoiceDetails: InvoiceDetails[]
+      public discount: number,
+      public serviceDesriptionDetails: any[]
     ){}
   }
 

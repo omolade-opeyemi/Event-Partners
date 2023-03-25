@@ -1,116 +1,330 @@
 <app-sidenav *ngIf="!isauthRouth()"></app-sidenav>
 
 <div class="body" [ngClass]="getBodyClass()">
-    <app-header></app-header>
-    <div class="main-header">
-        <div class="welcome">
-            <h5 class="colour">👋 Hi Lucy</h5>
-            <h3>Invoice List</h3>
-        </div>
-        <div>
-            <input type="search">
-            <button class="btn btn-primary" (click)="openLg(content)">+ Add New</button>
-        </div>
+  <app-header></app-header>
+  <div class="main-header">
+    <div class="welcome">
+      <h5 class="colour">👋 Hi Lucy</h5>
+      <h3>Invoice List</h3>
+    </div>
+    <div>
+      <input type="search">
+      <button class="btn btn-primary" (click)="openLg(content)">+ Add New</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Invoice ID</th>
+            <th scope="col">Event Creator</th>
+            <th scope="col">Email</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">
+              <mat-icon>delete</mat-icon>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let country of supplierInvoices; index as i">
+            <!-- <th scope="row">{{ i + 1 }}</th> -->
+            <th scope="row"><input type="checkbox" name="" id=""></th>
+            <td>{{country.invoiceId}}</td>
+            <td>
+              <img
+                [src]="country.eventCreatorImage ? country.eventCreatorImage :'/assets/images/Smiley face 21 (3).png'"
+                style="width: 20px">
+              {{ country.eventCreator }}
+            </td>
+            <td>{{ country.eventCreatorEmail }}</td>
+            <td>{{ country.date | split: "T": 0 }}</td>
+            <td>
+              <div [ngClass]="{'done': country.status =='Done','pending': country.status =='Pending'}">{{
+                country.status }}</div>
+            </td>
+            <td mat-button [matMenuTriggerFor]="menu" style="cursor: pointer;">&hellip; </td>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="getSupplierInvoiceDetails(review, country.id)">Detail</button>
+              <button mat-menu-item [disabled]="country.status == 'Done'"
+                (click)="sendSupplierInvoice(country.invoiceId)">Send</button>
+              <button mat-menu-item (click)="deleteSupplierService(country.invoiceId)">Delete</button>
+            </mat-menu>
+          </tr>
+        </tbody>
+      </table>
+
     </div>
 
-    <div class="main">
-        <div class="table-responsive">
-            <table class="table table-striped">
+    <!-- ///////  Add Invoice Modal /////// -->
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title">Create New Invoice</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3" #invoiCingForm="ngForm">
+          <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Invoice ID</label>
+            <input type="text" class="form-control" id="invoiceid" readonly [(ngModel)]="invoicing.inovieceNumber"
+              ngModel name="invoiceid">
+          </div>
+          <div class="col-md-6">
+            <label for="inputPassword4" class="form-label">Date</label>
+            <input type="date" class="form-control" id="date" [(ngModel)]="invoicing.date" ngModel name="date">
+          </div>
+          <div class="col-12">
+            <label for="inputAddress" class="form-label">Recipient Name</label>
+            <input type="text" class="form-control" id="name" placeholder="1234 Main St" #name="ngModel" ngModel
+              name="name_{{invoicing.recipientName}}">
+            <!-- [(ngModel)]="invoicing.recipientName" -->
+          </div>
+
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" [(ngModel)]="invoicing.email" ngModel name="email">
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" placeholder="Apartment, studio, or floor"
+              [(ngModel)]="invoicing.address" ngModel name="address">
+          </div>
+          <hr>
+          <h4>Service Description</h4>
+          <div class="col-md-6">
+            <label for="type" class="form-label">Service Type</label>
+            <select id="type" class="form-select" [(ngModel)]="serviceRate" ngModel name="service"
+              (change)="getRate(rate.value)" #rate="ngModel">
+              <option selected>Choose...</option>
+              <option *ngFor="let item of supplerData" value="{{item.serviceId}},{{item.price}}">{{item.serviceType}}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="rate" class="form-label">Rate</label>
+            <input type="text" class="form-control" id="rate" [(ngModel)]="invoicingDetail.rate" ngModel name="rate">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-light cancel"
+          (click)="modal.close('Close click'); createSupplierInvoice(true)">Send Invoice</button>
+        <button type="button" class="btn addService"
+          (click)="modal.close('Close click');createSupplierInvoice(false)">Create Invoice</button>
+      </div>
+    </ng-template>
+
+
+    <ng-template>
+      <div class="event-invoice">
+        <div class="event-invoiceTop">
+          <h2 class="invoiceTopHeader">
+            Preview
+          </h2>
+          <div class="invoiceTopIcons">
+            <mat-icon>download</mat-icon>
+            <mat-icon>print</mat-icon>
+          </div>
+        </div>
+        <div class="event-invoiceBanner">
+          <div class="invoiceBannerTop">
+            <div class="invoiceBannerLogo">
+              <img
+                src="https://images.squarespace-cdn.com/content/v1/56201b5ce4b0c05fdc35713a/1526420864826-N38FTFOAVE50YOYYME85/j-logo-black-new.pnglogo"
+                alt="">
+            </div>
+            <div class="invoiceBannerContact">
+              <p><mat-icon>mail</mat-icon>Johnsmith@email.com</p>
+              <p><mat-icon>call</mat-icon>12345678900</p>
+            </div>
+          </div>
+          <div class="invoiceBannerBottom">
+            <div class="invoiceBannerRecepient">
+              <h5>Recipient</h5>
+              <p>JOHN SMITH
+                4305 Liberty Avenue
+                92680 Lekki, Lagos</p>
+              <div class="invoiceBannerRecContact">
+                <p><mat-icon>mail</mat-icon>Johnsmith@email.com</p>
+                <p><mat-icon>call</mat-icon>12345678900</p>
+              </div>
+            </div>
+            <div class="invoiceBannerInvoice">
+              <h3>Invoice</h3>
+              <div class="invoiceNo">
+                <p class="invoiceNoTitle">Invoice no.</p>
+                <p class="invoiceNoText">#34FG456</p>
+              </div>
+              <div class="invoiceDate">
+                <p class="invoiceNoTitle">Invoice Date</p>
+                <p class="invoiceNoText">Sept 26, 2022</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="event-InvoiceTable">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <!-- <th scope="col">#</th> -->
+                  <th scope="col">SERVICE TYPE</th>
+                  <th scope="col">SERVICE CAPTION</th>
+                  <th scope="col">RATE</th>
+                  <th scope="col">TOTAL AMOUNT</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <!-- <th scope="row">1</th> -->
+                  <td>Festival</td>
+                  <td>Disk Jockey</td>
+                  <td>#3000</td>
+                  <td>#25000</td>
+                </tr>
+                <tr>
+                  <!-- <th scope="row">2</th> -->
+                  <td>Festival</td>
+                  <td>Disk Jockey</td>
+                  <td>#3000</td>
+                  <td>#25000</td>
+                </tr>
+                <tr>
+                  <th></th>
+                  <td class="subtotal" colspan="2">SUBTOTAL</td>
+                  <td>#25000</td>
+                </tr>
+                <tr>
+                  <th></th>
+                  <td class="discount" colspan="2">DISCOUNT 5%</td>
+                  <td>#25000</td>
+                </tr>
+                <tr>
+                  <th scope="row"></th>
+                  <td colspan="2">TOTAL</td>
+                  <td class="total">#25000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="event-InvoiceNotes">
+          <h4>NOTES</h4>
+          <p>Lörem ipsum egogåde gyssa. Fare egoligen. Lakask velädera tuktiga, monoseras. Prenade. Monopyv rukäsm
+            rirade.
+            Krisväska presamma. </p>
+        </div>
+        <div class="eventInvoiceBtn">
+          <button>Close</button>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #review let-modal>
+      <div class="modal-body">
+        <div class="event-invoice">
+          <div class="event-invoiceTop">
+            <h2 class="invoiceTopHeader">
+              Preview
+            </h2>
+            <div class="invoiceTopIcons">
+              <mat-icon>download</mat-icon>
+              <mat-icon>print</mat-icon>
+            </div>
+          </div>
+          <div class="event-invoiceBanner">
+            <div class="invoiceBannerTop">
+              <div class="invoiceBannerLogo">
+                <img
+                  src="https://images.squarespace-cdn.com/content/v1/56201b5ce4b0c05fdc35713a/1526420864826-N38FTFOAVE50YOYYME85/j-logo-black-new.pnglogo"
+                  alt="">
+              </div>
+              <div class="invoiceBannerContact">
+                <p><mat-icon>mail</mat-icon>{{invoiceDetail.supplierEmail}}</p>
+                <p><mat-icon>call</mat-icon>{{invoiceDetail.supplierPhoneNumber}}</p>
+              </div>
+            </div>
+            <div class="invoiceBannerBottom">
+              <div class="invoiceBannerRecepient">
+                <h5>Recipient</h5>
+                <p>{{invoiceDetail.recepientName}} <br>
+                  {{invoiceDetail.recepientAddress}}</p>
+                <div class="invoiceBannerRecContact">
+                  <p><mat-icon>mail</mat-icon>{{invoiceDetail.recepientEmail}}</p>
+                  <p><mat-icon>call</mat-icon>{{invoiceDetail.recepientPhoneNumber}}</p>
+                </div>
+              </div>
+              <div class="invoiceBannerInvoice">
+                <h3>Invoice</h3>
+                <div class="invoiceNo">
+                  <p class="invoiceNoTitle">Invoice no.</p>
+                  <p class="invoiceNoText">{{invoiceDetail.invoiceNumber}}</p>
+                </div>
+                <div class="invoiceDate">
+                  <p class="invoiceNoTitle">Invoice Date</p>
+                  <p class="invoiceNoText">{{invoiceDetail.invoiceDate}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="event-InvoiceTable">
+            <div class="table-responsive">
+              <table class="table table-hover">
                 <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Invoice ID</th>
-                        <th scope="col">Event Creator</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">
-                            <mat-icon>delete</mat-icon>
-                        </th>
-                    </tr>
+                  <tr>
+                    <!-- <th scope="col">#</th> -->
+                    <th scope="col">SERVICE TYPE</th>
+                    <th scope="col">SERVICE CAPTION</th>
+                    <th scope="col">RATE</th>
+                    <th scope="col">TOTAL AMOUNT</th>
+                  </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let country of supplierInvoices; index as i">
-                        <!-- <th scope="row">{{ i + 1 }}</th> -->
-                        <th scope="row"><input type="checkbox" name="" id=""></th>
-                        <td>#{{country.invoiceId}}</td>
-                        <td>
-                            <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="me-2"
-                                style="width: 20px">
-                            {{ country.eventCreator }}
-                        </td>
-                        <td>{{ country.email }}</td>
-                        <td>{{ country.date | split: "T": 0 }}</td>
-                        <td>
-                            <div [ngClass]="{'done': country.status =='Done','pending': country.status =='Pending'}">{{
-                                country.status }}</div>
-                        </td>
-                        <td>&hellip; </td>
-                    </tr>
+                  <tr *ngFor="let item of invoiceDetail.serviceDetails ">
+                    <!-- <th scope="row">1</th> -->
+                    <td>{{item.serviceType}}</td>
+                    <td>{{item.serviceCaption}}</td>
+                    <td>&#8358; {{item.rate}}</td>
+                    <td>&#8358; {{item.totalAmount}}</td>
+                  </tr>
+
+                  <tr>
+                    <th></th>
+                    <td class="subtotal" colspan="2">SUBTOTAL</td>
+                    <td>&#8358;{{invoiceDetail.subTotal}}</td>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <td class="discount" colspan="2">DISCOUNT {{invoiceDetail.discount}}%</td>
+                    <td>&#8358; {{invoiceDetail.discount/100 * invoiceDetail.subTotal}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"></th>
+                    <td colspan="2">TOTAL</td>
+                    <td class="total">&#8358; {{invoiceDetail.total}}</td>
+                  </tr>
                 </tbody>
-            </table>
-
+              </table>
+            </div>
+          </div>
+          <div class="event-InvoiceNotes">
+            <h4>NOTES</h4>
+            <p>Lörem ipsum egogåde gyssa. Fare egoligen. Lakask velädera tuktiga, monoseras. Prenade. Monopyv rukäsm
+              rirade.
+              Krisväska presamma. </p>
+          </div>
+          <div class="eventInvoiceBtn">
+            <button (click)="modal.dismiss('Cross click')">Close</button>
+          </div>
         </div>
+      </div>
 
-        <!-- ///////  Add Invoice Modal /////// -->
-        <ng-template #content let-modal>
-            <div class="modal-header">
-                <h4 class="modal-title">Create New Invoice</h4>
-                <button type="button" class="btn-close" aria-label="Close"
-                    (click)="modal.dismiss('Cross click')"></button>
-            </div>
-            <div class="modal-body">
-                <form class="row g-3" #invoiCingForm="ngForm">
-                    <div class="col-md-6">
-                        <label for="inputEmail4" class="form-label">Invoice ID</label>
-                        <input type="text" class="form-control" id="invoiceid" readonly
-                        [(ngModel)]="invoicing.invoiceId" ngModel name="invoiceid">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="inputPassword4" class="form-label">Date</label>
-                        <input type="date" class="form-control" id="date"
-                        [(ngModel)]="invoicing.date" ngModel name="date">
-                    </div>
-                    <div class="col-12">
-                        <label for="inputAddress" class="form-label">Recipient Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="1234 Main St"
-                        [(ngModel)]="invoicing.recipientName" ngModel name="name">
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <label for="inputCity" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email"
-                        [(ngModel)]="invoicing.email" ngModel name="email">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="inputCity" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="address" placeholder="Apartment, studio, or floor"
-                        [(ngModel)]="invoicing.address" ngModel name="address">
-                    </div>
-                    <hr>
-                    <h4>Service Description</h4>
-                    <div class="col-md-6">
-                        <label for="type" class="form-label">Service Type</label>
-                        <select id="type" class="form-select"
-                        [(ngModel)]="serviceRate" ngModel name="service"
-                        (change)="getRate(rate.value)" #rate="ngModel">
-                            <option selected>Choose...</option>
-                            <option *ngFor="let item of supplerData" 
-                            value="{{item.serviceId}},{{item.price}}">{{item.serviceType}}</option>
-                          </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="rate" class="form-label">Rate</label>
-                        <input type="text" class="form-control" id="rate"
-                        [(ngModel)]="invoicingDetail.rate" ngModel name="rate">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <button type="button" class="btn btn-light cancel" (click)="modal.close('Close click'); createSupplierInvoice(true)">Send Invoice</button>
-                <button type="button" class="btn addService" (click)="modal.close('Close click');createSupplierInvoice(false)">Create Invoice</button>
-            </div>
-        </ng-template>
-    </div>
+    </ng-template>
+  </div>
 </div>
-<ngx-spinner type="ball-scale-multiple" ><p style="color: white" > Loading... </p></ngx-spinner>
+<ngx-spinner type="ball-scale-multiple">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

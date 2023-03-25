@@ -95,6 +95,7 @@ export class AccreditationComponent implements OnInit {
   paymentInit() {
     console.log('Payment initialized');
     // this.payment.amount = this.bookingPrice;
+    this.paymentDetails.paymentGateway = '1'
   }
 
   paymentDone(ref: { message: string, reference: string, status: string }) {
@@ -103,7 +104,7 @@ export class AccreditationComponent implements OnInit {
     if (ref.status == 'success') {
       // this.addNewAsset(ref.reference, 'paystack');
       this.paymentDetails.paymentStatus = ref.status;
-      this.accreditationRequest()
+      this.accreditationRequest();
     }
     else{
       this.notifyService.showError('Error in making payment')
@@ -117,6 +118,7 @@ export class AccreditationComponent implements OnInit {
     this.page = 'payment'
   }
 
+  eml:any;
   addBasicInfo = new BasicInfo('', '', '', '', '', '');
   addSupplierLocation = new SupplierLocation('', '', '');
   // addSupplierService = new SupplierService
@@ -160,10 +162,13 @@ export class AccreditationComponent implements OnInit {
       this.addAccreditation.profileId = Number(localStorage.getItem('profileId'));
       this.getDetailsForAccreditationRequest();
       this.getAccreditationPrice();
+      this.getSupplierService_v2();
       this.interact.getUserName(String(localStorage.getItem('name')));
       this.interact.getUserId(String(localStorage.getItem('profileId')))
       this.userName = localStorage.getItem('name')
       this.page = 'introMsg';
+      this.eml=localStorage.getItem('email')
+
       this.interact.sharedscreenWidth.subscribe(message => { this.collapsed = message });
       this.interact.screenSize$.subscribe(message => { this.screenWidth = message });
       this.interact.service$.subscribe(message => {
@@ -353,17 +358,21 @@ export class AccreditationComponent implements OnInit {
   profileImgeFile: any;
   onSelect(event: { addedFiles: any; }) {
     this.files.push(...event.addedFiles);    
+    this.profileImageUpload();
   }
 
-  profileImageUpload(data:any) {
+  profileImageUpload() {
     var profileImgeFile:any
-    for (let i = 0; i < this.files.length; i++) {
-      profileImgeFile = this.files[i];
+    // for (let i = 0; i < this.files.length; i++) {
+      profileImgeFile = this.files[this.files.length - 1];
       this.imageUpload(profileImgeFile);
-    }
-    var proof:ProofOfExistence = new ProofOfExistence(data.caption, data.description.substring(0, 20),this.addProofOfExistence.documentFiles)
-    this.proofOfExistences.push(proof);
-    this.clearVerificationForm()
+    // }
+  }
+
+  addProof(data:any){
+    var proof:ProofOfExistence = new ProofOfExistence(data.caption, data.description,this.addProofOfExistence.documentFiles)
+      this.proofOfExistences.push(proof);
+      this.clearVerificationForm()
   }
 
   clearVerificationForm(){
@@ -373,8 +382,23 @@ export class AccreditationComponent implements OnInit {
     this.files = []
   }
   onRemove(event: File) {
+    const index  = this.files.indexOf(event)
     this.files.splice(this.files.indexOf(event), 1);
+    this.addProofOfExistence.documentFiles.splice(index,1);
+  }
 
+  services_v2: any[]=[]
+  getSupplierService_v2(){
+    this.endpoint.getSupplierService_v2(Number(localStorage.getItem('profileId'))).subscribe((data)=>{
+      this.response = data;
+      if(this.response.responseCode == '00'){
+        this.services_v2 = this.response.responseData;
+      }else{
+        this.notifyService.showError(this.response.responseMsg)
+      }
+    }, (error) => {
+      this.notifyService.showError(error.message);
+    })
   }
 
 }

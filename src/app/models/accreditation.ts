@@ -42,7 +42,7 @@ export class Accreditation {
 
   export class PaymentDetails {
     constructor(
-        public amount: string,
+        public amount: any,
         public transactionRef: string,
         public paymentGateway: string,
         public paymentStatus: string
@@ -60,5 +60,16 @@ export class Accreditation {
       public platForm:string,
       public gateway:string
 
+    ){}
+  }
+
+  export class CreateAccount{
+    constructor(
+      public profileId: number,
+      public bvn: string,
+      public bankCode: string,
+      public bankName: string,
+      public bankAccountNumber: string,
+      public accountName: string
     ){}
   }

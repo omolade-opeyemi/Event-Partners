@@ -68,7 +68,7 @@ export class InvoiceComponent implements OnInit {
 
     ) { }
 
-    invoicing = new Invoicing('','','','','',true,[]);
+    invoicing = new Invoicing('','','','','',true,0,[]);
     invoicingDetail = new InvoiceDetails(0,0)
   collapsed=false
   screenWidth = 0
@@ -82,6 +82,64 @@ export class InvoiceComponent implements OnInit {
     this.getSupplierInvoices();
   }
 
+  sendSupplierInvoice(data:string){
+    this.spinner.show();
+    this.endpoint.sendSupplierInvoice(data).subscribe((data)=>{
+      this.response = data;
+      this.spinner.hide();
+      if(this.response.responseCode == '00'){
+        this.getSupplierInvoices();
+        this.notify.showSuccess(this.response.responseMsg);
+      }else{
+        this.notify.showError(this.response.responseMsg)
+      }
+    },(error) => {      
+      this.notify.showError(error.message);
+            this.spinner.hide();
+    })
+  }
+
+  deleteSupplierService(data:string){
+    this.spinner.show();
+    this.endpoint.deleteSupplierInvoice(data).subscribe((data)=>{
+      this.response = data;
+      this.spinner.hide();
+      if(this.response.responseCode == '00'){
+        this.getSupplierInvoices();
+        this.notify.showSuccess(this.response.responseMsg)
+      }else{
+        this.notify.showError(this.response.responseMsg)
+      }
+    },(error) => {      
+      this.notify.showError(error.message);
+            this.spinner.hide();
+    })
+  }
+
+
+  invoiceDetail:any;
+  getSupplierInvoiceDetails(review:any, data:any){
+    this.spinner.show();
+    const profileId = Number(localStorage.getItem('profileId'))
+    const invoiceId = data
+    this.endpoint.getSupplierInvoiceDetails(profileId, invoiceId).subscribe((data)=> {
+      this.response = data;
+      this.spinner.hide();
+      if( this.response.responseCode == '00'){
+        this.invoiceDetail = this.response.responseData;
+        this.modalService.open(review, { size: 'xl' });
+      }
+      else{
+        this.notify.showError(this.response.responseMsg)
+      }
+    },(error) => {      
+      this.notify.showError(error.message);
+            this.spinner.hide();
+    })
+  }
+  detailInvoice(content:any,data:any) {
+		this.modalService.open(content, { size: 'xl' });
+	}
   supplierInvoices:any;
   getSupplierInvoices(){
     this.spinner.show();
@@ -124,7 +182,7 @@ export class InvoiceComponent implements OnInit {
         this.spinner.hide()
         if( this.response.responseCode == '00'){
           this.getSupplierServices();
-          this.invoicing.invoiceId = this.response.responseData;
+          this.invoicing.inovieceNumber = this.response.responseData;
           this.modalService.open(content, { size: 'lg' });
         }
         else{
@@ -161,7 +219,7 @@ export class InvoiceComponent implements OnInit {
 
   createSupplierInvoice(data:any){
     this.invoicing.isSent = data;
-    this.invoicing.supplierInvoiceDetails . push(this.invoicingDetail);
+    this.invoicing.serviceDesriptionDetails . push(this.invoicingDetail);
     console.log(this.invoicing);
     this.spinner.show();
   this.endpoint.createSupplierInvoice(this.invoicing).subscribe((data)=>{

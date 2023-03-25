@@ -50,6 +50,9 @@ export class EndpointsService {
   getSupplierService(id:number): Observable<any>{
     return this.http.get(this.baseUrl+ 'api/EventSupplier/GetSupplierServices?profileId='+id)
   }
+  getSupplierService_v2(id:number): Observable<any>{
+    return this.http.get(this.baseUrl+ 'api/EventSupplier/GetSupplierServices_v2?profileId='+id)
+  }
 
   deleteSupplierService(data:any): Observable<any>{
     return this.http.post(this.baseUrl+ 'api/EventSupplier/DeleteSupplierServices', data)
@@ -96,6 +99,25 @@ export class EndpointsService {
   getVendorTypes(): Observable<any>{
     return this.http.get(this.baseUrl + 'api/EventSupplier/GetVendorTypes')
   }
+  generateSupplierInvoiceDetails(profileId:any, eventId:any): Observable<any>{
+    return this.http.get(this.baseUrl+ 'api/EventPlanning/GenerateSupplierInvoiceDetails?profileId='+profileId+'&eventId='+eventId)
+  }
+  getSupplierInvoiceDetails(profileId:any, invoiceId:any): Observable<any>{
+    return this.http.get(this.baseUrl + 'api/EventPlanning/GetSupplierInvoiceDetails?profileId='+profileId +'&invoiceId='+invoiceId)
+  }
+  sendSupplierInvoice(invoiceNumber:string): Observable<any>{
+    return this.http.get(this.baseUrl+ 'api/EventPlanning/SendSupplierInvoice?invoiceNumber='+invoiceNumber)
+  }
+  deleteSupplierInvoice(invoiceNumber:string): Observable<any>{
+    return this.http.delete(this.baseUrl+ 'api/EventPlanning/DeleteSupplierInvoice?invoiceNumber='+invoiceNumber)
+  }
+  getBank(): Observable<any>{
+    return this.http.get(this.baseUrl+ 'api/CustomerPaymentAccount/GetBanks')
+  }
+  createAccount(data:any): Observable<any>{
+    return this.http.post(this.baseUrl+ 'api/CustomerPaymentAccount/CreateAccount',data)
+  }
+  
 
 }
 

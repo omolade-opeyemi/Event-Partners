@@ -46,8 +46,26 @@
 
 
 .main {
-    padding: 3rem;
+    // padding: 3rem;
+    
 
+}
+.pageOne{
+  padding: 3rem;
+
+}
+.accountimage {
+  width: 100%;
+  height: 90%;
+  padding: 10px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.accounth4{
+  text-align: center;
 }
 
 .mat-mdc-form-field + .mat-mdc-form-field {
@@ -177,7 +195,14 @@
         }
     }
 }
-
+input[type="number"]::-webkit-outer-spin-button, 
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
 .colour {
     color: #1C2B66;
 }
@@ -373,8 +398,48 @@
                 }
             }
         }
+        .NoIncoming{
+          width: 90%;
+          img{
+            width: 100%;
+            height: 70%;
+          }
+        }
     }
 
+}
+.servicesSec{
+  .col-md-6{
+    margin: 0px 0px 0px auto;
+  }
+  .col-md-12{
+    hr{
+      width: 100%;
+    }
+  }
+}
+
+.serviceMiddle{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  .discount{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+}
+#invoiceHR{
+  hr{
+    width: 100%;
+  }
+}
+#invoice{
+  padding:0 20px;
+}
+.color{
+  color: #1C2B66;
 }
 .modal-body{
     .negotiate{
@@ -441,36 +506,40 @@
   max-width: 96vw;
   margin-top: 20px;
   margin: 0 auto;
+  gap: 10px;
+  .heading1 {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #1c2b66;
+    cursor: pointer;
+  }
+  .heading2 {
+    font-size: 24px;
+    margin-right: 10px;
+    font-weight: lighter;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  .active {
+    border: 4px solid;
+    border-radius: 10px;
+    border-color: #1c2b66;
+  }
+  .inactive {
+    border: 1px solid;
+    border-color: rgba(28, 43, 102, 0.25);
+  }
 }
-.heading1 {
-  font-size: 24px;
-  margin-right: 10px;
-  color: #1c2b66;
-  cursor: pointer;
-}
-.heading2 {
-  font-size: 24px;
-  margin-right: 10px;
-  font-weight: lighter;
-  margin-bottom: 5px;
-  cursor: pointer;
-}
-.active {
-  border: 4px solid;
-  border-radius: 10px;
-  border-color: #1c2b66;
-}
-.inactive {
-  border: 1px solid;
-  border-color: rgba(28, 43, 102, 0.25);
-}
+
 .requests {
   margin-top: 20px;
 }
-// .example-sidenav-content{
-//   border: 2px solid;
-//   width: 100%;
-// }
+.example-sidenav-content{
+  // border: 2px solid;
+  width: 100%;
+      padding: 3rem;
+
+}
 .request-container {
   max-width: 1220px;
   border-radius: 10px;
@@ -486,10 +555,33 @@
   // padding-right: 20px;
   min-height: 690px;
 }
+.accordion{
+  margin: 10px 0;
+  
+}
 .table-responsive{
-  background: white;
+  // background: green;
   padding: 30px;
-  border-radius: 10px;
+  thead{
+    // border: 2px solid;
+  }
+  tbody{
+    padding: 0;
+  }
+  tr{
+    padding: 0;
+  }
+  ngb-accordion,ngb-panel{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    table{
+      padding: 0;
+      margin: 0;
+      border: 2px solid red;
+
+    }
+  }
 }
 
 .request-card {
@@ -555,11 +647,21 @@
 //   justify-content: start;
 //   border-radius: 10px;
 // }
-
+.noAttendedRequest{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  img{
+    width: 50%;
+  }
+}
+/////////////////////////// OLD SIDE BAR /////////
 .sidebar {
-  flex: 0.2;
+  flex: 0.5;
   background: white;
-  height: 690px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -568,10 +670,13 @@
   // margin-top: 20px;
   border-radius: 12px;
   border-left: 10px solid;
-  border-color: #1c2b66;
+  border-color:#1C2B66;
+  // border: 2px solid red;
   // margin-right: 40px;
   // max-width: 400px;
   padding: 10px 20px;
+ 
+
 }
 .sidebar-title > h1 {
   font-size: 20px;
@@ -586,7 +691,7 @@
   margin-left: 10px;
 }
 .sidebar-services {
-  width: 340px;
+  width: 50vw;
   height: fit-content;
   padding: 15px 15px;
   border: 0.5px solid rgba(28, 43, 102, 0.3);
@@ -613,7 +718,7 @@ hr {
 .sidebar-service {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
   margin-top: 20px;
 }
 .sidebar-service > input {
@@ -629,6 +734,7 @@ hr {
 .sidebar-service-item {
   display: flex;
   align-items: center;
+  width: 50%;
 }
 .sidebar-service-item > img {
   height: 30px;
@@ -699,8 +805,10 @@ hr {
   font-size: 13px;
   cursor: pointer;
 }
-.example-containert{
+.example-container{
   width: 100%;
+  // height: 50%;
+  border: 2px solid;
 }
 @media screen and (max-width: 1200px) {
   .requests {
@@ -710,4 +818,190 @@ hr {
     display: none;
   }
 }
+/////////////////////////////
 
+//////////////////////  Account Page ///////////
+.bank-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.bank-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 3rem 1rem;
+  border-bottom: 0.5px solid #1C2B66;
+}
+
+.bank-btn {
+  display: flex;
+  align-items: flex-start;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.bank-header h3,
+.bankContainer-top h3 {
+  font-size: clamp(1.1875rem, 1.0759rem + 0.3571vw, 1.5rem);
+  line-height: 36px;
+}
+
+.bank-header h3 {
+  font-weight: 500;
+}
+
+.bankContainer-top h3 {
+  font-weight: 600;
+  text-align: center;
+}
+
+.bank-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+.bankContainer-top {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.bank-info {
+  padding:0.5rem 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #1c2b66;
+  background: rgba(124, 139, 200, 0.25);
+  border-radius: 10px;
+  width: 50%;
+  // text-align: center;
+  min-width: 340px;
+  margin: 0 auto;
+}
+
+.bank-info p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 14px;
+  color: #1c2b66;
+}
+
+.bank-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  width: 45%;
+  margin: 1rem auto;
+}
+
+label {
+  font-size: clamp(0.84375rem, 0.8103rem + 0.1071vw, 0.9375rem);
+  font-weight: 600;
+}
+
+.form_input,
+.form_select {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 70%;
+  margin: 0 auto;
+
+}
+
+.selectDiv {
+  // border: 1px solid #1c2b66;
+  // padding: 0.7rem;
+}
+
+.selectDiv select {
+  width: 100%;
+   height: 40px; 
+   background: #F1F4FA;
+  border-radius: 10px;
+  border: 2px solid rgba(124, 139, 200, 0.25);
+  outline: none;
+}
+
+.form_input input {
+  height: 40px;
+  width: 100%;
+  background: #F1F4FA;
+  border-radius: 10px;
+  border: 2px solid rgba(124, 139, 200, 0.25);
+  outline: none;
+  padding: 0.8rem;
+}
+
+.form-btn {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.add-bank-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background: #1c2b66;
+  color: #fff;
+  border-radius: 10px;
+}
+
+/* modal styling */
+
+.bank-popup {
+  width: 95%;
+  margin: 0 auto;
+  padding: 1.5rem 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 1rem;
+}
+
+.bank-popup p {
+  font-size: 13.5px;
+}
+
+.bank-popup button {
+  padding: 0.6rem 2rem;
+  border: 0.5px solid #1C2B66;
+  border-radius: 10px;
+  background: #fff;
+}
+
+/* modal styling */
+
+@media screen and (max-width:850px) {
+  .bank-info {
+    width: 80%;
+  }
+
+  .bank-form {
+    width: 90%;
+  }
+
+  .form_input,
+  .form_select {
+    width: 90%;
+  }
+
+  .form-btn {
+    width: 90%;
+  }
+
+  .bank-info p {
+    text-align: justify;
+  }
+}
+/// ////////// Account Page Ended /////////////

@@ -38,6 +38,7 @@ export class AddService {
   }
 export class Services{
   constructor(
+    public requestId: number,
     public serviceId: number,
     public quantity: number
   ){}

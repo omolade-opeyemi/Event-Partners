@@ -103,6 +103,7 @@ export class AuthenticationComponent implements OnInit {
         localStorage.setItem('token', loginData.token);
         localStorage.setItem('profileId', loginData.userProfile.id);
         localStorage.setItem('name', loginData.userProfile.name),
+        localStorage.setItem('email', loginData.userProfile.email)
         this.interact.getnavbar("two")
         // let userProfile = loginData.userProfile;
         this.route.navigate(['/dashboard']);
@@ -117,17 +118,27 @@ export class AuthenticationComponent implements OnInit {
   }
   getlga(value: any) {
     this.individualReg.state = value.split(',')[1];
-    this.individualReg.stateId = value.split(',')[0];
+    this.individualReg.stateId = Number(value.split(',')[0]);
     this.endpoint.getLga(value.split(',')[0]).subscribe(data => {
       this.response = data;  
         this.lga= this.response.responseData })
+  }
+
+  lgaIdd:any
+  getLgaId(value:any){
+    console.log(value);
+    this.individualReg.lgaId = value
+    
+
   }
   getLgaBiz(value:any){
     this.bussinessReg.state = value.split(',')[1];
     this.bussinessReg.stateId = value.split(',')[0];
     this.endpoint.getLga(value.split(',')[0]).subscribe(data => {
       this.response = data;  
-        this.lga= this.response.responseData })
+      console.log();
+      
+        this.lga= Number(this.response.responseData) })
   }
   bHome(){
     this.page='one'
@@ -160,8 +171,8 @@ export class AuthenticationComponent implements OnInit {
     this.page='five'
   }
   Ipassword( data:NgForm){
-    console.log(this.individualReg);
-    console.warn(data);
+    // console.log(this.individualReg);
+    // console.warn(data);
     this.page='seven'
   }
   
@@ -181,7 +192,7 @@ export class AuthenticationComponent implements OnInit {
     this.page='eight'
   }
   businessContact(data:NgForm){
-    console.log(this.bussinessReg);
+    // console.log(this.bussinessReg);
     this.page='ten'
   }
   bBLoc(){
@@ -189,36 +200,36 @@ export class AuthenticationComponent implements OnInit {
   }
   businessPassword(data:NgForm){
     this.bussinessReg.primaryContactName = this.firstName+' '+this.lastName;
-    console.log(this.bussinessReg);
+    // console.log(this.bussinessReg);
     this.page='eleven'
   }
   bBusinessContact(){
     this.page='ten'
   }
   registerIndividual(data:NgForm){
-    console.log(this.individualLog);
-    console.warn(data);
+    this.spinner.show();
     this.otpEmail = this.individualLog.email;
-    console.log('data sent to the enpoint',this.individualReg);
     this.endpoint.individualAccount(this.individualReg).subscribe((data)=>{
-      console.log(data);
       this.response = data;
+      this.spinner.hide();
       if (this.response.responseCode == '00'){
         this.page='otp';
-        this.notifyService.showSuccess(this.response.responseData)
+        this.notifyService.showSuccess(this.response.responseMsg)
       }
       else{
         this.notifyService.showError(this.response.responseMsg)
       }
     },(error) => {
-      this.notifyService.showError(error.error.responseMsg);
+      this.notifyService.showError(error.errorMessage);
+      this.spinner.hide();
     })
     
   }
   registerBusiness(data:NgForm){
+    this.spinner.show();
     this.otpEmail = this.individualLog.email;
     this.endpoint.businessAccount(this.bussinessReg).subscribe((data)=>{
-      console.log(data);
+      this.spinner.hide();
       this.response = data;
       if (this.response.responseCode == '00'){
         this.page='otp'
@@ -228,16 +239,18 @@ export class AuthenticationComponent implements OnInit {
       }
     },(error) => {
       this.notifyService.showError(error.error.responseMsg);
+      this.spinner.hide()
     })
   }
 
   otpCode:any
   getOtp(item: any) {
+    this.spinner.show();
     this.otpCode = item.txt1 + item.txt2 + item.txt3 + item.txt4 + item.txt5 + item.txt6;
-    console.warn(this.otpCode);
     this.endpoint.verifyCode({ email: this.otpEmail, code: this.otpCode }).
       subscribe((data) => {
         this.response = data;
+        this.spinner.hide();
         if (this.response.responseCode == '00') {
           this.page='two'
         }
@@ -246,9 +259,11 @@ export class AuthenticationComponent implements OnInit {
           this.page = 'otp';
         };
       },(error) => {
-        this.notifyService.showError(error.error.responseMsg);
+        this.notifyService.showError(error.errorMessage);
+        this.spinner.hide();
       } );
   }
+
 resendOtp(){
   this.endpoint.resendVerificationCode(this.otpEmail).subscribe((data)=>{
     this.response = data;
