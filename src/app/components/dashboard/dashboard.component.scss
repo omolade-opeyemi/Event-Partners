@@ -534,12 +534,7 @@ input[type="number"] {
 .requests {
   margin-top: 20px;
 }
-.example-sidenav-content{
-  // border: 2px solid;
-  width: 100%;
-      padding: 3rem;
 
-}
 .request-container {
   max-width: 1220px;
   border-radius: 10px;
@@ -553,7 +548,7 @@ input[type="number"] {
   height: fit-content;
   padding: 20px;
   // padding-right: 20px;
-  min-height: 690px;
+  // min-height: 690px;
 }
 .accordion{
   margin: 10px 0;
@@ -641,12 +636,11 @@ input[type="number"] {
   margin-top: 15px;
   color: #58c971;
 }
-// .section {
-//   display: flex;
-//   align-items: start;
-//   justify-content: start;
-//   border-radius: 10px;
-// }
+.section {
+  height: 90vh;
+  border:2px solid yellow;
+  margin-bottom: 10px;
+}
 .noAttendedRequest{
   width: 100%;
   display: flex;
@@ -657,7 +651,7 @@ input[type="number"] {
     width: 50%;
   }
 }
-/////////////////////////// OLD SIDE BAR /////////
+/////////////////////////// OLD SIDE BAR statrt /////////
 .sidebar {
   flex: 0.5;
   background: white;
@@ -669,7 +663,7 @@ input[type="number"] {
   gap: 15px;
   // margin-top: 20px;
   border-radius: 12px;
-  border-left: 10px solid;
+  border-left: 10px solid #1C2B66;
   border-color:#1C2B66;
   // border: 2px solid red;
   // margin-right: 40px;
@@ -805,11 +799,7 @@ hr {
   font-size: 13px;
   cursor: pointer;
 }
-.example-container{
-  width: 100%;
-  // height: 50%;
-  border: 2px solid;
-}
+
 @media screen and (max-width: 1200px) {
   .requests {
     flex: 1;
@@ -818,7 +808,311 @@ hr {
     display: none;
   }
 }
-/////////////////////////////
+///////////////////////////// Od side bar ends ////////////////
+
+/////////////////////// New Sidebar starts ///////////////
+.example-container{
+  cursor: pointer;
+  height: 75%;
+  max-width: 70vw;
+  position: fixed;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 3;
+  background: none;
+  margin-right: 15px;
+
+  .example-sidenav{
+    // height: 90%;
+    // right: 0;
+    // display: flex;
+    // justify-content: flex-end;
+    // z-index: 3;
+    // background: #fff;
+    // margin-right: 15px;
+    // padding: 5px;
+    margin-left: 50px;
+  
+  
+    .drawer {
+      width: 50vw;
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+      padding: 1rem;
+      // border-left: 10px solid #1C2B66;
+      // height: 100%;
+    
+      .sideOne {
+  
+        h2,
+        p {
+            margin: 0;
+            padding: 0;
+        }
+      
+        flex-basis: 49%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      
+        .eventBanner {
+            width: 100%;
+            // height: 40%;
+      
+            img {
+                border-radius: 10px;
+                width: 100%;
+                // height: 100%;
+            }
+        }
+      
+        .eventDetail {
+
+            padding: 0 5px;
+            p{display: flex;
+            gap: 10px;
+            padding: 5px 0;
+          }
+        }
+      
+        .eventSummary {
+            padding: 0 5px;
+      
+            p {
+                text-align: justify;
+            }
+        }
+      }
+      
+      
+      .sideTwo {
+        flex-basis: 49%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      
+        .requestHeader {
+            display: flex;
+            background: #F6F7FC;
+            align-items: center;
+            border-radius: 5px;
+            padding: 5px;
+            gap: 15px;
+      
+            mat-icon{
+              font-size: 30px;
+              color: #1C2B66;
+            }
+            .requestsMeta {
+                b,
+                small {
+                    line-height: 17px;
+                    margin: 0;
+                    padding: 0;
+                }
+      
+                b {
+                    color: #1C2B66;
+                }
+      
+                display: flex;
+                flex-direction: column;
+                justify-content:center;
+                align-items: center;
+            }
+      
+        }
+      
+        .eventRequests {
+            display: flex;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgb(226, 219, 219);
+      
+            .requestImage {
+                width: 100px;
+                height: 70px;
+      
+                img {
+                    border-radius: 5px;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+      
+            .requestActions {
+      
+                h6,
+                p,
+                b {
+                    margin: 0;
+                    padding: 0;
+                }
+      
+                p,
+                b {
+                    font-size: 14px;
+                }
+      
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+      
+                .requestInfos {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+      
+                }
+      
+                .requestbtns {
+                    display: flex;
+                    gap: 5px;
+                    justify-content: flex-end;
+                    .btn{
+                        border-radius: 15px;
+                        font-size: 15px;
+                        padding: 3px 15px;
+                        
+                    }
+                }
+            }
+        }
+      }
+    }
+
+    .attendedDrawer {
+      width: 50vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+      /* flex-wrap: wrap; */
+      padding: 2rem;
+  
+      .top {
+  
+          h2,
+          p {
+              margin: 0;
+              padding: 0;
+          }
+  
+          display: flex;
+          min-height: 200px;
+          justify-content: space-between;
+          gap: 20px;
+  
+          .left {
+              flex-basis: 30%;
+  
+              img {
+                  width: 100%;
+                  border-radius: 5px;
+              }
+          }
+  
+          .right {
+              flex: 60%;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-evenly;
+  
+              .eventDetail {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 5px;
+                  p{
+                    display: flex;
+                    gap: 10px;
+                  }
+              }
+  
+              .eventSummary {
+                  display: flex;
+                  flex-direction: column;
+                  grid-area: 5px;
+  
+                  p {
+                      text-align: justify;
+                  }
+              }
+          }
+      }
+  
+      .buttom {
+          thead{
+              color: #1C2B66;
+              font-size: 18px;
+          }
+          
+          .rejected {
+             span{
+              padding: 2px 10px;
+              color: #FF69B4;
+              background: rgba(255, 105, 180, 0.12);
+              border-radius: 10px;
+             }      
+          }
+  
+          .accepted {
+              span{
+                  padding: 2px 10px;
+                  color: #1C2B66;
+                  background: rgba(173, 182, 220, 0.24);
+                  border-radius: 10px;
+              }
+                  
+              
+              
+          }
+      }
+      .button{
+        button{
+            background:#1C2B66;
+        }
+    }
+  }
+  }
+
+  .example-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    // position: relative;
+    right: 0;
+
+    .eventRod {
+      height: 100%;
+      background: #1C2B66;
+      width: 20px;
+    }
+
+    .icon {
+      color: #fff;
+      background: #1C2B66;
+      display: flex;
+      padding: 1px;
+      border-top-left-radius: 40%;
+      border-bottom-left-radius: 40%;
+    }
+  }
+
+
+}
+  
+
+
+
+
+
+
+////////////////////// New sidebar ends //////////////
 
 //////////////////////  Account Page ///////////
 .bank-page {

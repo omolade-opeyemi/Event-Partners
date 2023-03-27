@@ -454,15 +454,22 @@ subTotal:any;
     this.request = 'attended'
   }
   requestsDetail: any[]=[]
+  attendedRequestDetail: any[]=[]
 
   getRequestDetail(){
     this.spinner.show();
     this.events = [];
+    this.attendedRequestDetail = []
     this.endpoint.getRequestDetail(Number(localStorage.getItem('profileId')), this.eventId).subscribe((data)=>{
       this.response = data;
       this.spinner.hide();
       if( this.response.responseCode == '00'){
         this.requestsDetail = this.response.responseData;
+          var item = this.requestsDetail.filter((item)=> item.isTreated == true);
+          this.attendedRequestDetail=item
+
+        console.log(this.attendedRequestDetail);
+        
       }
       else{
         this.notify.showError(this.response.responseMsg)
@@ -473,12 +480,26 @@ subTotal:any;
     })
   }
 
+  isOpen:boolean = false
+  getDrawerStatus(drawer:any){
+    this.eventData = ''
+    this.isOpen = false;
+    if(drawer._opened){
+      this.isOpen = true;
+    }
+  }
+
+  eventData:any = ''
   eventId:any;
   toggleSideBar(data:any,drawer:any) {
-    this.eventId = data
-
+    this.eventData = ''
+    this.eventId = data.eventId;
+    this.isOpen = false;
+    this.eventData = data;
+    console.log(this.eventData);
     if(drawer._opened){
       this.getRequestDetail();
+      this.isOpen = true;
     }
     
     

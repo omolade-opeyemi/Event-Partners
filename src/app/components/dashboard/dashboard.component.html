@@ -30,9 +30,9 @@
 
     <!-- <div class="main"> -->
 
-        <!-- //////// Landing Page Dashboard /////// -->
-        <ng-template [ngIf]="page == 'one'">
-            <div class="pageOne">
+    <!-- //////// Landing Page Dashboard /////// -->
+    <ng-template [ngIf]="page == 'one'">
+        <div class="pageOne">
             <div class="row1">
 
                 <div class="part1">
@@ -342,13 +342,13 @@
 
             </div>
         </div>
-        </ng-template>
+    </ng-template>
 
-        <!-- //////////// Request Page //////// -->
-        <ng-template [ngIf]="page == 'requests'">
+    <!-- //////////// Request Page //////// -->
+    <ng-template [ngIf]="page == 'requests'">
 
-            <div class="pendingReq">
-                <!-- <div class="header">
+        <div class="pendingReq">
+            <!-- <div class="header">
                     <div (click)="pendingRequest()">
                         <h1 [ngClass]="{'heading1':requestHead == 'pending', 'heading2':requestHead == 'attended'}">
                             Pending Request</h1>
@@ -363,14 +363,13 @@
                     </div>
                 </div> -->
 
-                <div class="section">
+            <!-- <div class="section"> -->
 
-                    <!-- ////////// Request Page /////////// -->
-                    <ng-template [ngIf]="request == 'pending' || request == 'attended'">
-                        <mat-drawer-container class="example-container" autosize>
-                            <mat-drawer #drawer class="example-sidenav" mode="side" position="end">
-                               
-                                <div class="sidebar">
+            <!-- ////////// Request Page /////////// -->
+            <mat-drawer-container class="example-container" autosize>
+                <mat-drawer #drawer class="example-sidenav" mode="side" position="end">
+
+                    <!-- <div class="sidebar">
                                     <div class="sidebar-title">
                                         <h1>Service Request</h1>
                                         <p>{{requestsDetail.length}} service requests for this event</p>
@@ -404,437 +403,405 @@
                                                 (click)="eventRequestAction(false)">Reject</button>
                                         </div>
                                     </div>
+                                </div> -->
+                            <ng-template [ngIf]="request == 'pending'">
+                                <div class="drawer">
+                                    <ng-template [ngIf]="eventData != ''">
+            
+                                        <div class="sideOne">
+                                            <div class="eventBanner">
+                                                <img [src]="eventData.eventImage ? eventData.eventImage : '/assets/images/Rectangle 669.png'"
+                                                    alt="">
+                                            </div>
+                                            <div class="eventDetail">
+                                                <h2>{{eventData.eventName}}</h2>
+                                                <p><mat-icon>calendar_month</mat-icon> {{eventData.eventDates[0].startDate}} - {{eventData.eventDates[0].endDate}}</p>
+                                                <p><mat-icon>schedule</mat-icon> {{eventData.eventDates[0].startTime}} - {{eventData.eventDates[0].endTime}}</p>
+                                                <P><mat-icon>pin_drop</mat-icon> {{eventData.eventLocation}}</P>
+                                            </div>
+                                            <div class="eventSummary">
+                                                <h2>Event Summary</h2>
+                                                <p>{{eventData.eventDescription}}</p>
+                                            </div>
+                                        </div>
+            
+                                        <div class="sideTwo">
+                                            <div class="requestHeader">
+                                                <mat-icon>notifications_active</mat-icon>
+                                                <div class="requestsMeta">
+                                                    <b>Requests</b>
+                                                    <small>{{requestsDetail.length}} Requests</small>
+                                                </div>
+                                            </div>
+                                            <div class="eventRequests" *ngFor="let detail of requestsDetail; index as i">
+                                                <div class="requestImage">
+                                                    <img src="{{detail.serviceImage}}" alt="">
+                                                </div>
+                                                <div class="requestActions">
+                                                    <div class="requestInfos">
+                                                        <div class="requestInfo">
+                                                            <h6>{{detail.serviceName}}</h6>
+                                                            <p>Quantity: {{detail.quantity}}</p>
+                                                            <b>$ 36,000</b>
+                                                        </div>
+                                                        <p class="requestDate">{{detail.eventStartDate}}</p>
+                                                    </div>
+                                                    <div class="requestbtns">
+                                                        <button class="btn btn-outline-danger">Decline</button>
+                                                        <button class="btn btn-outline-success">Accept</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+            
+                                        </div>
+                                    </ng-template>
+                                    <ng-template [ngIf]="eventData == ''">
+                                        <img src="/assets/images/Rectangle 669.png" alt="">
+                                    </ng-template>
+             
                                 </div>
 
-                            </mat-drawer>
-                            <div class="example-sidenav-content">
-                                <div class="header">
-                                    <div (click)="pendingRequest()">
-                                        <h1
-                                            [ngClass]="{'heading1':requestHead == 'pending', 'heading2':requestHead == 'attended'}">
-                                            Pending Request</h1>
-                                        <div
-                                            [ngClass]="{'active':requestHead == 'pending', 'inactive':requestHead == 'attended'}">
+                            </ng-template>
+                               
+                            <ng-template [ngIf]="request == 'attended'">
+                                <div class="attendedDrawer">
+                                    <ng-template [ngIf]="eventData != ''">
+                                    <div class="top">
+                                        <div class="left">
+                                            <img [src]="eventData.eventImage ? eventData.eventImage : '/assets/images/Rectangle 669.png'" alt="">
+                                        </div>
+                                        <div class="right">
+                                            <div class="eventDetail">
+                                                <h2>{{eventData.eventName}}</h2>
+                                                <p><mat-icon>calendar_month</mat-icon> {{eventData.eventDates[0].startDate}} - {{eventData.eventDates[0].endDate}}</p>
+                                                <p><mat-icon>schedule</mat-icon> {{eventData.eventDates[0].startTime}} - {{eventData.eventDates[0].endTime}}</p>
+                                                <P><mat-icon>pin_drop</mat-icon> {{eventData.eventLocation}}</P>
+                                            </div>
+                                            <div class="eventSummary">
+                                                <h2>Event Summary</h2>
+                                                <p>{{eventData.eventDescription}}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div (click)="requestAttended()">
-                                        <h1
-                                            [ngClass]="{'heading1':requestHead == 'attended', 'heading2':requestHead == 'pending'}">
-                                            Request Attended</h1>
-                                        <div
-                                            [ngClass]="{'active':requestHead == 'attended', 'inactive':requestHead == 'pending'}">
-                                        </div>
+                                
+                                    <div class="buttom">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Service</th>
+                                                    <th scope="col">Quantity</th>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">Date</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let req of attendedRequestDetail; index as i" >
+                                                    <td>
+                                                        <img
+                                                            src="{{req.serviceImage}}"
+                                                            class="me-2"
+                                                            style="width: 20px"
+                                                        />
+                                                        {{ req.serviceName }}
+                                                    </td>
+                                                    <td>{{ req.quantity | number }}</td>
+                                                    <td>&#8358; {{ req.amount | number }}</td>
+                                                    <td>{{req.eventStartDate}}</td>
+                                                    <td class="rejected" *ngIf="!req.isAccepted"><span>Rejected</span> </td>
+                                                    <td class="accepted" *ngIf="req.isAccepted"><span>Accepted</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
+                                    <div class="button">
+                                        <button class="btn btn-primary">Create Invoice</button>
+                                    </div>
+                                </ng-template>
+                                <ng-template [ngIf]="eventData == ''">
+                                    <img src="/assets/images/Rectangle 669.png" alt="">
+                                </ng-template>
                                 </div>
 
-                                <ng-template [ngIf]="request == 'pending'">
-                                    <div class="request-container">
-                                        <ng-template [ngIf]="pendingRequests.length != 0">
-                                            <div class="request-card"
-                                                *ngFor="let pending of pendingRequests; index as i"
-                                                (click)="drawer.toggle();toggleSideBar(pending.eventId, drawer) ">
-                                                <img [src]="pending.eventImage ? pending.eventImage: '/assets/images/Rectangle 669.png'"
-                                                    alt="" class="request-card-img" />
-                                                <h1 class="">{{pending.eventName}}</h1>
-                                                <p class="by">By</p>
-                                                <div class="avatar">
-                                                    <img class=""
-                                                        [src]="pending.creatorImage ? pending.creatorImage : '/assets/images/person.jpg'"
-                                                        alt="" />
-                                                    <p class="">{{pending.eventCreator}}</p>
-                                                </div>
-                                                <div class="event">
-                                                    <p>Event Date: {{pending.eventDates[0].startDate}}</p>
-                                                    <p>Event Time: {{pending.eventDates[0].startTime}}</p>
-                                                </div>
-                                                <p class="notice">Service requested: {{pending.serviceRequestCount}}</p>
-                                            </div>
-                                        </ng-template>
+                            </ng-template> 
+                    
+                </mat-drawer>
 
-                                        <ng-template [ngIf]="pendingRequests.length == 0">
-                                            <div class="noAttendedRequest">
-                                                <img src="/assets/images/Search engines-cuate.png" alt="">
-                                                <h5 class="color">0 Requests Pending</h5>
-                                            </div>
-                                        </ng-template>
-                                    </div>
-                                </ng-template>
-
-                                <!-- ////////////// Attended Request //////// -->
-
-                                <ng-template [ngIf]="request == 'attended'">
-                                    <div class="pendingReq">
-                                        <ng-template [ngIf]="attendedRequests.length != 0">
-                                            <div class="table-responsive">
-                                                <div class="filter colour">Last 7 Days <mat-icon>expand_more</mat-icon>
-                                                </div>
-
-                                                <table class="table table-striped">
-                                                    <thead>
-                                                        <tr class="colour">
-                                                            <!-- <th scope="col">#</th> -->
-                                                            <th scope="col">Event Creator</th>
-                                                            <th scope="col">Event name</th>
-                                                            <th scope="col">Service</th>
-                                                            <th scope="col">Amount</th>
-                                                            <th scope="col">Date</th>
-                                                            <th scope="col"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr *ngFor="let attend of attendedRequests; index as i">
-                                                            <!-- <th scope="row">{{ i + 1 }}</th> -->
-                                                            <td>
-                                                                <img [src]="attend.eventImage ? attend.eventImage: '/assets/images/Vector (6).png'"
-                                                                    class="me-2" style="width: 20px" />
-                                                                {{ attend.eventCreator }}
-                                                            </td>
-                                                            <td>{{ attend.eventName }}</td>
-                                                            <td>{{ attend.serviceType }}</td>
-                                                            <td>{{ attend.quantity }}</td>
-                                                            <td>{{ attend.eventDates[0].startDate}}</td>
-                                                            <td>
-                                                                <mat-icon mat-button [matMenuTriggerFor]="menu"
-                                                                    style="cursor: pointer;">more_horiz</mat-icon>
-                                                            </td>
-                                                            <mat-menu #menu="matMenu">
-                                                                <button mat-menu-item
-                                                                    (click)="openInvoiceCreation(content,attend.eventId)">Create
-                                                                    Invoice</button>
-                                                                <button mat-menu-item>Item 2</button>
-                                                            </mat-menu>
-                                                            <!-- ///////  Invoice Modal /////// -->
-                                                            <ng-template #content let-modal>
-                                                                <div class="modal-header">
-                                                                    <h4 class="modal-title color">Create New Invoice
-                                                                    </h4>
-                                                                    <button type="button" class="btn-close"
-                                                                        aria-label="Close"
-                                                                        (click)="modal.dismiss('Cross click')"></button>
-                                                                </div>
-                                                                <div class="modal-body" id="invoice">
-                                                                    <form class="row g-3" #invoiCingForm="ngForm">
-                                                                        <!-- <div class="col-md-6">
-                                                                        <label for="inputEmail4" class="form-label">Invoice
-                                                                            ID</label>
-                                                                        <input type="text" class="form-control" id="invoiceid"
-                                                                            disabled="true" ngModel
-                                                                            [(ngModel)]="invoicing.inovieceNumber"
-                                                                            name="invoiceid">
-                                                                    </div> -->
-
-                                                                        <div class="col-12">
-                                                                            <label for="inputAddress"
-                                                                                class="form-label">Date</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="date" disabled="true" ngModel
-                                                                                name="date" #date="ngModel"
-                                                                                [(ngModel)]="invoicing.date">
-                                                                        </div>
-                                                                        <div class="col-12">
-                                                                            <label for="inputAddress"
-                                                                                class="form-label">Recipient
-                                                                                Name</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="name" disabled="true" ngModel
-                                                                                name="name" #name="ngModel"
-                                                                                [(ngModel)]="invoicing.recipientName">
-                                                                        </div>
-
-                                                                        <div class="col-md-6">
-                                                                            <label for="inputCity"
-                                                                                class="form-label">Email</label>
-                                                                            <input type="email" class="form-control"
-                                                                                id="email" ngModel disabled="true"
-                                                                                name="email"
-                                                                                [(ngModel)]="invoicing.email">
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <label for="inputCity"
-                                                                                class="form-label">Address</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="address" disabled="true"
-                                                                                placeholder="Apartment, studio, or floor"
-                                                                                ngModel [(ngModel)]="invoicing.address"
-                                                                                name="address">
-                                                                        </div>
-                                                                        <div id="invoiceHR">
-                                                                            <hr>
-                                                                        </div>
-                                                                        <h4 class="color">Service Description</h4>
-
-                                                                        <div class="servicesSec row g-3"
-                                                                            *ngFor="let item of invoicing.serviceDesriptionDetails">
-
-                                                                            <div class="col-md-3">
-                                                                                <label for="rate"
-                                                                                    class="form-label">Service</label>
-                                                                                <input type="text" class="form-control"
-                                                                                    id="rate" disabled="true"
-                                                                                    name="rate" [value]="item.service">
-                                                                            </div>
-                                                                            <div class="col-md-3">
-                                                                                <label for="rate"
-                                                                                    class="form-label">Quantity</label>
-                                                                                <input type="text" class="form-control"
-                                                                                    id="rate" disabled="true"
-                                                                                    name="rate" value="qty"
-                                                                                    [value]="item.quantity">
-                                                                            </div>
-                                                                            <div class="col-md-3">
-                                                                                <label for="rate"
-                                                                                    class="form-label">Rate
-                                                                                    &#8358;</label>
-                                                                                <input type="text" class="form-control"
-                                                                                    id="rate" disabled="true"
-                                                                                    name="rate" [value]="item.rate">
-                                                                            </div>
-                                                                            <div class="col-md-3">
-                                                                                <label for="rate"
-                                                                                    class="form-label">Amount
-                                                                                    &#8358;</label>
-                                                                                <input type="text" class="form-control"
-                                                                                    id="rate" disabled="true"
-                                                                                    name="rate" [value]="item.amount">
-                                                                            </div>
-
-                                                                            <!-- <div class="col-md-6">
-                                                                            <label for="rate" class="form-label">Amount
-                                                                                &#8358;</label>
-                                                                            <input type="text" class="form-control" id="amount"
-                                                                                disabled="true" name="amount"
-                                                                                [value]="item.amount">
-                                                                        </div> -->
-                                                                        </div>
-
-                                                                    </form>
-                                                                    <div id="invoiceHR">
-                                                                        <hr>
-                                                                    </div>
-
-                                                                    <div class="serviceMiddle" id="invoice">
-                                                                        <div class="discount">
-                                                                            Discount ( % ): <span><input
-                                                                                    class="form-control" type="number"
-                                                                                    (keyup)="onChangeDiscount()"
-                                                                                    id="discount" ngModel
-                                                                                    [(ngModel)]="invoicing.discount"></span>
-                                                                        </div>
-
-                                                                        <h5>Sub Total :&#8358; {{total | number}}</h5>
-                                                                        <h5>VAT : &#8358; {{total * 0.075 | number}}
-                                                                        </h5>
-                                                                        <h3>Total : &#8358; {{total + total * 0.075 |
-                                                                            number}}</h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer d-flex justify-content-center">
-                                                                    <button type="button" class="btn btn-light cancel"
-                                                                        (click)="modal.close('Close click'); createSupplierInvoice(true)">Send
-                                                                        Invoice</button>
-                                                                    <button type="button" class="btn addService"
-                                                                        (click)="modal.close('Close click');createSupplierInvoice(false)">Create
-                                                                        Invoice</button>
-                                                                </div>
-                                                            </ng-template>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-
-                                            </div>
-                                        </ng-template>
-
-                                        <ng-template [ngIf]="attendedRequests.length == 0">
-                                            <div class="noAttendedRequest">
-                                                <img src="/assets/images/Search engines-cuate.png" alt="">
-                                                <h5 class="color">0 Requests Attended</h5>
-                                            </div>
-
-                                        </ng-template>
-
-                                    </div>
-
-                                </ng-template>
-
-                            </div>
-                        </mat-drawer-container>
-                    </ng-template>
-
+                <div class="example-sidenav-content" (click)="drawer.toggle();getDrawerStatus(drawer)">
+                    <div class="icon" *ngIf="!isOpen">
+                        <mat-icon>keyboard_double_arrow_left</mat-icon>
+                    </div>
+                    <div class="icon" *ngIf="isOpen">
+                        <mat-icon>keyboard_double_arrow_right</mat-icon>
+                    </div>
+                    <div class="eventRod"></div>
                 </div>
-            </div>
+            </mat-drawer-container>
+            <ng-template [ngIf]="page == 'requests'">
 
-        </ng-template>
-
-        <!-- ///////// Account Setup Page /////// -->
-
-        <ng-template [ngIf]="page == 'account'">
-            <div class="bank-page">
-                <div class="bank-container">
-                    <div class="bankContainer-top">
-                        <h3>Add your Bank Account Details</h3>
-
-
-                        <div class="bank-info">
-                            <p><span> <mat-icon>info</mat-icon></span> The safety and security of your bank account
-                                information is
-                                protected.</p>
+                <!-- <div class="example-sidenav-content"> -->
+                <div class="header">
+                    <div (click)="pendingRequest()">
+                        <h1 [ngClass]="{'heading1':requestHead == 'pending', 'heading2':requestHead == 'attended'}">
+                            Pending Request</h1>
+                        <div [ngClass]="{'active':requestHead == 'pending', 'inactive':requestHead == 'attended'}">
                         </div>
                     </div>
-                    <form class="bank-form">
-                        <div class="form_select">
-                            <label for="selectBank">Select Bank</label>
-                            <div class="selectDiv">
-                                <select name="selectBank" id="" ngModel #bank="ngModel" (change)="getBank(bank.value)">
-                                    <option value="">Select Bank</option>
-                                    <option *ngFor="let item of banks" value="{{item.bankName}},{{item.bankCode}}">
-                                        {{item.bankName}}</option>
-                                </select>
-                            </div>
+                    <div (click)="requestAttended()">
+                        <h1 [ngClass]="{'heading1':requestHead == 'attended', 'heading2':requestHead == 'pending'}">
+                            Request Attended</h1>
+                        <div [ngClass]="{'active':requestHead == 'attended', 'inactive':requestHead == 'pending'}">
                         </div>
-                        <div class="form_input">
-                            <label for="accountNo">Account No</label>
-                            <input type="text" name="accountNo" ngModel [(ngModel)]="createAccount.bankAccountNumber">
-                        </div>
-                        <div class="form_input">
-                            <label for="accountName">Account Name</label>
-                            <input type="text" name="accountName" ngModel [(ngModel)]="createAccount.accountName">
-                        </div>
-                        <div class="form_input">
-                            <label for="accountName">BVN</label>
-                            <input type="text" name="bvn" ngModel [(ngModel)]="createAccount.bvn">
-                        </div>
-                        <div class="form-btn">
-                            <!-- (click)="open(risk)" -->
-                            <button class="add-bank-btn" (click)="setUpAccount()">Add Bank Account</button>
-                        </div>
-                    </form>
+                    </div>
+                </div>
 
-                    <ng-template #risk let-modal class="moddd">
-                        <!-- <div class="modal-header">
+                <ng-template [ngIf]="request == 'pending'">
+                    <div class="request-container">
+                        <ng-template [ngIf]="pendingRequests.length != 0">
+                            <div class="request-card" *ngFor="let pending of pendingRequests; index as i"
+                                (click)="drawer.toggle();toggleSideBar(pending, drawer)">
+
+                                <img [src]="pending.eventImage ? pending.eventImage: '/assets/images/Rectangle 669.png'"
+                                    alt="" class="request-card-img" />
+                                <h1 class="">{{pending.eventName}}</h1>
+                                <p class="by">By</p>
+                                <div class="avatar">
+                                    <img class=""
+                                        [src]="pending.creatorImage ? pending.creatorImage : '/assets/images/person.jpg'"
+                                        alt="" />
+                                    <p class="">{{pending.eventCreator}}</p>
+                                </div>
+                                <div class="event">
+                                    <p>Event Date: {{pending.eventDates[0].startDate}}</p>
+                                    <p>Event Time: {{pending.eventDates[0].startTime}}</p>
+                                </div>
+                                <p class="notice">Service requested: {{pending.serviceRequestCount}}</p>
+                            </div>
+                        </ng-template>
+
+                        <ng-template [ngIf]="pendingRequests.length == 0">
+                            <div class="noAttendedRequest">
+                                <img src="/assets/images/Search engines-cuate.png" alt="">
+                                <h5 class="color">0 Requests Pending</h5>
+                            </div>
+                        </ng-template>
+                    </div>
+                </ng-template>
+
+                <!-- ////////////// Attended Request //////// -->
+
+                <ng-template [ngIf]="request == 'attended'">
+                    
+                    <div class="request-container">
+                        <ng-template [ngIf]="attendedRequests.length != 0">
+                            <div class="request-card" *ngFor="let pending of attendedRequests; index as i"
+                                (click)="drawer.toggle();toggleSideBar(pending, drawer)">
+
+                                <img [src]="pending.eventImage ? pending.eventImage: '/assets/images/Rectangle 669.png'"
+                                    alt="" class="request-card-img" />
+                                <h1 class="">{{pending.eventName}}</h1>
+                                <p class="by">By</p>
+                                <div class="avatar">
+                                    <img class=""
+                                        [src]="pending.creatorImage ? pending.creatorImage : '/assets/images/person.jpg'"
+                                        alt="" />
+                                    <p class="">{{pending.eventCreator}}</p>
+                                </div>
+                                <div class="event">
+                                    <p>Event Date: {{pending.eventDates[0].startDate}}</p>
+                                    <p>Event Time: {{pending.eventDates[0].startTime}}</p>
+                                </div>
+                                <p class="notice">Service requested: {{pending.serviceRequestCount}}</p>
+                            </div>
+                        </ng-template>
+
+                        <ng-template [ngIf]="attendedRequests.length == 0">
+                            <div class="noAttendedRequest">
+                                <img src="/assets/images/Search engines-cuate.png" alt="">
+                                <h5 class="color">0 Requests Pending</h5>
+                            </div>
+                        </ng-template>
+                    </div>
+
+                </ng-template>
+
+                <!-- </div> -->
+
+            </ng-template>
+
+            <!-- </div> -->
+        </div>
+
+    </ng-template>
+
+    <!-- ///////// Account Setup Page /////// -->
+
+    <ng-template [ngIf]="page == 'account'">
+        <div class="bank-page">
+            <div class="bank-container">
+                <div class="bankContainer-top">
+                    <h3>Add your Bank Account Details</h3>
+
+
+                    <div class="bank-info">
+                        <p><span> <mat-icon>info</mat-icon></span> The safety and security of your bank account
+                            information is
+                            protected.</p>
+                    </div>
+                </div>
+                <form class="bank-form">
+                    <div class="form_select">
+                        <label for="selectBank">Select Bank</label>
+                        <div class="selectDiv">
+                            <select name="selectBank" id="" ngModel #bank="ngModel" (change)="getBank(bank.value)">
+                                <option value="">Select Bank</option>
+                                <option *ngFor="let item of banks" value="{{item.bankName}},{{item.bankCode}}">
+                                    {{item.bankName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form_input">
+                        <label for="accountNo">Account No</label>
+                        <input type="text" name="accountNo" ngModel [(ngModel)]="createAccount.bankAccountNumber">
+                    </div>
+                    <div class="form_input">
+                        <label for="accountName">Account Name</label>
+                        <input type="text" name="accountName" ngModel [(ngModel)]="createAccount.accountName">
+                    </div>
+                    <div class="form_input">
+                        <label for="accountName">BVN</label>
+                        <input type="text" name="bvn" ngModel [(ngModel)]="createAccount.bvn">
+                    </div>
+                    <div class="form-btn">
+                        <!-- (click)="open(risk)" -->
+                        <button class="add-bank-btn" (click)="setUpAccount()">Add Bank Account</button>
+                    </div>
+                </form>
+
+                <ng-template #risk let-modal class="moddd">
+                    <!-- <div class="modal-header">
                       <div class="m-title">
                         <h4 class="modal-title" id="modal-basic-title">Bank Account Details
                           Submitted</h4>
                       </div>
               
                     </div> -->
-                        <div class="bank-popup">
-                            <h4>Bank Account Details Submitted</h4>
-                            <img src="/assets/success.png" alt="">
+                    <div class="bank-popup">
+                        <h4>Bank Account Details Submitted</h4>
+                        <img src="/assets/success.png" alt="">
 
-                            <p>Your Bank Account Details Have Been submitted Successfully and is awaiting validation!
-                            </p>
-                            <button (click)="modal.dismiss()">Close</button>
-                        </div>
-                    </ng-template>
+                        <p>Your Bank Account Details Have Been submitted Successfully and is awaiting validation!
+                        </p>
+                        <button (click)="modal.dismiss()">Close</button>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </ng-template>
+
+    <!-- //////////// Add Service Modal //////// -->
+
+    <ng-template #addService let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Add a New Service</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <form #addService="ngForm">
+                <div class="mb-3">
+                    <label for="Select" class="form-label">Service Category</label>
+                    <select class="form-select" aria-label="Default select example" name="serviceType"
+                        #category="ngModel" ngModel (change)="getCategory(category.value)">
+                        <option *ngFor="let item of categoryData" value="{{item.id}},{{item.name}}">{{item.name}}
+                        </option>
+                    </select>
                 </div>
-            </div>
-        </ng-template>
-
-        <!-- //////////// Add Service Modal //////// -->
-
-        <ng-template #addService let-c="close" let-d="dismiss">
-            <div class="modal-header">
-                <h4 class="modal-title" id="modal-basic-title">Add a New Service</h4>
-                <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
-            </div>
-            <div class="modal-body">
-                <form #addService="ngForm">
-                    <div class="mb-3">
-                        <label for="Select" class="form-label">Service Category</label>
-                        <select class="form-select" aria-label="Default select example" name="serviceType"
-                            #category="ngModel" ngModel (change)="getCategory(category.value)">
-                            <option *ngFor="let item of categoryData" value="{{item.id}},{{item.name}}">{{item.name}}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="Select" class="form-label">Service Type</label>
-                        <select class="form-select" aria-label="Default select example" name="serviceType" ngModel>
-                            <option *ngFor="let item of serviveTypes">{{item.name}}</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Service Caption</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            name="serviceCaption" ngModel>
-                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                            name="serviceDescription" ngModel></textarea>
-                    </div>
-                    <div class="negotiate">
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Rate per unit</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput"
-                                placeholder=" &#x20A6; 350 " name="rate" ngModel>
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="negotiable"
-                                ngModel>
-                            <label class="form-check-label" for="exampleCheck1">Negotiatable</label>
-                        </div>
-
-                    </div>
-                    <div class="mb-3">
-                        <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" [maxFileSize]="2000000"
-                            (change)="onSelect($event)">
-                            <ngx-dropzone-label>
-                                <div>
-                                    <mat-icon>cloud_upload</mat-icon>
-                                    <h3>Drop images here or click to select</h3>
-                                </div>
-                            </ngx-dropzone-label>
-                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
-                                [file]="f" [removable]="true" (removed)="onRemove(f)">
-                                <ngx-dropzone-label>({{ f.type }})</ngx-dropzone-label>
-                            </ngx-dropzone-image-preview>
-
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <button type="button" class="btn btn-light cancel" (click)="c('Save click')">Cancel</button>
-                <button type="button" class="btn addService" (click)="serviceSuccess(success, addService.value)">+
-                    Add Service</button>
-            </div>
-        </ng-template>
-        <!-- /////////// Service Addedd Successfully modal /////////// -->
-
-        <!-- //////////////////  Account Set Up Modal ////////// -->
-        <ng-template #account let-modal>
-            <div class="modal-header">
-                <button type="button" class="btn-close" aria-label="Close"
-                    (click)="modal.dismiss('Cross click')"></button>
-            </div>
-            <div class="modal-body">
-                <div class="accountimage">
-                    <img src="/assets/images/Creative team-pana 1.png" alt="">
+                <div class="mb-3">
+                    <label for="Select" class="form-label">Service Type</label>
+                    <select class="form-select" aria-label="Default select example" name="serviceType" ngModel>
+                        <option *ngFor="let item of serviveTypes">{{item.name}}</option>
+                    </select>
                 </div>
-                <h4 class="accounth4">You need to setup up your account before you can create a service</h4>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cancel</button>
-                <button type="button" class="btn btn-light" (click)="accountSetup()">Proceed</button>
-            </div>
-        </ng-template>
-        <!-- ////////////////////// Account Setup Modal Ended ///////////// -->
-
-        <ng-template #success let-modal>
-
-            <div class="modal-body">
-                <div class="successmodal">
-                    <h4>Congratulations! Your service has been addedd successfully</h4>
-                    <div class="img">
-                        <img src="/assets/images/undraw_Mail_sent_re_0ofv 1.png" alt="">
-                    </div>
-                    <button class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Service Caption</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        name="serviceCaption" ngModel>
+                    <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                 </div>
-            </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="serviceDescription"
+                        ngModel></textarea>
+                </div>
+                <div class="negotiate">
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput" class="form-label">Rate per unit</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder=" &#x20A6; 350 "
+                            name="rate" ngModel>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="negotiable" ngModel>
+                        <label class="form-check-label" for="exampleCheck1">Negotiatable</label>
+                    </div>
 
-        </ng-template>
+                </div>
+                <div class="mb-3">
+                    <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" [maxFileSize]="2000000"
+                        (change)="onSelect($event)">
+                        <ngx-dropzone-label>
+                            <div>
+                                <mat-icon>cloud_upload</mat-icon>
+                                <h3>Drop images here or click to select</h3>
+                            </div>
+                        </ngx-dropzone-label>
+                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                            [file]="f" [removable]="true" (removed)="onRemove(f)">
+                            <ngx-dropzone-label>({{ f.type }})</ngx-dropzone-label>
+                        </ngx-dropzone-image-preview>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn btn-light cancel" (click)="c('Save click')">Cancel</button>
+            <button type="button" class="btn addService" (click)="serviceSuccess(success, addService.value)">+
+                Add Service</button>
+        </div>
+    </ng-template>
+    <!-- /////////// Service Addedd Successfully modal /////////// -->
+
+    <!-- //////////////////  Account Set Up Modal ////////// -->
+    <ng-template #account let-modal>
+        <div class="modal-header">
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <div class="accountimage">
+                <img src="/assets/images/Creative team-pana 1.png" alt="">
+            </div>
+            <h4 class="accounth4">You need to setup up your account before you can create a service</h4>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cancel</button>
+            <button type="button" class="btn btn-light" (click)="accountSetup()">Proceed</button>
+        </div>
+    </ng-template>
+    <!-- ////////////////////// Account Setup Modal Ended ///////////// -->
+
+    <ng-template #success let-modal>
+
+        <div class="modal-body">
+            <div class="successmodal">
+                <h4>Congratulations! Your service has been addedd successfully</h4>
+                <div class="img">
+                    <img src="/assets/images/undraw_Mail_sent_re_0ofv 1.png" alt="">
+                </div>
+                <button class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+            </div>
+        </div>
+
+    </ng-template>
     <!-- </div> -->
 
 </div>
